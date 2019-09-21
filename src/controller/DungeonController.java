@@ -5,8 +5,8 @@ import userInterface.UserCLIInterface;
 
 /**
  * The DungeonController describes a way to play multiple text based Dungeon-Crawler-Games.
- * It can be given as an argument over the CommandLine while starting the game or when the game is
- * started, where the player may chose from a list of games.
+ * It can be given an argument over the CommandLine while starting the game or just start
+ * the game with no argument and chose from a list of games.
  *
  * @author Manuel Werder
  * @version 0.1
