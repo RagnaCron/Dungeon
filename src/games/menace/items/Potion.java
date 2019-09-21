@@ -4,13 +4,20 @@ import games.menace.items.generic.Item;
 
 
 /**
- * Potion Subclasses Item. It adds a private field lifePoints and a get method to access lifePoints.
+ * The Potion a subclass of Item.
  *
+ * @author Manuel Werder
+ * @version 0.1
  */
 public class Potion extends Item {
 
     private int lifePoints;
 
+    /**
+     * The constructor for the Potion.
+     * @param name Type: String. The name of the Potion.
+     * @param lifePoints Type: int. The lifePoints to gain from the potion.
+     */
     public Potion(String name, int lifePoints) {
         super(name);
         this.lifePoints = lifePoints;
@@ -22,10 +29,10 @@ public class Potion extends Item {
 
     @Override
     public String getName() {
-        String buildName = super.getName() + " gives " + lifePoints;
+        String buildName = super.getName() + " gives life " + lifePoints;
         if (lifePoints == 1) {
-            buildName += " life point.";
+            return buildName + " point.";
         }
-        return buildName + " life points.";
+        return buildName + " points.";
     }
 }
