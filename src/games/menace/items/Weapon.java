@@ -27,10 +27,10 @@ public class Weapon extends Item {
 
     @Override
     public String getName() {
-        String buildName = super.getName() + " has attack " + attackPoints;
+        String buildName = super.getName() + " has " + attackPoints + " attack ";
         if (attackPoints == 1) {
-            return buildName + " point.";
+            return buildName + "point.";
         }
-        return buildName + " points.";
+        return buildName + "points.";
     }
 }

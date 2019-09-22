@@ -27,10 +27,10 @@ public class Shield extends Item {
 
     @Override
     public String getName() {
-        String buildName = super.getName() + " has defense" + defensePoints;
+        String buildName = super.getName() + " has " + defensePoints + " defense ";
         if (defensePoints == 1) {
-           return buildName + " point.";
+           return buildName + "point.";
            }
-        return buildName + " points.";
+        return buildName + "points.";
     }
 }
