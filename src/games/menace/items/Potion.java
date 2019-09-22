@@ -27,12 +27,11 @@ public class Potion extends Item {
         return lifePoints;
     }
 
-    @Override
-    public String getName() {
+    public String stats() {
         String buildName = super.getName() + " gives " + lifePoints + " life ";
         if (lifePoints == 1) {
-            return buildName + "point.";
+            return buildName + "point";
         }
-        return buildName + "points.";
+        return buildName + "points";
     }
 }

@@ -5,8 +5,7 @@ import games.menace.items.Weapon;
 
 /**
  * The LifeForm Baseclass will provide the basic API all LifeForms in the Game.
- * All LifeForms in this Game have a name, lifePoints and hold a Weapon in the
- * right hand.
+ * All LifeForms in this Game have a name and lifePoints.
  *
  * (It can be that at a later time the LifeForm may to hold a Shield in its leftHand.)
  *
@@ -17,27 +16,26 @@ public class LifeForm {
     private String name;
     private boolean isALife;
     private int lifePoints;
-    private Weapon rightHandWeapon;
 
-    public LifeForm(String name, boolean isALife, int lifePoints, Weapon rightHandWeapon) {
+    public LifeForm(String name, boolean isALife, int lifePoints) {
         this.name = name;
         this.isALife = isALife;
         this.lifePoints = lifePoints;
-        this.rightHandWeapon = rightHandWeapon;
     }
 
     /**
      * Stats gives you a beautified version of what this LifeForm is.
      * @return Type: String. The nice and beauty.
      */
-    public String stats() {
+    @Override
+    public String toString() {
         String buildStats = getName() + " has " + lifePoints + " life ";
         if (lifePoints == 1) {
             buildStats += "point,\n";
         } else {
             buildStats += "points,\n";
         }
-         return buildStats + "right hand: " + getRightHandWeapon().getName();
+         return buildStats;
     }
 
     public String getName() {
@@ -69,7 +67,4 @@ public class LifeForm {
         return isALife;
     }
 
-    public Weapon getRightHandWeapon() {
-        return rightHandWeapon;
-    }
 }

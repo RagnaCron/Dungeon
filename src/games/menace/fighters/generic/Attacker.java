@@ -7,5 +7,5 @@ package games.menace.fighters.generic;
  * @version 0.1
  */
 public interface Attacker {
-    public void attack(Attacker attacker);
+    public void attack(LifeForm attacker);
 }

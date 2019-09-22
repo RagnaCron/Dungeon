@@ -25,12 +25,11 @@ public class Weapon extends Item {
         return attackPoints;
     }
 
-    @Override
-    public String getName() {
+    public String stats() {
         String buildName = super.getName() + " has " + attackPoints + " attack ";
         if (attackPoints == 1) {
-            return buildName + "point.";
+            return buildName + "point";
         }
-        return buildName + "points.";
+        return buildName + "points";
     }
 }
