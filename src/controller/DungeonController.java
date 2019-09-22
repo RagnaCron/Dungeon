@@ -1,5 +1,7 @@
 package controller;
 
+import controller.model.DungeonControllerModel;
+import games.generic.Gamer;
 import userInterface.UserCLIInterface;
 
 
@@ -14,27 +16,60 @@ import userInterface.UserCLIInterface;
 public class DungeonController {
 
     private UserCLIInterface userInterface;
+    private DungeonControllerModel controllerModel = new DungeonControllerModel();
+
+    private String gameName;
 
     /**
-     * The Constructor for the DungeonController will call internally a private method,
-     * witch will evaluate if there is a valid argument and set up the game, or will
-     * show a list of games to play.
+     * The Constructor for the DungeonController will evaluate it there is an argument,
+     * if yes it will check if it is a valid gameName, if the name is not valid it will
+     * stop and give out a message to the user, else it will start up the game.
      *
-     * When given an argument (one argument only) it will work
-     * or it will tell the user that there is no game with the given name
-     * and quit the application.
-     *
-     * @param args Takes one argument. It must be a name to a possible game.
+     * @param args Takes one or zero arguments. It must be a name to a game.
      */
     public DungeonController(String[] args) {
         this.userInterface = new UserCLIInterface();
+        if (args.length == 1) {
+            gameName = args[0];
+            if (checkGameName(gameName)) return;
+           userInterface.println( controllerModel.noGameWithThatName(gameName));
+            System.exit(2);
+        } else if(args.length > 1) {
+            userInterface.println(controllerModel.wrongInputParameters());
+            System.exit(1);
+        } else {
+            gameName = null;
+        }
+    }
 
-//        userInterface.print("args from CLI are currently not used", "\n");
-//        String userInput = userInterface.getInput("dungeon@games.games.games.menace> ");
-//        userInterface.print(userInput, "\n");
-
+    /**
+     * The start method should be called right after init of the DungeonController.
+     */
+    public void start() {
 
     }
 
+    private boolean checkGameName(String gameName) {
+        return false;
+    }
+
+    /**
+     * Looks up the gameName and initializes the game with the roomCount.
+     * @param gameName The name of the game to play.
+     * @param roomCount The number of rooms tho create.
+     * @return Returns a playable Game.
+     */
+    private Gamer choseGame(String gameName, int roomCount) {
+        // TODO: - chose a Game out of the available game list.
+        return null;
+    }
+
+    /**
+     * The chosenGame method calls the playGame method on the class that implements the Gamer Interface.
+     * @param game The gamer Interface that all games have to implement in the Dungeon game Series.
+     */
+    private void chosenGame(Gamer game, UserCLIInterface userInterface) {
+        game.playGame(userInterface);
+    }
 
 }
