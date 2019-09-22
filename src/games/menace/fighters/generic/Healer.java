@@ -11,5 +11,5 @@ public interface Healer {
     /**
      * Heal will consume the Potion that is held by an entity.
      */
-    public void heal();
+    void heal();
 }

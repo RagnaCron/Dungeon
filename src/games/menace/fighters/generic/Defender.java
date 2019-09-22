@@ -11,5 +11,5 @@ public interface Defender {
      * This method will be one of the main parts to the fighting in the game.
      * @param attacker The attacker which to defend against.
      */
-    public void defend(LifeForm attacker);
+    void defend(LifeForm attacker);
 }

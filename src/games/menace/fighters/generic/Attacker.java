@@ -11,5 +11,5 @@ public interface Attacker {
      * This method will be one of the main parts of attacking an opponent in the game.
      * @param attacker The lifeForm to be attacked.
      */
-    public void attack(LifeForm attacker);
+    void attack(LifeForm attacker);
 }
