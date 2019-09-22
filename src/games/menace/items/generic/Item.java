@@ -12,13 +12,18 @@ public class Item {
 
     /**
      * The constructor for the Item BaseClass.
-     * @param name Type: String. The name of the item.
+     * @param name The name of the item.
      */
     public Item(String name) {
         this.name = name;
     }
 
-    public String getName() {
+    /**
+     * toString gives you a nice view of what an Item is.
+     * @return The nice and beauty.
+     */
+    @Override
+    public String toString() {
         return name;
     }
 

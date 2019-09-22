@@ -21,6 +21,15 @@ public class Player extends LifeForm implements Healer, Attacker, Defender {
     private Shield leftHandShield;
     private Potion potion;
 
+    /**
+     *
+     * @param name Name of the Player.
+     * @param isALife Is the Player a life.
+     * @param lifePoints The lifePoints the Player has.
+     * @param rightHandWeapon The Weapon the Player holds.
+     * @param leftHandShield The Shield the Player holds.
+     * @param potion The Potion that the Player can use.
+     */
     public Player(String name, boolean isALife, int lifePoints,
                   Weapon rightHandWeapon, Shield leftHandShield, Potion potion)
     {
@@ -30,12 +39,15 @@ public class Player extends LifeForm implements Healer, Attacker, Defender {
         this.potion = potion;
     }
 
-
+    /**
+     * toString gives you a beautified version of what the Player is.
+     * @return The nice and beauty.
+     */
     @Override
     public String toString() {
-        String buildStats = super.toString() + ",\n" + potion.stats();
-        buildStats += ",\nright hand: " + rightHandWeapon.stats();
-        return buildStats + ",\nleft hand: " + leftHandShield.stats();
+        String buildStats = super.toString() + ", \n" + potion.toString();
+        buildStats += ", \nright hand: " + rightHandWeapon.toString();
+        return buildStats + ", \nleft hand: " + leftHandShield.toString();
     }
 
     @Override
@@ -47,9 +59,12 @@ public class Player extends LifeForm implements Healer, Attacker, Defender {
     public void defend(LifeForm attacker) {
         try {
             Enemy enemy = (Enemy) attacker;
-
-        } catch (Exception e) {
-            // we dont care
+            if (leftHandShield.getDefensePoints() < enemy.getRightHandWeapon().getAttackPoints()) {
+                int lifePointsToLose = enemy.getRightHandWeapon().getAttackPoints() - leftHandShield.getDefensePoints();
+                loseLifePoints(lifePointsToLose);
+            }
+        } catch (ClassCastException e) {
+            // Currently we don't care
         }
     }
 
@@ -58,8 +73,11 @@ public class Player extends LifeForm implements Healer, Attacker, Defender {
      */
     @Override
     public void heal() {
-        setLifePoints(potion.getLifePoints());
+        addLifePoints(potion.getLifePoints());
         potion = null;
     }
 
+    public void setPotion(Potion potion) {
+        this.potion = potion;
+    }
 }
