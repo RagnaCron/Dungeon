@@ -7,5 +7,9 @@ package games.menace.fighters.generic;
  * @version 0.1
  */
 public interface Defender {
-    public void defend(Attacker attacker);
+    /**
+     * This method will be one of the main parts to the fighting in the game.
+     * @param attacker The attacker which to defend against.
+     */
+    void defend(LifeForm attacker);
 }

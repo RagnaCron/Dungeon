@@ -13,8 +13,8 @@ public class Shield extends Item {
 
     /**
      * The constructor for the Shield.
-     * @param name Type: String. The name of the Shield.
-     * @param defensePoints Type: int. The defensePoints to have when holding the shield.
+     * @param name The name of the Shield.
+     * @param defensePoints The defensePoints to have when holding the shield.
      */
     public Shield(String name, int defensePoints) {
         super(name);
@@ -25,12 +25,16 @@ public class Shield extends Item {
         return defensePoints;
     }
 
+    /**
+     * toString gives you a nice view of what a Shield is.
+     * @return The nice and beauty.
+     */
     @Override
-    public String getName() {
-        String buildName = super.getName() + " has " + defensePoints + " defense ";
+    public String toString() {
+        String buildName = super.toString() + " has " + defensePoints + " defense ";
         if (defensePoints == 1) {
-           return buildName + "point.";
+           return buildName + "point";
            }
-        return buildName + "points.";
+        return buildName + "points";
     }
 }

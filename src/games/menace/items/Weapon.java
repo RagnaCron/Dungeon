@@ -13,8 +13,8 @@ public class Weapon extends Item {
 
     /**
      * The constructor for the Weapon.
-     * @param name Type: String. The name of the amazing weapon.
-     * @param attackPoints Type: int. Some nice attackPoints for the weapon.
+     * @param name The name of the amazing weapon.
+     * @param attackPoints Some nice attackPoints for the weapon.
      */
     public Weapon(String name, int attackPoints) {
         super(name);
@@ -25,12 +25,16 @@ public class Weapon extends Item {
         return attackPoints;
     }
 
+    /**
+     * toString gives you a nice view of what a Weapon is.
+     * @return The nice and beauty.
+     */
     @Override
-    public String getName() {
-        String buildName = super.getName() + " has " + attackPoints + " attack ";
+    public String toString() {
+        String buildName = super.toString() + " has " + attackPoints + " attack ";
         if (attackPoints == 1) {
-            return buildName + "point.";
+            return buildName + "point";
         }
-        return buildName + "points.";
+        return buildName + "points";
     }
 }

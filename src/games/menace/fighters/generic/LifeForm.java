@@ -4,40 +4,44 @@ package games.menace.fighters.generic;
 import games.menace.items.Weapon;
 
 /**
- * The LifeForm Baseclass will provide the basic API all LifeForms in the Game.
- * All LifeForms in this Game have a name, lifePoints and hold a Weapon in the
- * right hand.
+ * The LifeForm abstract Baseclass will provide the basic API for all LifeForms in the Game.
+ * All LifeForms in this Game have a name and lifePoints.
  *
  * (It can be that at a later time the LifeForm may to hold a Shield in its leftHand.)
  *
  * @author Manuel Werder
  * @version 0.1
  */
-public class LifeForm {
+public abstract class LifeForm {
     private String name;
     private boolean isALife;
     private int lifePoints;
-    private Weapon rightHandWeapon;
 
-    public LifeForm(String name, boolean isALife, int lifePoints, Weapon rightHandWeapon) {
+    /**
+     *
+     * @param name The name of the LifeForm.
+     * @param isALife Is the LifeForm a life.
+     * @param lifePoints The lifePoints of the LifeForm.
+     */
+    public LifeForm(String name, boolean isALife, int lifePoints) {
         this.name = name;
         this.isALife = isALife;
         this.lifePoints = lifePoints;
-        this.rightHandWeapon = rightHandWeapon;
     }
 
     /**
-     * Stats gives you a beautified version of what this LifeForm is.
-     * @return Type: String. The nice and beauty.
+     * toString gives you a beautified version of what this LifeForm is.
+     * @return The nice and beauty.
      */
-    public String stats() {
-        String buildStats = getName() + " has " + lifePoints + " life ";
+    @Override
+    public String toString() {
+        String buildStats = name + " has " + lifePoints + " life ";
         if (lifePoints == 1) {
-            buildStats += "point,\n";
+            buildStats += "point";
         } else {
-            buildStats += "points,\n";
+            buildStats += "points";
         }
-         return buildStats + "right hand: " + getRightHandWeapon().getName();
+         return buildStats;
     }
 
     public String getName() {
@@ -50,8 +54,8 @@ public class LifeForm {
 
     /**
      * Each LifeForm can lose life. It returns a boolean that is set if lifePoints is less or equals zero.
-     * @param lifePoints Type: int. The lifePoints to lose.
-     * @return Type: boolean. If LifeForm is still a life.
+     * @param lifePoints The lifePoints to lose.
+     * @return If LifeForm is still a life.
      */
     public boolean loseLifePoints(int lifePoints) {
         this.lifePoints -= lifePoints;
@@ -61,15 +65,19 @@ public class LifeForm {
         return isALife;
     }
 
-    public void setLifePoints(int lifePoints) {
+    public void addLifePoints(int lifePoints) {
         this.lifePoints += lifePoints;
+    }
+
+    public void setLifePoints(int lifePoints) {
+        this.lifePoints = lifePoints;
     }
 
     public boolean isALife() {
         return isALife;
     }
 
-    public Weapon getRightHandWeapon() {
-        return rightHandWeapon;
+    public void setALife(boolean ALife) {
+        isALife = ALife;
     }
 }

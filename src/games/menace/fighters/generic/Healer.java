@@ -8,5 +8,8 @@ package games.menace.fighters.generic;
  * @version 0.1
  */
 public interface Healer {
-    public void heal();
+    /**
+     * Heal will consume the Potion that is held by an entity.
+     */
+    void heal();
 }

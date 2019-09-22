@@ -23,12 +23,20 @@ public class UserCLIInterface {
     }
 
     /**
-     *
-     * @param message Takes a String. The message that you want to display to the user over the CommandLine.
-     * @param delimiter Takes a String. The end of line delimiter, something like "\n" or " " whatever you like.
+     * Prints a nice message to the STDOUT.
+     * @param message The message that you want to display to the user over the CommandLine.
+     * @param delimiter The end of line delimiter, something like "\n" or " " whatever you like.
      */
     public void print(String message, String delimiter) {
         System.out.print(message + delimiter);
+    }
+
+    /**
+     * Prints a nice message to the STDOUT.
+     * @param message Takes a String. The message that you want to display to the user over the CommandLine.
+     */
+    public void println(String message) {
+        print(message, "\n");
     }
 
 }
