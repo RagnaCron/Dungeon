@@ -73,8 +73,10 @@ public class Player extends LifeForm implements Healer, Attacker, Defender {
      */
     @Override
     public void heal() {
-        addLifePoints(potion.getLifePoints());
-        potion = null;
+        if (potion != null) {
+            addLifePoints(potion.getLifePoints());
+            potion = null;
+        }
     }
 
     public void setPotion(Potion potion) {
