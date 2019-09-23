@@ -29,7 +29,7 @@ class PotionTest {
 
 	@Test
 	void testToString() {
-		String expected = "Potion gives 10 life points";
+		String expected = "Potion has 10 life points";
 		assertEquals(expected, potion.toString());
 	}
 }

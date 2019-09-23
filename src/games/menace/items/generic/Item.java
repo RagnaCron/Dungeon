@@ -18,6 +18,10 @@ public class Item {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     /**
      * toString gives you a nice view of what an Item is.
      * @return The nice and beauty.
