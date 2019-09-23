@@ -35,7 +35,7 @@ public class Enemy extends LifeForm implements Attacker {
      */
     @Override
     public String toString() {
-        return super.toString() + ", \n" + rightHandWeapon.toString();
+        return super.toString() + ", \nright hand: " + rightHandWeapon.toString();
     }
 
     /**
