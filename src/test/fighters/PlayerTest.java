@@ -43,7 +43,7 @@ class PlayerTest {
 	@Test
 	void testToString() {
 		String expected = "Manuel has 10 life points, " +
-				"\nPotion gives 10 life points, " +
+				"\nPotion has 10 life points, " +
 				"\nright hand: Sword has 10 attack points, " +
 				"\nleft hand: Shield has 10 defense points";
 		assertEquals(expected, player.toString());
@@ -74,8 +74,8 @@ class PlayerTest {
 
 	@Test
 	void setPotion() {
-		String expected = "Potion gives 10 life points";
-		String expected1 = "Big Potion gives 20 life points";
+		String expected = "Potion has 10 life points";
+		String expected1 = "Big Potion has 20 life points";
 		assertEquals(expected, potion.toString());
 		assertEquals(expected1, potion1.toString());
 		player.heal();
