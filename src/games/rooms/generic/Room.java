@@ -30,4 +30,5 @@ public abstract class Room {
 	public String toString() {
 		return roomName;
 	}
+
 }
