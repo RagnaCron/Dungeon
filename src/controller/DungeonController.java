@@ -32,7 +32,7 @@ public class DungeonController {
         if (args.length == 1) {
             gameName = args[0];
             if (checkGameName(gameName)) return;
-           userInterface.println( controllerModel.noGameWithThatName(gameName));
+            userInterface.println( controllerModel.noGameWithThatName(gameName));
             System.exit(2);
         } else if(args.length > 1) {
             userInterface.println(controllerModel.wrongInputParameters());
