@@ -1,7 +1,7 @@
 package controller;
 
 import controller.model.DungeonControllerModel;
-import games.generic.Gamer;
+import games.base.Gamer;
 import userInterface.UserCommandLineInterface;
 
 
