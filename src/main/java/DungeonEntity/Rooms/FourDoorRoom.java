@@ -1,8 +1,11 @@
 package DungeonEntity.Rooms;
 
 
+import DungeonEntity.Fighters.Enemy;
 import DungeonEntity.Items.Base.ItemList;
 import DungeonEntity.Rooms.Base.Room;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * The FourDoorRoom has four doors.
@@ -10,21 +13,36 @@ import DungeonEntity.Rooms.Base.Room;
  * @author Manuel Werder
  * @version 0.1
  */
-public class FourDoorRoom extends Room {
+public final class FourDoorRoom extends Room {
 
 	private Door northDoor;
 	private Door southDoor;
 	private Door westDoor;
 	private Door eastDoor;
 
+	@Getter
 	private ItemList items;
+	@Setter
+	@Getter
+	private Enemy enemy;
 
-	public FourDoorRoom(String roomName, Door northDoor, Door southDoor, Door westDoor, Door eastDoor) {
+	public FourDoorRoom(String roomName) {
+		this(roomName, null, null, null, null, null);
+	}
+
+	public FourDoorRoom(String roomName, int roomNumber, Enemy enemy, ItemList items) {
+		this(roomName);
+		this.enemy = enemy;
+		this.items = items;
+	}
+
+	public FourDoorRoom(String roomName, Enemy enemy, Door northDoor , Door southDoor, Door westDoor, Door eastDoor) {
 		super(roomName);
 		this.northDoor = northDoor;
 		this.southDoor = southDoor;
 		this.westDoor = westDoor;
 		this.eastDoor = eastDoor;
+		this.enemy = enemy;
 	}
 
 	@Override
@@ -51,6 +69,15 @@ public class FourDoorRoom extends Room {
 
 	public boolean hasEastDoor() {
 		return eastDoor != null;
+	}
+
+	public void setDoorDirection(Door direction) {
+		switch (direction){
+			case NORTHDOOR: northDoor = direction;
+			case SOUTHDOOR: southDoor = direction;
+			case WESTDOOR: westDoor = direction;
+			case EASTDOOR: eastDoor = direction;
+		}
 	}
 
 }

@@ -26,14 +26,9 @@ public class ItemList extends ArrayList<Item> {
 		this.add(item);
 	}
 
-//	@Override
-//	public String toString() {
-//		String buildItemList = "Items:\n";
-//		for (Item item : this) {
-//			buildItemList += "\t" + item.toString() + "\n";
-//		}
-//		return buildItemList;
-//	}
+	public ItemList() {
+		super();
+	}
 
 	@Override
 	public String toString() {

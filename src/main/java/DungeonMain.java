@@ -1,5 +1,7 @@
 import Controller.DungeonController;
 
+import java.util.Random;
+
 
 /**
  * The entry point to the Dungeon game.
@@ -11,8 +13,9 @@ public final class DungeonMain {
 
     public static void main(String[] args) {
 
-        DungeonController controller = new DungeonController(args);
-        controller.start();
+//        DungeonController controller = new DungeonController(args);
+//        controller.start();
+        System.out.println(new Random().nextInt(4));
 
     }
 
