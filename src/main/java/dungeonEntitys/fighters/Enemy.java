@@ -3,6 +3,7 @@ package dungeonEntitys.fighters;
 import dungeonEntitys.fighters.generic.Attacker;
 import dungeonEntitys.fighters.generic.LifeForm;
 import dungeonEntitys.items.Weapon;
+import lombok.Getter;
 
 
 /**
@@ -13,6 +14,7 @@ import dungeonEntitys.items.Weapon;
  * @author Manuel Werder
  * @version 0.1
  */
+@Getter
 public class Enemy extends LifeForm implements Attacker {
     private Weapon rightHandWeapon;
 
@@ -47,7 +49,4 @@ public class Enemy extends LifeForm implements Attacker {
         defender.loseLifePoints(getLifePoints());
     }
 
-    public Weapon getRightHandWeapon() {
-        return rightHandWeapon;
-    }
 }

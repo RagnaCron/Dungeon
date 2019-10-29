@@ -1,14 +1,17 @@
 package dungeonEntitys.items.generic;
 
 
+import lombok.Getter;
+
 /**
  * The Item Superclass provides the basic API for Shields, Weapons and Potions.
  *
  * @author Manuel Werder
  * @version 0.1
  */
+@Getter
 public class Item {
-    private String name;
+    protected String name;
 
     /**
      * The constructor for the Item BaseClass.
@@ -16,10 +19,6 @@ public class Item {
      */
     public Item(String name) {
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
     }
 
     /**

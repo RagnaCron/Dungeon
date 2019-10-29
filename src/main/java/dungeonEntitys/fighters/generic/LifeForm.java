@@ -1,6 +1,9 @@
 package dungeonEntitys.fighters.generic;
 
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * The LifeForm abstract Baseclass will provide the basic API for all LifeForms in the Game.
  * All LifeForms in this Game have a name and lifePoints.
@@ -11,9 +14,14 @@ package dungeonEntitys.fighters.generic;
  * @version 0.1
  */
 public abstract class LifeForm {
-    private String name;
-    private boolean isALife;
-    private int lifePoints;
+    @Getter
+    protected final String name;
+    @Getter
+    @Setter
+    protected boolean isALife;
+    @Getter
+    @Setter
+    protected int lifePoints;
 
     /**
      *
@@ -42,14 +50,6 @@ public abstract class LifeForm {
          return buildStats;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getLifePoints() {
-        return lifePoints;
-    }
-
     /**
      * Each LifeForm can lose life. It returns a boolean that is set if lifePoints is less or equals zero.
      * @param lifePoints The lifePoints to lose.
@@ -67,15 +67,4 @@ public abstract class LifeForm {
         this.lifePoints += lifePoints;
     }
 
-    public void setLifePoints(int lifePoints) {
-        this.lifePoints = lifePoints;
-    }
-
-    public boolean isALife() {
-        return isALife;
-    }
-
-    public void setALife(boolean ALife) {
-        isALife = ALife;
-    }
 }

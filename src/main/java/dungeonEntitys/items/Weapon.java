@@ -1,6 +1,7 @@
 package dungeonEntitys.items;
 
 import dungeonEntitys.items.generic.Item;
+import lombok.Getter;
 
 /**
  * The Weapon a subclass of Item.
@@ -8,6 +9,7 @@ import dungeonEntitys.items.generic.Item;
  * @author Manuel Werder
  * @version 0.1
  */
+@Getter
 public class Weapon extends Item {
     private int attackPoints;
 
@@ -19,10 +21,6 @@ public class Weapon extends Item {
     public Weapon(String name, int attackPoints) {
         super(name);
         this.attackPoints = attackPoints;
-    }
-
-    public int getAttackPoints() {
-        return attackPoints;
     }
 
     /**

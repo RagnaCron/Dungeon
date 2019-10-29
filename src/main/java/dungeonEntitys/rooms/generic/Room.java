@@ -12,7 +12,7 @@ public abstract class Room {
 	/**
 	 * The field roomName is final.
 	 */
-	private final String roomName;
+	protected final String roomName;
 
 	/**
 	 * The Room of ... what ever.
@@ -20,10 +20,6 @@ public abstract class Room {
 	 */
 	public Room(String roomName) {
 		this.roomName = roomName;
-	}
-
-	public String getRoomName() {
-		return roomName;
 	}
 
 	@Override

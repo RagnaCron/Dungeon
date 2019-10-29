@@ -7,6 +7,7 @@ import dungeonEntitys.fighters.generic.LifeForm;
 import dungeonEntitys.items.Potion;
 import dungeonEntitys.items.Shield;
 import dungeonEntitys.items.Weapon;
+import lombok.Setter;
 
 /**
  * The Player. This is the entity that the user gives command to.
@@ -16,6 +17,7 @@ import dungeonEntitys.items.Weapon;
  * @author Manuel Werder
  * @version 0.1
  */
+@Setter
 public class Player extends LifeForm implements Healer, Attacker, Defender {
     private Weapon rightHandWeapon;
     private Shield leftHandShield;
@@ -79,7 +81,4 @@ public class Player extends LifeForm implements Healer, Attacker, Defender {
         }
     }
 
-    public void setPotion(Potion potion) {
-        this.potion = potion;
-    }
 }
