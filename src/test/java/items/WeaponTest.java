@@ -1,4 +1,4 @@
-package test.items;
+package items;
 
 import games.menace.items.Weapon;
 import org.junit.jupiter.api.BeforeEach;

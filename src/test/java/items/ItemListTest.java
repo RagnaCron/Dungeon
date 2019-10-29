@@ -1,4 +1,4 @@
-package test.items;
+package items;
 
 import games.menace.items.Potion;
 import games.menace.items.Shield;

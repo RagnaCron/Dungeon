@@ -1,16 +1,16 @@
-package test.fighters;
+package fighters;
 
 import games.menace.fighters.Enemy;
 import games.menace.fighters.Player;
 import games.menace.items.Potion;
 import games.menace.items.Shield;
 import games.menace.items.Weapon;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 
 /**
@@ -46,7 +46,7 @@ class EnemyTest {
 	@Test
 	void attack() {
 		enemy.attack(player);
-		assertEquals(false, player.isALife());
+		assertFalse(player.isALife());
 	}
 
 	@Test

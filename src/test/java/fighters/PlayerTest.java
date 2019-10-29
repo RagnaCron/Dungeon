@@ -1,4 +1,4 @@
-package test.fighters;
+package fighters;
 
 import games.menace.fighters.Enemy;
 import games.menace.fighters.Player;
@@ -52,7 +52,7 @@ class PlayerTest {
 	@Test
 	void attack() {
 		player.attack(enemy);
-		assertEquals(false, enemy.isALife());
+		assertFalse(enemy.isALife());
 	}
 
 	@Test
@@ -60,7 +60,7 @@ class PlayerTest {
 		player.defend(enemy);
 		assertEquals(10, player.getLifePoints());
 		player.defend(enemy1);
-		assertEquals(false, player.isALife());
+		assertFalse(player.isALife());
 	}
 
 	@Test
