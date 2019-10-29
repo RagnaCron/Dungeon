@@ -2,7 +2,7 @@ package controller;
 
 import controller.model.DungeonControllerModel;
 import games.generic.Gamer;
-import userInterface.UserCLIInterface;
+import userInterface.UserCommandLineInterface;
 
 
 /**
@@ -15,7 +15,7 @@ import userInterface.UserCLIInterface;
  */
 public class DungeonController {
 
-    private UserCLIInterface userInterface;
+    private UserCommandLineInterface userInterface;
     private DungeonControllerModel controllerModel = new DungeonControllerModel();
 
     private String gameName;
@@ -28,7 +28,7 @@ public class DungeonController {
      * @param args Takes one or zero arguments. It must be a name to a game.
      */
     public DungeonController(String[] args) {
-        this.userInterface = new UserCLIInterface();
+        this.userInterface = new UserCommandLineInterface();
         if (args.length == 1) {
             gameName = args[0];
             if (checkGameName(gameName)) return;
@@ -68,7 +68,7 @@ public class DungeonController {
      * The chosenGame method calls the playGame method on the class that implements the Gamer Interface.
      * @param game The gamer Interface that all games have to implement in the Dungeon game Series.
      */
-    private void chosenGame(Gamer game, UserCLIInterface userInterface) {
+    private void chosenGame(Gamer game, UserCommandLineInterface userInterface) {
         game.playGame(userInterface);
     }
 
