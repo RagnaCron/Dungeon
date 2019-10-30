@@ -6,5 +6,6 @@ class DungeonControllerTest {
 
 	@BeforeEach
 	void setUp() {
+
 	}
 }
