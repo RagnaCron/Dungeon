@@ -1,4 +1,4 @@
-package GamesInterface;
+package GameInterface;
 
 import UserInterface.UserCommandLineInterface;
 

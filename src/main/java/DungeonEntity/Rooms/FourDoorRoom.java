@@ -21,28 +21,40 @@ public final class FourDoorRoom extends Room {
 	private Door eastDoor;
 
 	@Getter
+	private int currentRoomNumber;
+	@Setter
+	@Getter
+	private int lastRoomNumber;
+	@Setter
+	@Getter
+	private int nextRoomNumber;
+
+	@Getter
 	private ItemList items;
 	@Setter
 	@Getter
 	private Enemy enemy;
 
 	public FourDoorRoom(String roomName) {
-		this(roomName, null, null, null, null, null);
+		this(roomName, 0, null, null);
 	}
 
 	public FourDoorRoom(String roomName, int roomNumber, Enemy enemy, ItemList items) {
-		this(roomName);
-		this.enemy = enemy;
-		this.items = items;
+		this(roomName, roomNumber, enemy, items, null, null, null, null);
 	}
 
-	public FourDoorRoom(String roomName, Enemy enemy, Door northDoor , Door southDoor, Door westDoor, Door eastDoor) {
+	public FourDoorRoom(String roomName, int roomNumber, Enemy enemy, ItemList items,
+						Door northDoor , Door southDoor, Door westDoor, Door eastDoor) {
 		super(roomName);
+		this.currentRoomNumber = roomNumber;
 		this.northDoor = northDoor;
 		this.southDoor = southDoor;
 		this.westDoor = westDoor;
 		this.eastDoor = eastDoor;
 		this.enemy = enemy;
+		this.items = items;
+		this.lastRoomNumber = 0;
+		this.nextRoomNumber = 0;
 	}
 
 	@Override
@@ -71,12 +83,28 @@ public final class FourDoorRoom extends Room {
 		return eastDoor != null;
 	}
 
-	public void setDoorDirection(Door direction) {
+	public void setDoorDirection(Door direction, FourDoorRoom nextRoom) {
 		switch (direction){
-			case NORTHDOOR: northDoor = direction;
-			case SOUTHDOOR: southDoor = direction;
-			case WESTDOOR: westDoor = direction;
-			case EASTDOOR: eastDoor = direction;
+			case NORTHDOOR:
+				northDoor = Door.SOUTHDOOR;
+				nextRoom.setLastRoomNumber(currentRoomNumber);
+				nextRoomNumber = nextRoom.getCurrentRoomNumber();
+				break;
+			case SOUTHDOOR:
+				southDoor = Door.NORTHDOOR;
+				nextRoom.setLastRoomNumber(currentRoomNumber);
+				nextRoomNumber = nextRoom.getCurrentRoomNumber();
+				break;
+			case WESTDOOR:
+				westDoor = Door.EASTDOOR;
+				nextRoom.setLastRoomNumber(currentRoomNumber);
+				nextRoomNumber = nextRoom.getCurrentRoomNumber();
+				break;
+			case EASTDOOR:
+				eastDoor = Door.WESTDOOR;
+				nextRoom.setLastRoomNumber(currentRoomNumber);
+				nextRoomNumber = nextRoom.getCurrentRoomNumber();
+				break;
 		}
 	}
 

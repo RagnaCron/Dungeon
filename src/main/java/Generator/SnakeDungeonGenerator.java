@@ -81,31 +81,14 @@ public class SnakeDungeonGenerator {
 		while (true) { // TODO: MAKE DO WHILE OUT OF IT, USE SECOND IF STATEMENT FOR CHECK
 			FourDoorRoom room = rooms.get(currentRoomNumber);
 			Door direction = randomDoorDirection();
-			if (checkDoorToNextRoom(room, direction)) {
+			if (direction != null && checkDoorToNextRoom(room, direction)) {
 				if (currentRoomNumber + 1 < rooms.size() - 2) {
 					FourDoorRoom nextRoom = rooms.get(currentRoomNumber + 1);
-					setDoorsDirections(room, direction, nextRoom);
+					room.setDoorDirection(direction, nextRoom);
 					currentRoomNumber++;
 				}
 				else return;
 			}
-		}
-	}
-
-	private void setDoorsDirections(FourDoorRoom currentRoom, Door direction, FourDoorRoom nextRoom) {
-		switch (direction) {
-			case NORTHDOOR:
-				currentRoom.setDoorDirection(direction);
-				nextRoom.setDoorDirection(Door.SOUTHDOOR);
-			case SOUTHDOOR:
-				currentRoom.setDoorDirection(direction);
-				nextRoom.setDoorDirection(Door.NORTHDOOR);
-			case WESTDOOR:
-				currentRoom.setDoorDirection(direction);
-				nextRoom.setDoorDirection(Door.EASTDOOR);
-			case EASTDOOR:
-				currentRoom.setDoorDirection(direction);
-				nextRoom.setDoorDirection(Door.WESTDOOR);
 		}
 	}
 
