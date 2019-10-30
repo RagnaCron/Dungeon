@@ -2,17 +2,17 @@ package DungeonEntity.Rooms.DataStructure;
 
 import DungeonEntity.Rooms.Base.Queue;
 
-public class OuroborusQueue<T> implements Queue<T> {
+public class OuroborusRoomQueue<T> implements Queue<T> {
 
 	private int front, rear;
 
 	private T[] queue;
 
-	public OuroborusQueue() {
+	public OuroborusRoomQueue() {
 		this(10);
 	}
 
-	public OuroborusQueue(int capacity) {
+	public OuroborusRoomQueue(int capacity) {
 		if (capacity < 1)
 			throw new IllegalArgumentException("Capacity must be >= 1");
 		queue = (T[]) new Object[capacity];

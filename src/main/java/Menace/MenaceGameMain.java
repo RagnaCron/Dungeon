@@ -15,9 +15,8 @@ public final class MenaceGameMain {
 
     public static void main(String[] args) {
 
-//        DungeonController controller = new DungeonController(args);
-//        controller.start();
-//        System.out.println(new Random().nextInt(4));
+        DungeonController controller = new DungeonController();
+        controller.start();
 
     }
 

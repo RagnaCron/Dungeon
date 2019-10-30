@@ -1,23 +1,23 @@
 package DungeonEntity.Rooms;
 
-import DungeonEntity.Rooms.DataStructure.OuroborusQueue;
+import DungeonEntity.Rooms.DataStructure.OuroborusRoomQueue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class OuroborusQueueTest {
+class OuroborusRoomQueueTest {
 
-	private OuroborusQueue<String> queue;
+	private OuroborusRoomQueue<String> queue;
 
 	@BeforeEach
 	void setUp() {
-		queue = new OuroborusQueue<>(1);
+		queue = new OuroborusRoomQueue<>(1);
 	}
 
 	@Test
 	void illegalArgument() {
-		assertThrows(IllegalArgumentException.class, () -> new OuroborusQueue<>(-10));
+		assertThrows(IllegalArgumentException.class, () -> new OuroborusRoomQueue<>(-10));
 	}
 
 	@Test

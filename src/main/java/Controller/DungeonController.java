@@ -2,13 +2,18 @@ package Controller;
 
 import Controller.Model.DungeonControllerModel;
 import GameInterface.Gamer;
+import Menace.MenaceGame;
 import UserInterface.UserCommandLineInterface;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
  * The DungeonController describes a way to play multiple text based Dungeon-Crawler-Games.
- * It can be given an argument over the CommandLine while starting the game or just start
- * the game with no argument and chose from a list of Games.
  *
  * @author Manuel Werder
  * @version 0.1
@@ -18,28 +23,18 @@ public class DungeonController {
     private UserCommandLineInterface userInterface;
     private DungeonControllerModel controllerModel = new DungeonControllerModel();
 
-    private String gameName;
+    private HashMap<String, Gamer> games = new HashMap<>();
+
+    @Setter
+    @Getter
+    private String gameName = "";
 
     /**
-     * The Constructor for the DungeonController will evaluate it there is an argument,
-     * if yes it will check if it is a valid gameName, if the name is not valid it will
-     * stop and give out a message to the user, else it will start up the game.
-     *
-     * @param args Takes one or zero arguments. It must be a name to a game.
+     * The Constructor for the DungeonController initializes the DungeonController
+     * and creates a new instanz of UserCommandLineInterface.
      */
-    public DungeonController(String[] args) {
+    public DungeonController() {
         this.userInterface = new UserCommandLineInterface();
-        if (args.length == 1) {
-            gameName = args[0];
-            if (checkGameName(gameName)) return;
-            userInterface.println( controllerModel.noGameWithThatName(gameName));
-            System.exit(2);
-        } else if(args.length > 1) {
-            userInterface.println(controllerModel.wrongInputParameters());
-            System.exit(1);
-        } else {
-            gameName = null;
-        }
     }
 
     /**
