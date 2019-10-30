@@ -3,7 +3,7 @@ package Controller.Model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class DungeonControllerModelTest {
+class ControllerTest {
 
 	@BeforeEach
 	void setUp() {
