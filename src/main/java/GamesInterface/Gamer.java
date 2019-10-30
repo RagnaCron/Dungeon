@@ -1,9 +1,9 @@
-package Games.Base;
+package GamesInterface;
 
 import UserInterface.UserCommandLineInterface;
 
 /**
- * The Gamer Interface provides a single way for the Games to be started by the DungeonController.
+ * The GamesInterface.Gamer Interface provides a single way for the Games to be started by the DungeonController.
  *
  * @author Manuel Werder
  * @version 0.1

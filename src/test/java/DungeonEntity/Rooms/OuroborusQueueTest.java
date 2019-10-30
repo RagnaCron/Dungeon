@@ -1,5 +1,6 @@
 package DungeonEntity.Rooms;
 
+import DungeonEntity.Rooms.DataStructure.OuroborusQueue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

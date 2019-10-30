@@ -1,7 +1,7 @@
 package Controller;
 
 import Controller.Model.DungeonControllerModel;
-import Games.Base.Gamer;
+import GamesInterface.Gamer;
 import UserInterface.UserCommandLineInterface;
 
 
@@ -65,7 +65,7 @@ public class DungeonController {
     }
 
     /**
-     * The chosenGame method calls the playGame method on the class that implements the Gamer Interface.
+     * The chosenGame method calls the playGame method on the class that implements the GamesInterface.Gamer Interface.
      * @param game The gamer Interface that all Games have to implement in the Dungeon game Series.
      */
     private void chosenGame(Gamer game, UserCommandLineInterface userInterface) {

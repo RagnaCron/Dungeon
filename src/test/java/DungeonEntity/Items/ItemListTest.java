@@ -1,7 +1,7 @@
 package DungeonEntity.Items;
 
 import DungeonEntity.Items.Base.Item;
-import DungeonEntity.Items.Base.ItemList;
+import DungeonEntity.Items.DataStructure.ItemList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

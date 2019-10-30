@@ -1,4 +1,4 @@
-package DungeonEntity.Rooms.Base;
+package DungeonEntity.Rooms.DataStructure;
 
 import DungeonEntity.Rooms.FourDoorRoom;
 

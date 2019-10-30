@@ -2,11 +2,11 @@ package Generator;
 
 import DungeonEntity.Fighters.Enemy;
 import DungeonEntity.Items.Base.Item;
-import DungeonEntity.Items.Base.ItemList;
+import DungeonEntity.Items.DataStructure.ItemList;
 import DungeonEntity.Items.Potion;
 import DungeonEntity.Items.Shield;
 import DungeonEntity.Items.Weapon;
-import DungeonEntity.Rooms.Base.RoomList;
+import DungeonEntity.Rooms.DataStructure.RoomList;
 import DungeonEntity.Rooms.Door;
 import DungeonEntity.Rooms.FourDoorRoom;
 

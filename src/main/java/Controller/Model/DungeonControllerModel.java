@@ -1,6 +1,6 @@
 package Controller.Model;
 
-public final class DungeonControllerModel {
+public class DungeonControllerModel {
 
 	public String wrongInputParameters() {
 		return "You can use this game with zero or 1 arguments.\n" +

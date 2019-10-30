@@ -1,4 +1,4 @@
-package DungeonEntity.Rooms;
+package DungeonEntity.Rooms.DataStructure;
 
 import DungeonEntity.Rooms.Base.Queue;
 

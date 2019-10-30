@@ -1,3 +1,5 @@
+package Menace;
+
 import Controller.DungeonController;
 
 import java.util.Random;
@@ -9,13 +11,13 @@ import java.util.Random;
  * @author Manuel Werder
  * @version 0.1
  */
-public final class DungeonMain {
+public final class MenaceGameMain {
 
     public static void main(String[] args) {
 
 //        DungeonController controller = new DungeonController(args);
 //        controller.start();
-        System.out.println(new Random().nextInt(4));
+//        System.out.println(new Random().nextInt(4));
 
     }
 

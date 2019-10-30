@@ -1,5 +1,6 @@
-package DungeonEntity.Items.Base;
+package DungeonEntity.Items.DataStructure;
 
+import DungeonEntity.Items.Base.Item;
 import DungeonEntity.Items.Potion;
 import DungeonEntity.Items.Shield;
 import DungeonEntity.Items.Weapon;

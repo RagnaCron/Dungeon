@@ -2,7 +2,7 @@ package DungeonEntity.Rooms;
 
 
 import DungeonEntity.Fighters.Enemy;
-import DungeonEntity.Items.Base.ItemList;
+import DungeonEntity.Items.DataStructure.ItemList;
 import DungeonEntity.Rooms.Base.Room;
 import lombok.Getter;
 import lombok.Setter;
