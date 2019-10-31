@@ -2,8 +2,6 @@ package Menace;
 
 import Controller.DungeonController;
 
-import java.util.Random;
-
 
 /**
  * The entry point to the Dungeon game.
@@ -16,7 +14,7 @@ public final class MenaceGameMain {
     public static void main(String[] args) {
 
         DungeonController controller = new DungeonController();
-        controller.start();
+        controller.startCommandLineInterface();
 
     }
 

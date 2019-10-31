@@ -8,6 +8,6 @@ import UserInterface.UserCommandLineInterface;
  * @author Manuel Werder
  * @version 0.1
  */
-public interface Gamer<T> {
-	void playGame(UserCommandLineInterface userInterface);
+public interface Gamer {
+	String playGame(UserCommandLineInterface userInterface);
 }
