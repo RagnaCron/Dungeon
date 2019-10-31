@@ -39,7 +39,7 @@ public final class MenaceGame extends Command<String, Supplier<String>> implemen
 		commands.put("go east", this::goEast);
 		commands.put("pickup weapon", this::pickupWeapon);
 		commands.put("pickup shield", this::pickupShield);
-		commands.put("pickup potion", this::pickupPotion);
+		commands.put("pickup potion", this::pickupPotion); // TODO: DROP ITEMS
 		commands.put("stats", this::stats);
 		commands.put("look", this::look);
 		commands.put("attack", this::attack);
@@ -72,7 +72,7 @@ public final class MenaceGame extends Command<String, Supplier<String>> implemen
 
 	private String harakiri() {
 		player.setALife(false);
-		return "You have committed harakiri. You reached Room <number>";
+		return "You have committed harakiri. You reached Room " + currentRoom.getCurrentRoomNumber();
 	}
 
 	private String goNorth() {
