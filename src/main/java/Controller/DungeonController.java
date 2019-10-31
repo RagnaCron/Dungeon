@@ -12,6 +12,7 @@ import java.util.function.Supplier;
 
 /**
  * The DungeonController describes a way to play multiple text based Dungeon-Crawler-Games.
+ * After init, you should call startController.
  *
  * @author Manuel Werder
  * @version 0.1
@@ -40,7 +41,7 @@ public final class DungeonController extends Controller {
 	 * The start method should be called right after init of the DungeonController.
 	 */
 	@Override
-	public void startCommandLineInterface() {
+	public void startController() {
 		this.playerName = userInterface.getInput("Hello, enter your name> ");
 		userInterface.println(helloGamer(playerName));
 		while (true) {
@@ -55,7 +56,8 @@ public final class DungeonController extends Controller {
 	 * @param command The command to evaluate on.
 	 * @return The massage of the evaluation, success of failure.
 	 */
-	private String runCommand(String command) {
+	@Override
+	protected String runCommand(String command) {
 		Supplier<String> func = commands.get(command);
 		if (func == null)
 			return wrongInput(command);
@@ -72,7 +74,7 @@ public final class DungeonController extends Controller {
 		Gamer game = games.get(gameName);
 		if (game == null)
 			return wrongInput(gameName);
-		return game.playGame(userInterface);
+		return game.playGame(userInterface, playerName);
 	}
 
 }

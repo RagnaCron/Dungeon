@@ -19,7 +19,8 @@ public class UserCommandLineInterface {
     public String getInput(String prompt){
         Scanner scanner = new Scanner(System.in);
         print(prompt, "");
-        return scanner.nextLine();
+        // TODO: CHECK TRIM FUNCTION IN JAVA DOC
+        return scanner.nextLine().trim();
     }
 
     /**

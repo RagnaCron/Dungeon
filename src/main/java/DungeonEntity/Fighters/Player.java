@@ -41,6 +41,12 @@ public class Player extends LifeForm implements Healer, Attacker, Defender {
         this.potion = potion;
     }
 
+    public Player(String name) {
+        this(name, true, 5, new Weapon("Stick", 3),
+                new Shield("Wooden plank", 3),
+                new Potion("Water", 3));
+    }
+
     /**
      * toString gives you a beautified version of what the Player is.
      * @return The nice and beauty.

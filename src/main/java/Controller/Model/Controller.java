@@ -1,22 +1,26 @@
 package Controller.Model;
 
+import Commander.Command;
+
 import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Supplier;
 
-public abstract class Controller {
-
-	// TODO: DOCUMENT COMMAND PATTERN
-	protected Map<String, Supplier<String>> commands = new HashMap<>();
+/**
+ *
+ * @author Manuel Werder
+ * @version 0.1
+ */
+public abstract class Controller extends Command<String, Supplier<String>> {
 
 	protected Controller() {
+		commands = new HashMap<>();
 		commands.put("help", this::help);
 		commands.put("info", this::info);
 		commands.put("commands", this::commands);
 		commands.put("exit", this::exit);
 	}
 
-	abstract public void startCommandLineInterface();
+	abstract public void startController();
 
 	protected String helloGamer(String name) {
 		return "Hello " + name + ", welcome to a Text base Dungeon Crawler Game Library.\n" +
@@ -55,7 +59,6 @@ public abstract class Controller {
 	 * @return String, but gives null back. This is done due to the command Pattern.
 	 */
 	private String exit() {
-		// TODO: CHANGE FUNCTION SIGNATURE
 		System.exit(0);
 		return null;
 	}
