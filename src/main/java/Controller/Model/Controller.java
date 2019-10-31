@@ -15,7 +15,6 @@ public abstract class Controller extends Command<String, Supplier<String>> {
 	protected Controller() {
 		commands = new HashMap<>();
 		commands.put("help", this::help);
-		commands.put("info", this::info);
 		commands.put("commands", this::commands);
 		commands.put("exit", this::exit);
 	}
@@ -23,8 +22,10 @@ public abstract class Controller extends Command<String, Supplier<String>> {
 	abstract public void startController();
 
 	protected String helloGamer(String name) {
-		return "Hello " + name + ", welcome to a Text base Dungeon Crawler Game Library.\n" +
-				"Enter the command 'help' to see some basic infos.";
+		return "Hello " + name + ", welcome to a Text base Dungeon Crawler Game.\n" +
+				"Enter the command 'help' to see some basic infos.\n" +
+				name + " you are at the beginning of you journey enter 'commands' to see" +
+				"what is possible at the Dungeon Portal.";
 	}
 
 	protected String wrongInput(String command) {
@@ -34,22 +35,19 @@ public abstract class Controller extends Command<String, Supplier<String>> {
 	private String help() {
 		return "This is the help text...Enter 'help' for this text.\n" +
 				"Most commands that can be run have a simple syntax, \n" +
-				"'<command name>', exchange  everything\n" +
-				"between the <> with a given command. For example 'info'.\n" +
-				"Enter 'play' to play a game. You will then have to chose from a list of games.\n" +
-				"Note: While you are playing a game you can not use 'help' or 'info'.\n" +
-				"Enter 'commands' to see all possible commands to the Dungeon.";
-	}
-
-	private String info() {
-		return "Those are the current games you can play:\n" +
-				"'menace'.";
+				"'<command name>', exchange  everything between the <> with a given command.\n" +
+				"For example 'commands'. Enter 'play' to play a game.\n" +
+				"You will then have to chose from a list of games.\n" +
+				"Note: While you are playing a game you can not use any of the commands that are\n" +
+				"listed under 'commands'.";
 	}
 
 	private String commands() {
-		return "The Dungeon has the following commands:\n" +
-				"'help', 'info', 'command', '<game name>',\n" +
-				"'<game name> info'.";
+		return "The Dungeon Portal has the following commands:\n" +
+				"'help' - gives you a nice general help to the dungeon portal\n" +
+				"'commands' - gives you this out what you are reading right know\n" +
+				"'play' - displays you a list of all possible games to play\n" +
+				"'exit' - stops the game";
 	}
 
 

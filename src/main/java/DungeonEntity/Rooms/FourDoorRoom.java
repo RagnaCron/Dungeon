@@ -64,7 +64,8 @@ public final class FourDoorRoom extends Room {
 		if (hasSouthDoor()) buildDoorString.append("\t").append(southDoor.toString()).append("\n");
 		if (hasWestDoor()) buildDoorString.append("\t").append(westDoor.toString()).append("\n");
 		if (hasEastDoor()) buildDoorString.append("\t").append(eastDoor.toString()).append("\n");
-		return new String(buildDoorString);
+		buildDoorString.append("\t").append(enemy.getName());
+		return buildDoorString.toString();
 	}
 
 	public boolean hasNorthDoor() {

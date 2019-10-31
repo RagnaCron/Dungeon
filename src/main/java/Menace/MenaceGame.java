@@ -6,6 +6,7 @@ import DungeonEntity.Items.Potion;
 import DungeonEntity.Items.Shield;
 import DungeonEntity.Items.Weapon;
 import DungeonEntity.Rooms.DataStructure.RoomList;
+import DungeonEntity.Rooms.FourDoorRoom;
 import GameInterface.Gamer;
 import Generator.SnakeDungeonGenerator;
 import UserInterface.UserCommandLineInterface;
@@ -27,6 +28,7 @@ public final class MenaceGame extends Command<String, Supplier<String>> implemen
 
 	private RoomList dungeon;
 	private Player player;
+	private FourDoorRoom currentRoom;
 
 	public MenaceGame() {
 		commands = new HashMap<>();
@@ -45,6 +47,7 @@ public final class MenaceGame extends Command<String, Supplier<String>> implemen
 
 	private void newGame(String playerName) {
 		dungeon = new SnakeDungeonGenerator().generateSnakeDungeon();
+		currentRoom = dungeon.get(0);
 		player = new Player(playerName);
 	}
 
@@ -52,7 +55,7 @@ public final class MenaceGame extends Command<String, Supplier<String>> implemen
 	public String playGame(UserCommandLineInterface userInterface, String playerName) {
 		newGame(playerName);
 		do {
-			String command = userInterface.getInput("dungeon menace> ");
+			String command = userInterface.getInput("menace dungeon> ");
 			command = runCommand(command);
 			userInterface.println(command);
 		} while (player.isALife());
@@ -93,11 +96,11 @@ public final class MenaceGame extends Command<String, Supplier<String>> implemen
 	}
 
 	private String look() {
-		return "look";
+		return currentRoom.toString();
 	}
 
 	private String stats() {
-		return "stats";
+		return player.toString();
 	}
 
 	private String pickupWeapon() {

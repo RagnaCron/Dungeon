@@ -36,7 +36,7 @@ public class RoomList extends ArrayList<FourDoorRoom> {
 		for (FourDoorRoom room : this) {
 			buildItemList.append("\t").append(room.toString()).append("\n");
 		}
-		return new String(buildItemList);
+		return buildItemList.toString();
 	}
 
 }

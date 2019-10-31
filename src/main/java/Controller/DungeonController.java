@@ -70,10 +70,12 @@ public final class DungeonController extends Controller {
 	 * @return A message of success or failure.
 	 */
 	private String playGame() {
+		games.keySet().forEach(userInterface::println);
 		String gameName = userInterface.getInput("dungeon portal play> ");
 		Gamer game = games.get(gameName);
 		if (game == null)
 			return wrongInput(gameName);
+		userInterface.println(playerName + " you are entering the " + gameName + "dungeon.");
 		return game.playGame(userInterface, playerName);
 	}
 
