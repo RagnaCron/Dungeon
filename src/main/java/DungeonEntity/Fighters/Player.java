@@ -58,11 +58,22 @@ public class Player extends LifeForm implements Healer, Attacker, Defender {
         return buildStats + ", \nleft hand: " + leftHandShield.toString();
     }
 
+    /**
+     * Attack an opponent. It just subtracts the a attack points from the player weapon
+     * of the life points form an opponent.
+     *
+     * @param defender The life form that is defending.
+     */
     @Override
     public void attack(LifeForm defender) {
-        defender.loseLifePoints(getLifePoints());
+        defender.loseLifePoints(rightHandWeapon.getAttackPoints());
     }
 
+    /**
+     * Defend against an attacking opponent.
+     *
+     * @param attacker The attacker which to defend against.
+     */
     @Override
     public void defend(LifeForm attacker) {
         try {
@@ -77,7 +88,7 @@ public class Player extends LifeForm implements Healer, Attacker, Defender {
     }
 
     /**
-     * Heal consumes the potion.
+     * Heal consumes the potion and adds the life points of the potion to the player life points.
      */
     @Override
     public void heal() {

@@ -12,6 +12,6 @@ import java.util.function.Supplier;
  * @author Manuel Werder
  * @version 0.1
  */
-public interface Gamer{
+public interface Gamer {
 	Supplier<String> playGame(String command);
 }

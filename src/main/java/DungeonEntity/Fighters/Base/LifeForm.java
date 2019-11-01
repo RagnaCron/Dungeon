@@ -1,6 +1,5 @@
 package DungeonEntity.Fighters.Base;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +14,7 @@ import lombok.Setter;
  */
 @Getter
 public abstract class LifeForm {
+
     protected final String name;
     @Setter
     protected boolean isALife;
@@ -55,6 +55,10 @@ public abstract class LifeForm {
         return isALife;
     }
 
+    /**
+     * Add some more life points to the LifeForm.
+     * @param lifePoints The life points to add.
+     */
     public void addLifePoints(int lifePoints) {
         this.lifePoints += lifePoints;
     }

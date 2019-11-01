@@ -44,10 +44,10 @@ public class SnakeDungeonGenerator {
 	private Door randomDoorDirection() {
 		int i = rand.nextInt(4);
 		switch (i) {
-			case 0: return Door.NORTHDOOR;
-			case 1: return Door.SOUTHDOOR;
-			case 2: return Door.WESTDOOR;
-			case 3: return Door.EASTDOOR;
+			case 0: return Door.NORTH_DOOR;
+			case 1: return Door.SOUTH_DOOR;
+			case 2: return Door.WEST_DOOR;
+			case 3: return Door.EAST_DOOR;
 			default: return null;
 		}
 	}
@@ -94,10 +94,10 @@ public class SnakeDungeonGenerator {
 
 	private boolean checkDoorToNextRoom(FourDoorRoom room, Door direction) {
 		switch (direction) {
-			case NORTHDOOR: return !room.hasNorthDoor();
-			case SOUTHDOOR: return !room.hasSouthDoor();
-			case WESTDOOR: return !room.hasWestDoor();
-			case EASTDOOR: return !room.hasEastDoor();
+			case NORTH_DOOR: return !room.hasNorthDoor();
+			case SOUTH_DOOR: return !room.hasSouthDoor();
+			case WEST_DOOR: return !room.hasWestDoor();
+			case EAST_DOOR: return !room.hasEastDoor();
 			default: return false;
 		}
 	}

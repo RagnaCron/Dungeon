@@ -86,23 +86,23 @@ public final class FourDoorRoom extends Room {
 
 	public void setDoorDirection(Door direction, FourDoorRoom nextRoom) {
 		switch (direction){
-			case NORTHDOOR:
-				northDoor = Door.SOUTHDOOR;
+			case NORTH_DOOR:
+				northDoor = Door.SOUTH_DOOR;
 				nextRoom.setLastRoomNumber(currentRoomNumber);
 				nextRoomNumber = nextRoom.getCurrentRoomNumber();
 				break;
-			case SOUTHDOOR:
-				southDoor = Door.NORTHDOOR;
+			case SOUTH_DOOR:
+				southDoor = Door.NORTH_DOOR;
 				nextRoom.setLastRoomNumber(currentRoomNumber);
 				nextRoomNumber = nextRoom.getCurrentRoomNumber();
 				break;
-			case WESTDOOR:
-				westDoor = Door.EASTDOOR;
+			case WEST_DOOR:
+				westDoor = Door.EAST_DOOR;
 				nextRoom.setLastRoomNumber(currentRoomNumber);
 				nextRoomNumber = nextRoom.getCurrentRoomNumber();
 				break;
-			case EASTDOOR:
-				eastDoor = Door.WESTDOOR;
+			case EAST_DOOR:
+				eastDoor = Door.WEST_DOOR;
 				nextRoom.setLastRoomNumber(currentRoomNumber);
 				nextRoomNumber = nextRoom.getCurrentRoomNumber();
 				break;

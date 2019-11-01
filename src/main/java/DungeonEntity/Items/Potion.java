@@ -1,6 +1,7 @@
 package DungeonEntity.Items;
 
 import DungeonEntity.Items.Base.Item;
+import lombok.Getter;
 
 
 /**
@@ -11,6 +12,7 @@ import DungeonEntity.Items.Base.Item;
  */
 public class Potion extends Item {
 
+    @Getter
     private int lifePoints;
 
     /**
@@ -21,10 +23,6 @@ public class Potion extends Item {
     public Potion(String name, int lifePoints) {
         super(name);
         this.lifePoints = lifePoints;
-    }
-
-    public int getLifePoints() {
-        return lifePoints;
     }
 
     /**

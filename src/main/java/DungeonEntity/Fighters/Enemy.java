@@ -16,6 +16,7 @@ import lombok.Getter;
  */
 @Getter
 public class Enemy extends LifeForm implements Attacker {
+
     private Weapon rightHandWeapon;
 
     /**

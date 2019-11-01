@@ -1,6 +1,7 @@
 package DungeonEntity.Items;
 
 import DungeonEntity.Items.Base.Item;
+import lombok.Getter;
 
 /**
  * The Shield a subclass from Item.
@@ -9,6 +10,7 @@ import DungeonEntity.Items.Base.Item;
  * @version 0.1
  */
 public class Shield extends Item {
+    @Getter
     private int defensePoints;
 
     /**
@@ -20,11 +22,7 @@ public class Shield extends Item {
         super(name);
         this.defensePoints = defensePoints;
     }
-
-    public int getDefensePoints() {
-        return defensePoints;
-    }
-
+    
     /**
      * toString gives you a nice view of what a Shield is.
      * @return The nice and beauty.
