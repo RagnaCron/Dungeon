@@ -2,13 +2,11 @@ package Controller;
 
 import Controller.Model.Controller;
 import Controller.Model.ControllerState;
-import GameInterface.Gamer;
 import Menace.MenaceGame;
 import UserInterface.UserCommandLineInterface;
 import javafx.util.Pair;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Supplier;
 
 
@@ -22,10 +20,6 @@ import java.util.function.Supplier;
 public final class DungeonController extends Controller {
 
 	private UserCommandLineInterface userInterface;
-	private Map<String, Gamer> games;
-	private Gamer game;
-	private String playerName;
-	private ControllerState state;
 
 	/**
 	 * The Constructor for the DungeonController initializes the DungeonController
@@ -34,11 +28,10 @@ public final class DungeonController extends Controller {
 	public DungeonController() {
 		super();
 		userInterface = new UserCommandLineInterface();
-		this.playerName = userInterface.getInput("Hello, enter your name> ");
+		playerName = userInterface.getInput("Hello, enter your name> ");
 		userInterface.println(helloGamer(playerName));
-		this.games = new HashMap<>();
 
-		this.games.put("menace", MenaceGame.CreateNewMenaceGame(playerName));
+		games.put("menace", MenaceGame.CreateNewMenaceGame(playerName));
 	}
 
 	/**
@@ -87,6 +80,11 @@ public final class DungeonController extends Controller {
 		return com;
 	}
 
+	/**
+	 * We simple execute the given Function.
+	 * @param command Takes the function with no arguments and a String as Return value.
+	 * @return Returns the String that is returned by the function.
+	 */
 	@Override
 	protected String executeCommand(Supplier<String> command) {
 		return command.get();
@@ -94,6 +92,8 @@ public final class DungeonController extends Controller {
 
 	/**
 	 * Looks up the gameName and initializes the game and runs it.
+	 * Internally we set the State of the DungeonController, depending on if
+	 * the Game exists or not.
 	 *
 	 * @return A message of success or failure.
 	 */
