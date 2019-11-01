@@ -1,12 +1,10 @@
 package DungeonEntity.Fighters;
 
-import DungeonEntity.Fighters.Base.Attacker;
-import DungeonEntity.Fighters.Base.Defender;
-import DungeonEntity.Fighters.Base.Healer;
-import DungeonEntity.Fighters.Base.LifeForm;
+import DungeonEntity.Fighters.Base.*;
 import DungeonEntity.Items.Potion;
 import DungeonEntity.Items.Shield;
 import DungeonEntity.Items.Weapon;
+import lombok.Getter;
 import lombok.Setter;
 
 /**
@@ -18,7 +16,9 @@ import lombok.Setter;
  * @version 0.1
  */
 @Setter
+@Getter
 public class Player extends LifeForm implements Healer, Attacker, Defender {
+
     private Weapon rightHandWeapon;
     private Shield leftHandShield;
     private Potion potion;
@@ -86,5 +86,4 @@ public class Player extends LifeForm implements Healer, Attacker, Defender {
             potion = null;
         }
     }
-
 }

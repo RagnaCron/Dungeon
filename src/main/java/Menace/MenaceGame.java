@@ -2,8 +2,6 @@ package Menace;
 
 import Commander.Command;
 import DungeonEntity.Fighters.Player;
-import DungeonEntity.Items.Potion;
-import DungeonEntity.Items.Shield;
 import DungeonEntity.Items.Weapon;
 import DungeonEntity.Rooms.DataStructure.RoomList;
 import DungeonEntity.Rooms.FourDoorRoom;
@@ -39,7 +37,11 @@ public final class MenaceGame extends Command<String, Supplier<String>> implemen
 		commands.put("go east", this::goEast);
 		commands.put("pickup weapon", this::pickupWeapon);
 		commands.put("pickup shield", this::pickupShield);
-		commands.put("pickup potion", this::pickupPotion); // TODO: DROP ITEMS
+		commands.put("pickup potion", this::pickupPotion);
+		commands.put("drop weapon", this::dropWeapon);
+		commands.put("drop shield", this::dropShield);
+		commands.put("drop potion", this::dropPotion);
+		commands.put("heal", this::heal);
 		commands.put("stats", this::stats);
 		commands.put("look", this::look);
 		commands.put("attack", this::attack);
@@ -75,6 +77,10 @@ public final class MenaceGame extends Command<String, Supplier<String>> implemen
 		return "You have committed harakiri. You reached Room " + currentRoom.getCurrentRoomNumber();
 	}
 
+	private void traverseToNextRoom() {
+
+	}
+
 	private String goNorth() {
 		return "goNorth";
 	}
@@ -103,8 +109,13 @@ public final class MenaceGame extends Command<String, Supplier<String>> implemen
 		return player.toString();
 	}
 
+	private String heal() { return "Heal"; }
+
 	private String pickupWeapon() {
-		return "pickup weapon";
+		Weapon weapon = currentRoom.getItems().removeWeapon("Stick");
+		currentRoom.getItems().add(player.getRightHandWeapon());
+		player.setRightHandWeapon(weapon);
+		return "pickup " + weapon.toString();
 	}
 
 	private String pickupShield() {
@@ -113,6 +124,27 @@ public final class MenaceGame extends Command<String, Supplier<String>> implemen
 
 	private String pickupPotion() {
 		return "pickup potion";
+	}
+
+	private String dropWeapon() {
+		String weaponName = player.getRightHandWeapon().toString();
+		currentRoom.getItems().add(player.getRightHandWeapon());
+		player.setRightHandWeapon(null);
+		return "dropped " + weaponName;
+	}
+
+	private String dropShield() {
+		String shieldName = player.getLeftHandShield().toString();
+		currentRoom.getItems().add(player.getLeftHandShield());
+		player.setLeftHandShield(null);
+		return "dropped " + shieldName;
+	}
+
+	private String dropPotion() {
+		String shieldName = player.getPotion().toString();
+		currentRoom.getItems().add(player.getPotion());
+		player.setPotion(null);
+		return "dropped " + shieldName;
 	}
 
 }
