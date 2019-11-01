@@ -1,9 +1,11 @@
 package Controller;
 
 import Controller.Model.Controller;
+import Controller.Model.ControllerState;
 import GameInterface.Gamer;
 import Menace.MenaceGame;
 import UserInterface.UserCommandLineInterface;
+import javafx.util.Pair;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +25,7 @@ public final class DungeonController extends Controller {
 	private Map<String, Gamer> games;
 	private Gamer game;
 	private String playerName;
+	private ControllerState state;
 
 	/**
 	 * The Constructor for the DungeonController initializes the DungeonController
@@ -31,11 +34,11 @@ public final class DungeonController extends Controller {
 	public DungeonController() {
 		super();
 		userInterface = new UserCommandLineInterface();
-		this.playerName = "";
+		this.playerName = userInterface.getInput("Hello, enter your name> ");
+		userInterface.println(helloGamer(playerName));
 		this.games = new HashMap<>();
 
-		commands.put("play", this::playGame);
-		this.games.put("menace", new MenaceGame());
+		this.games.put("menace", MenaceGame.CreateNewMenaceGame(playerName));
 	}
 
 	/**
@@ -43,36 +46,50 @@ public final class DungeonController extends Controller {
 	 */
 	@Override
 	public void startController() {
-		this.playerName = userInterface.getInput("Hello, enter your name> ");
-		userInterface.println(helloGamer(playerName));
+		state = ControllerState.CHOOSING_STATE;
 		while (true) {
-			String input = userInterface.getInput("dungeon portal> ");
-			userInterface.println(runCommand(input));
+			switch (state) {
+				case CHOOSING_STATE:
+					state = controlCommand("dungeon portal> ");
+					break;
+				case GAMING_STATE:
+					state = controlCommand("exploring dungeon> ");
+					break;
+			}
 		}
 	}
 
+	private ControllerState controlCommand(String prompt) {
+		String input;
+		Pair<ControllerState, Supplier<String>> command;
+		String output;
+		input = userInterface.getInput(prompt);
+		command = getCommand(input);
+		state = command.getKey();
+		output = executeCommand(command.getValue());
+		userInterface.println(output);
+		return state;
+	}
+
 	@Override
-	protected Supplier<String> getCommand(String Command) {
-		return null;
+	protected Pair<ControllerState, Supplier<String>> getCommand(String command) {
+		Pair<ControllerState, Supplier<String>> com = null;
+		switch (state) {
+			case CHOOSING_STATE:
+				com = commands.get(command);
+				if (com == null)
+					com =  new Pair<>(state, () -> wrongInput(command));
+				return com;
+			case GAMING_STATE:
+				com = new Pair<>(state, game.playGame(command));
+				return com;
+		}
+		return com;
 	}
 
 	@Override
 	protected String executeCommand(Supplier<String> command) {
-		return null;
-	}
-
-	/**
-	 * In this Method we evaluate a given text command form the user and give feedback to the user.
-	 *
-	 * @param command The command to evaluate on.
-	 * @return The massage of the evaluation, success of failure.
-	 */
-	@Override
-	protected String runCommand(String command) {
-		Supplier<String> func = commands.get(command);
-		if (func == null)
-			return wrongInput(command);
-		return func.get();
+		return command.get();
 	}
 
 	/**
@@ -80,14 +97,17 @@ public final class DungeonController extends Controller {
 	 *
 	 * @return A message of success or failure.
 	 */
-	private String playGame() {
-		games.keySet().forEach(userInterface::println);
-		String gameName = userInterface.getInput("dungeon portal play> ");
-		Gamer game = games.get(gameName);
-		if (game == null)
-			return wrongInput(gameName);
-		userInterface.println(playerName + " you are entering the " + gameName + "dungeon.");
-		return game.playGame(userInterface, playerName);
+	@Override
+	protected String playGame() {
+		games.keySet().forEach( (t) ->System.out.print("'" + t + "' "));
+		String gameName = userInterface.getInput("enter dungeon name> ");
+		game = games.get(gameName);
+		if (game == null) {
+			state = ControllerState.CHOOSING_STATE;
+			return "There is no dungeon '" + gameName + "' to explore...";
+		}
+		return playerName + " you have entered the " + gameName + " dungeon...good luck!";
 	}
+
 
 }
