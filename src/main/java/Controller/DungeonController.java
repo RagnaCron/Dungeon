@@ -21,6 +21,7 @@ public final class DungeonController extends Controller {
 
 	private UserCommandLineInterface userInterface;
 	private Map<String, Gamer> games;
+	private Gamer game;
 	private String playerName;
 
 	/**
@@ -48,6 +49,16 @@ public final class DungeonController extends Controller {
 			String input = userInterface.getInput("dungeon portal> ");
 			userInterface.println(runCommand(input));
 		}
+	}
+
+	@Override
+	protected Supplier<String> getCommand(String Command) {
+		return null;
+	}
+
+	@Override
+	protected String executeCommand(Supplier<String> command) {
+		return null;
 	}
 
 	/**

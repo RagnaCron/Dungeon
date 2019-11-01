@@ -12,6 +12,8 @@ public abstract class Command<T, R> {
 
 	protected Map<T, R> commands;
 
+	abstract protected R getCommand(String Command);
+	abstract protected String executeCommand(R command);
 	abstract protected String runCommand(String command);
 
 }
