@@ -1,8 +1,8 @@
 package Menace;
 
 import DungeonEntity.Fighters.Player;
-import DungeonEntity.Items.Weapon;
 import DungeonEntity.Rooms.DataStructure.RoomList;
+import DungeonEntity.Rooms.Directions;
 import DungeonEntity.Rooms.FourDoorRoom;
 import GameInterface.Gamer;
 import Generator.SnakeDungeonGenerator;
@@ -27,6 +27,7 @@ public final class MenaceGame implements Gamer {
 	private Player player;
 	private FourDoorRoom currentRoom;
 	private Map<String, Supplier<String>> commands;
+	private Directions previousDirection = null;
 
 	private MenaceGame(String playerName) {
 		dungeon = new SnakeDungeonGenerator().generateSnakeDungeon();

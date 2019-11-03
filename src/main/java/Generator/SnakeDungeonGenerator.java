@@ -7,7 +7,7 @@ import DungeonEntity.Items.Potion;
 import DungeonEntity.Items.Shield;
 import DungeonEntity.Items.Weapon;
 import DungeonEntity.Rooms.DataStructure.RoomList;
-import DungeonEntity.Rooms.Door;
+import DungeonEntity.Rooms.Directions;
 import DungeonEntity.Rooms.FourDoorRoom;
 
 import java.util.Random;
@@ -41,13 +41,13 @@ public class SnakeDungeonGenerator {
 			new Enemy("Ork", true, 5, new Weapon("Axe", 6)),
 	};
 
-	private Door randomDoorDirection() {
+	private Directions randomDoorDirection() {
 		int i = rand.nextInt(4);
 		switch (i) {
-			case 0: return Door.NORTH_DOOR;
-			case 1: return Door.SOUTH_DOOR;
-			case 2: return Door.WEST_DOOR;
-			case 3: return Door.EAST_DOOR;
+			case 0: return Directions.NORTH_DOOR;
+			case 1: return Directions.SOUTH_DOOR;
+			case 2: return Directions.WEST_DOOR;
+			case 3: return Directions.EAST_DOOR;
 			default: return null;
 		}
 	}
@@ -80,7 +80,7 @@ public class SnakeDungeonGenerator {
 		int currentRoomNumber = 0;
 		while (true) { // TODO: MAKE DO WHILE OUT OF IT, USE SECOND IF STATEMENT FOR CHECK
 			FourDoorRoom room = rooms.get(currentRoomNumber);
-			Door direction = randomDoorDirection();
+			Directions direction = randomDoorDirection();
 			if (direction != null && checkDoorToNextRoom(room, direction)) {
 				if (currentRoomNumber + 1 < rooms.size() - 2) {
 					FourDoorRoom nextRoom = rooms.get(currentRoomNumber + 1);
@@ -92,7 +92,7 @@ public class SnakeDungeonGenerator {
 		}
 	}
 
-	private boolean checkDoorToNextRoom(FourDoorRoom room, Door direction) {
+	private boolean checkDoorToNextRoom(FourDoorRoom room, Directions direction) {
 		switch (direction) {
 			case NORTH_DOOR: return !room.hasNorthDoor();
 			case SOUTH_DOOR: return !room.hasSouthDoor();
@@ -102,25 +102,25 @@ public class SnakeDungeonGenerator {
 		}
 	}
 
-	private void setDoorDirection(Door direction, FourDoorRoom currentRoom, FourDoorRoom nextRoom) {
+	private void setDoorDirection(Directions direction, FourDoorRoom currentRoom, FourDoorRoom nextRoom) {
 		switch (direction){
 			case NORTH_DOOR:
-				currentRoom.setNorthDoor(Door.SOUTH_DOOR);
+				currentRoom.setNorthDoor(Directions.SOUTH_DOOR);
 				nextRoom.setLastRoomNumber(currentRoom.getCurrentRoomNumber());
 				currentRoom.setNextRoomNumber(nextRoom.getCurrentRoomNumber());
 				break;
 			case SOUTH_DOOR:
-				currentRoom.setNorthDoor(Door.NORTH_DOOR);
+				currentRoom.setNorthDoor(Directions.NORTH_DOOR);
 				nextRoom.setLastRoomNumber(currentRoom.getCurrentRoomNumber());
 				currentRoom.setNextRoomNumber(nextRoom.getCurrentRoomNumber());
 				break;
 			case WEST_DOOR:
-				currentRoom.setNorthDoor(Door.EAST_DOOR);
+				currentRoom.setNorthDoor(Directions.EAST_DOOR);
 				nextRoom.setLastRoomNumber(currentRoom.getCurrentRoomNumber());
 				currentRoom.setNextRoomNumber(nextRoom.getCurrentRoomNumber());
 				break;
 			case EAST_DOOR:
-				currentRoom.setNorthDoor(Door.WEST_DOOR);
+				currentRoom.setNorthDoor(Directions.WEST_DOOR);
 				nextRoom.setLastRoomNumber(currentRoom.getCurrentRoomNumber());
 				currentRoom.setNextRoomNumber(nextRoom.getCurrentRoomNumber());
 				break;

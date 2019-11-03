@@ -16,13 +16,13 @@ import lombok.Setter;
 public final class FourDoorRoom extends Room {
 
 	@Setter
-	private Door northDoor;
+	private Directions northDoor;
 	@Setter
-	private Door southDoor;
+	private Directions southDoor;
 	@Setter
-	private Door westDoor;
+	private Directions westDoor;
 	@Setter
-	private Door eastDoor;
+	private Directions eastDoor;
 
 	@Getter
 	private int currentRoomNumber;
@@ -48,7 +48,7 @@ public final class FourDoorRoom extends Room {
 	}
 
 	public FourDoorRoom(String roomName, int roomNumber, Enemy enemy, ItemList items,
-						Door northDoor , Door southDoor, Door westDoor, Door eastDoor) {
+	                    Directions northDoor , Directions southDoor, Directions westDoor, Directions eastDoor) {
 		super(roomName);
 		this.currentRoomNumber = roomNumber;
 		this.northDoor = northDoor;
