@@ -60,11 +60,15 @@ public final class MenaceGame implements Gamer {
 		return com != null ? com : this::mmhNoCantDoThat;
 	}
 
+	/**
+	 * Tells the Player off, You can't do that.
+	 * @return A nice message about what you can't do.
+	 */
 	private String mmhNoCantDoThat() {
 		return "No, " + player.getName() + " you can't do that...";
 	}
 
-	private void traverseToNextRoom() {
+	private void traverseToNextRoom() { // TODO: CHANGE ROOM TO HOLD INT.. MAKE LIFE EASY
 
 	}
 
@@ -88,10 +92,18 @@ public final class MenaceGame implements Gamer {
 		return "attacked";
 	}
 
+	/**
+	 * Look at the room.
+	 * @return Shows a nice message of the current room.
+	 */
 	private String look() {
 		return currentRoom.toString();
 	}
 
+	/**
+	 * Shows the Players stats
+	 * @return A nice message of the Players stats.
+	 */
 	private String stats() {
 		return player.toString();
 	}
