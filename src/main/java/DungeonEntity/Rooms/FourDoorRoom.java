@@ -15,9 +15,13 @@ import lombok.Setter;
  */
 public final class FourDoorRoom extends Room {
 
+	@Setter
 	private Door northDoor;
+	@Setter
 	private Door southDoor;
+	@Setter
 	private Door westDoor;
+	@Setter
 	private Door eastDoor;
 
 	@Getter
@@ -64,9 +68,12 @@ public final class FourDoorRoom extends Room {
 		if (hasSouthDoor()) buildDoorString.append("\t").append(southDoor.toString()).append("\n");
 		if (hasWestDoor()) buildDoorString.append("\t").append(westDoor.toString()).append("\n");
 		if (hasEastDoor()) buildDoorString.append("\t").append(eastDoor.toString()).append("\n");
-		buildDoorString.append("\t").append(enemy.getName());
+		if (hasEnemy()) buildDoorString.append("\t").append(enemy.getName()).append("\n");
+		if (!hasEnemy()) buildDoorString.append(items.toString());
 		return buildDoorString.toString();
 	}
+
+	public boolean hasEnemy() { return enemy != null; }
 
 	public boolean hasNorthDoor() {
 		return northDoor != null;
@@ -82,31 +89,6 @@ public final class FourDoorRoom extends Room {
 
 	public boolean hasEastDoor() {
 		return eastDoor != null;
-	}
-
-	public void setDoorDirection(Door direction, FourDoorRoom nextRoom) {
-		switch (direction){
-			case NORTH_DOOR:
-				northDoor = Door.SOUTH_DOOR;
-				nextRoom.setLastRoomNumber(currentRoomNumber);
-				nextRoomNumber = nextRoom.getCurrentRoomNumber();
-				break;
-			case SOUTH_DOOR:
-				southDoor = Door.NORTH_DOOR;
-				nextRoom.setLastRoomNumber(currentRoomNumber);
-				nextRoomNumber = nextRoom.getCurrentRoomNumber();
-				break;
-			case WEST_DOOR:
-				westDoor = Door.EAST_DOOR;
-				nextRoom.setLastRoomNumber(currentRoomNumber);
-				nextRoomNumber = nextRoom.getCurrentRoomNumber();
-				break;
-			case EAST_DOOR:
-				eastDoor = Door.WEST_DOOR;
-				nextRoom.setLastRoomNumber(currentRoomNumber);
-				nextRoomNumber = nextRoom.getCurrentRoomNumber();
-				break;
-		}
 	}
 
 }

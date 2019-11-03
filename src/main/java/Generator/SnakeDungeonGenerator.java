@@ -84,7 +84,7 @@ public class SnakeDungeonGenerator {
 			if (direction != null && checkDoorToNextRoom(room, direction)) {
 				if (currentRoomNumber + 1 < rooms.size() - 2) {
 					FourDoorRoom nextRoom = rooms.get(currentRoomNumber + 1);
-					room.setDoorDirection(direction, nextRoom);
+					setDoorDirection(direction, room, nextRoom);
 					currentRoomNumber++;
 				}
 				else return;
@@ -99,6 +99,31 @@ public class SnakeDungeonGenerator {
 			case WEST_DOOR: return !room.hasWestDoor();
 			case EAST_DOOR: return !room.hasEastDoor();
 			default: return false;
+		}
+	}
+
+	private void setDoorDirection(Door direction, FourDoorRoom currentRoom, FourDoorRoom nextRoom) {
+		switch (direction){
+			case NORTH_DOOR:
+				currentRoom.setNorthDoor(Door.SOUTH_DOOR);
+				nextRoom.setLastRoomNumber(currentRoom.getCurrentRoomNumber());
+				currentRoom.setNextRoomNumber(nextRoom.getCurrentRoomNumber());
+				break;
+			case SOUTH_DOOR:
+				currentRoom.setNorthDoor(Door.NORTH_DOOR);
+				nextRoom.setLastRoomNumber(currentRoom.getCurrentRoomNumber());
+				currentRoom.setNextRoomNumber(nextRoom.getCurrentRoomNumber());
+				break;
+			case WEST_DOOR:
+				currentRoom.setNorthDoor(Door.EAST_DOOR);
+				nextRoom.setLastRoomNumber(currentRoom.getCurrentRoomNumber());
+				currentRoom.setNextRoomNumber(nextRoom.getCurrentRoomNumber());
+				break;
+			case EAST_DOOR:
+				currentRoom.setNorthDoor(Door.WEST_DOOR);
+				nextRoom.setLastRoomNumber(currentRoom.getCurrentRoomNumber());
+				currentRoom.setNextRoomNumber(nextRoom.getCurrentRoomNumber());
+				break;
 		}
 	}
 

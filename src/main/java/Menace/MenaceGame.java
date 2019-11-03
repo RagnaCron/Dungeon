@@ -42,9 +42,6 @@ public final class MenaceGame implements Gamer {
 		commands.put("pickup weapon", this::pickupWeapon);
 		commands.put("pickup shield", this::pickupShield);
 		commands.put("pickup potion", this::pickupPotion);
-		commands.put("drop weapon", this::dropWeapon);
-		commands.put("drop shield", this::dropShield);
-		commands.put("drop potion", this::dropPotion);
 		commands.put("heal", this::heal);
 		commands.put("stats", this::stats);
 		commands.put("look", this::look);
@@ -98,47 +95,50 @@ public final class MenaceGame implements Gamer {
 		return player.toString();
 	}
 
-	private String heal() { return "Heal"; }
+	/**
+	 * Heal yourself. Consumes the Potion of the player.
+	 * @return Shows a nice message of how much you have healed.
+	 */
+	private String heal() {
+		StringBuilder message =  new StringBuilder();
+		if (player.hasPotion()) {
+			message.append(player.getName()).append(" you have healed yourself by ")
+					.append(player.getPotion().getLifePoints());
+			player.heal();
+			message.append("\n").append(player.getName()).append(" you have ").append(player.getLifePoints());
+		}
+		else
+			message.append(player.getName())
+					.append(" you have no potion to heal yourself");
+		return message.toString();
+	}
 
+	//  TODO: MAKE SHORE THAT HARAKIRE STOPS THE GAME
+	/**
+	 * Commit harakiri. You will die. Sets the players isALife to false.
+	 * It is one of two was to quit the game.
+	 * @return A nice message about harakiri and witch room you have reached.
+	 */
 	private String harakiri() {
 		player.setALife(false);
 		return "You have committed harakiri. You reached Room " + currentRoom.getCurrentRoomNumber();
 	}
 
 	private String pickupWeapon() {
-		Weapon weapon = currentRoom.getItems().removeWeapon("Stick");
-		currentRoom.getItems().add(player.getRightHandWeapon());
-		player.setRightHandWeapon(weapon);
-		return "pickup " + weapon.toString();
+		System.out.println(currentRoom.getItems().toString());
+//		Weapon weapon = currentRoom.getItems().removeWeapon("Stick");
+//		currentRoom.getItems().add(player.getRightHandWeapon());
+//		player.setRightHandWeapon(weapon);
+//		return "picked up " + weapon.toString();
+		return "picked up weapon";
 	}
 
 	private String pickupShield() {
-		return "pickup shield";
+		return "picked up shield";
 	}
 
 	private String pickupPotion() {
-		return "pickup potion";
-	}
-
-	private String dropWeapon() {
-		String weaponName = player.getRightHandWeapon().toString();
-		currentRoom.getItems().add(player.getRightHandWeapon());
-		player.setRightHandWeapon(null);
-		return "dropped " + weaponName;
-	}
-
-	private String dropShield() {
-		String shieldName = player.getLeftHandShield().toString();
-		currentRoom.getItems().add(player.getLeftHandShield());
-		player.setLeftHandShield(null);
-		return "dropped " + shieldName;
-	}
-
-	private String dropPotion() {
-		String shieldName = player.getPotion().toString();
-		currentRoom.getItems().add(player.getPotion());
-		player.setPotion(null);
-		return "dropped " + shieldName;
+		return "picked up potion";
 	}
 
 }

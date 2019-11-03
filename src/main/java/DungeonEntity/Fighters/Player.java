@@ -53,9 +53,14 @@ public class Player extends LifeForm implements Healer, Attacker, Defender {
      */
     @Override
     public String toString() {
-        String buildStats = super.toString() + ", \n" + potion.toString();
-        buildStats += ", \nright hand: " + rightHandWeapon.toString();
-        return buildStats + ", \nleft hand: " + leftHandShield.toString();
+        StringBuilder builder = new StringBuilder(super.toString());
+        if (hasPotion()) builder.append(", \n").append(potion.toString());
+        else builder.append(",\n").append("no potion");
+        builder.append(",\nright hand: ")
+                .append(rightHandWeapon.toString())
+                .append(",\nleft hand: ")
+                .append(leftHandShield.toString());
+        return builder.toString();
     }
 
     /**
@@ -66,7 +71,8 @@ public class Player extends LifeForm implements Healer, Attacker, Defender {
      */
     @Override
     public void attack(LifeForm defender) {
-        defender.loseLifePoints(rightHandWeapon.getAttackPoints());
+        if (hasWeapon())
+            defender.loseLifePoints(rightHandWeapon.getAttackPoints());
     }
 
     /**
@@ -78,7 +84,7 @@ public class Player extends LifeForm implements Healer, Attacker, Defender {
     public void defend(LifeForm attacker) {
         try {
             Enemy enemy = (Enemy) attacker;
-            if (leftHandShield.getDefensePoints() < enemy.getRightHandWeapon().getAttackPoints()) {
+            if (hasShield() && leftHandShield.getDefensePoints() < enemy.getRightHandWeapon().getAttackPoints()) {
                 int lifePointsToLose = enemy.getRightHandWeapon().getAttackPoints() - leftHandShield.getDefensePoints();
                 loseLifePoints(lifePointsToLose);
             }
@@ -92,9 +98,33 @@ public class Player extends LifeForm implements Healer, Attacker, Defender {
      */
     @Override
     public void heal() {
-        if (potion != null) {
+        if (hasPotion()) {
             addLifePoints(potion.getLifePoints());
             potion = null;
         }
+    }
+
+    /**
+     * Check if the player has a Potion.
+     * @return True if player has a Potion false otherwise.
+     */
+    public boolean hasPotion() {
+        return potion != null;
+    }
+
+    /**
+     * Check if the player has a Weapon.
+     * @return True if player has a Weapon false otherwise.
+     */
+    public boolean hasWeapon() {
+        return rightHandWeapon != null;
+    }
+
+    /**
+     * Check if the player has a Shield.
+     * @return True if player has a Shield false otherwise.
+     */
+    public boolean hasShield() {
+        return leftHandShield != null;
     }
 }
