@@ -16,22 +16,16 @@ import lombok.Setter;
 public final class FourDoorRoom extends Room {
 
 	@Setter
-	private Directions northDoor;
+	private Integer northDoor;
 	@Setter
-	private Directions southDoor;
+	private Integer southDoor;
 	@Setter
-	private Directions westDoor;
+	private Integer westDoor;
 	@Setter
-	private Directions eastDoor;
+	private Integer eastDoor;
 
 	@Getter
 	private int currentRoomNumber;
-	@Setter
-	@Getter
-	private int lastRoomNumber;
-	@Setter
-	@Getter
-	private int nextRoomNumber;
 
 	@Getter
 	private ItemList items;
@@ -48,7 +42,7 @@ public final class FourDoorRoom extends Room {
 	}
 
 	public FourDoorRoom(String roomName, int roomNumber, Enemy enemy, ItemList items,
-	                    Directions northDoor , Directions southDoor, Directions westDoor, Directions eastDoor) {
+	                    Integer northDoor , Integer southDoor, Integer westDoor, Integer eastDoor) {
 		super(roomName);
 		this.currentRoomNumber = roomNumber;
 		this.northDoor = northDoor;
@@ -57,18 +51,16 @@ public final class FourDoorRoom extends Room {
 		this.eastDoor = eastDoor;
 		this.enemy = enemy;
 		this.items = items;
-		this.lastRoomNumber = 0;
-		this.nextRoomNumber = 0;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder buildDoorString = new StringBuilder(super.toString()).append(":\n");
-		if (hasNorthDoor()) buildDoorString.append("\t").append(northDoor.toString()).append("\n");
-		if (hasSouthDoor()) buildDoorString.append("\t").append(southDoor.toString()).append("\n");
-		if (hasWestDoor()) buildDoorString.append("\t").append(westDoor.toString()).append("\n");
-		if (hasEastDoor()) buildDoorString.append("\t").append(eastDoor.toString()).append("\n");
-		if (hasEnemy()) buildDoorString.append("\t").append(enemy.getName()).append("\n");
+		if (hasNorthDoor()) buildDoorString.append("There is a door to the North").append("\n");
+		if (hasSouthDoor()) buildDoorString.append("There is a door to the South").append("\n");
+		if (hasWestDoor()) buildDoorString.append("There is a door to the West").append("\n");
+		if (hasEastDoor()) buildDoorString.append("There is a door to the East").append("\n");
+		if (hasEnemy()) buildDoorString.append(enemy.toString()).append("\n");
 		if (!hasEnemy()) buildDoorString.append(items.toString());
 		return buildDoorString.toString();
 	}

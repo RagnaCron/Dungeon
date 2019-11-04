@@ -7,7 +7,6 @@ import DungeonEntity.Items.Potion;
 import DungeonEntity.Items.Shield;
 import DungeonEntity.Items.Weapon;
 import DungeonEntity.Rooms.DataStructure.RoomList;
-import DungeonEntity.Rooms.Directions;
 import DungeonEntity.Rooms.FourDoorRoom;
 
 import java.util.Random;
@@ -24,7 +23,6 @@ public class SnakeDungeonGenerator {
 
 
 	private RoomList rooms = new RoomList();
-
 	private Random rand = new Random();
 	private ItemList items = new ItemList(
 			new Item[]{
@@ -41,15 +39,8 @@ public class SnakeDungeonGenerator {
 			new Enemy("Ork", true, 5, new Weapon("Axe", 6)),
 	};
 
-	private Directions randomDoorDirection() {
-		int i = rand.nextInt(4);
-		switch (i) {
-			case 0: return Directions.NORTH_DOOR;
-			case 1: return Directions.SOUTH_DOOR;
-			case 2: return Directions.WEST_DOOR;
-			case 3: return Directions.EAST_DOOR;
-			default: return null;
-		}
+	private Integer randomDoorDirection() {
+		return rand.nextInt(4);
 	}
 
 	private Item getRandomItem() {
@@ -78,13 +69,13 @@ public class SnakeDungeonGenerator {
 
 	private void connectRooms() {
 		int currentRoomNumber = 0;
-		while (true) { // TODO: MAKE DO WHILE OUT OF IT, USE SECOND IF STATEMENT FOR CHECK
-			FourDoorRoom room = rooms.get(currentRoomNumber);
-			Directions direction = randomDoorDirection();
-			if (direction != null && checkDoorToNextRoom(room, direction)) {
+		while (true) {
+			FourDoorRoom currentRoom = rooms.get(currentRoomNumber);
+			Integer direction = randomDoorDirection();
+			if (checkDoorToNextRoom(direction, currentRoom)) {
 				if (currentRoomNumber + 1 < rooms.size() - 2) {
 					FourDoorRoom nextRoom = rooms.get(currentRoomNumber + 1);
-					setDoorDirection(direction, room, nextRoom);
+					setDoorDirection(direction, currentRoom, nextRoom);
 					currentRoomNumber++;
 				}
 				else return;
@@ -92,40 +83,31 @@ public class SnakeDungeonGenerator {
 		}
 	}
 
-	private boolean checkDoorToNextRoom(FourDoorRoom room, Directions direction) {
-		switch (direction) {
-			case NORTH_DOOR: return !room.hasNorthDoor();
-			case SOUTH_DOOR: return !room.hasSouthDoor();
-			case WEST_DOOR: return !room.hasWestDoor();
-			case EAST_DOOR: return !room.hasEastDoor();
-			default: return false;
-		}
+	private boolean checkDoorToNextRoom(Integer direction, FourDoorRoom currentRoom) {
+		if (direction == 0 && !currentRoom.hasNorthDoor()) return true;
+		if (direction == 1 && !currentRoom.hasSouthDoor()) return true;
+		if (direction == 2 && !currentRoom.hasWestDoor()) return true;
+		if (direction == 3 && !currentRoom.hasEastDoor()) return true;
+		return false;
 	}
 
-	private void setDoorDirection(Directions direction, FourDoorRoom currentRoom, FourDoorRoom nextRoom) {
-		switch (direction){
-			case NORTH_DOOR:
-				currentRoom.setNorthDoor(Directions.SOUTH_DOOR);
-				nextRoom.setLastRoomNumber(currentRoom.getCurrentRoomNumber());
-				currentRoom.setNextRoomNumber(nextRoom.getCurrentRoomNumber());
-				break;
-			case SOUTH_DOOR:
-				currentRoom.setNorthDoor(Directions.NORTH_DOOR);
-				nextRoom.setLastRoomNumber(currentRoom.getCurrentRoomNumber());
-				currentRoom.setNextRoomNumber(nextRoom.getCurrentRoomNumber());
-				break;
-			case WEST_DOOR:
-				currentRoom.setNorthDoor(Directions.EAST_DOOR);
-				nextRoom.setLastRoomNumber(currentRoom.getCurrentRoomNumber());
-				currentRoom.setNextRoomNumber(nextRoom.getCurrentRoomNumber());
-				break;
-			case EAST_DOOR:
-				currentRoom.setNorthDoor(Directions.WEST_DOOR);
-				nextRoom.setLastRoomNumber(currentRoom.getCurrentRoomNumber());
-				currentRoom.setNextRoomNumber(nextRoom.getCurrentRoomNumber());
-				break;
+	private void setDoorDirection(Integer direction, FourDoorRoom currentRoom, FourDoorRoom nextRoom) {
+		if (direction == 0) {
+			currentRoom.setNorthDoor(nextRoom.getCurrentRoomNumber());
+			nextRoom.setSouthDoor(currentRoom.getCurrentRoomNumber());
+		}
+		if (direction == 1) {
+			currentRoom.setSouthDoor(nextRoom.getCurrentRoomNumber());
+			nextRoom.setNorthDoor(currentRoom.getCurrentRoomNumber());
+		}
+		if (direction == 2) {
+			currentRoom.setWestDoor(nextRoom.getCurrentRoomNumber());
+			nextRoom.setEastDoor(currentRoom.getCurrentRoomNumber());
+		}
+		if (direction == 3) {
+			currentRoom.setEastDoor(nextRoom.getCurrentRoomNumber());
+			nextRoom.setWestDoor(currentRoom.getCurrentRoomNumber());
 		}
 	}
-
 
 }
