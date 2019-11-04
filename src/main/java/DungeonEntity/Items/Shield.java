@@ -22,7 +22,7 @@ public class Shield extends Item {
         super(name);
         this.defensePoints = defensePoints;
     }
-    
+
     /**
      * toString gives you a nice view of what a Shield is.
      * @return The nice and beauty.

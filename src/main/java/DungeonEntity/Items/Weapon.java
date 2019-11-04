@@ -24,6 +24,14 @@ public class Weapon extends Item {
     }
 
     /**
+     * This constructor is used to copy a weapon.
+     * @param weapon The Weapon to copy.
+     */
+    public Weapon(Weapon weapon) {
+        this(weapon.getName(), weapon.getAttackPoints());
+    }
+
+    /**
      * toString gives you a nice view of what a Weapon is.
      * @return The nice and beauty.
      */

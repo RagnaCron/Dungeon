@@ -29,7 +29,6 @@ public class SnakeDungeonGenerator {
 			new Item[]{
 					new Potion("Small Potion", 3),
 					new Shield("Broken Shield", 4),
-					new Weapon("Sword", 6)
 			}
 	);
 	private Enemy[] enemies = {
@@ -49,7 +48,7 @@ public class SnakeDungeonGenerator {
 	}
 
 	private Enemy getRandomEnemy() {
-		return enemies[rand.nextInt(enemies.length )];
+		return  new Enemy(enemies[rand.nextInt(enemies.length )]);
 	}
 
 	private void generateRooms() {

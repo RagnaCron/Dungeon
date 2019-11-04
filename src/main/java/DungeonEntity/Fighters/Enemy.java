@@ -31,6 +31,13 @@ public class Enemy extends LifeForm implements Attacker {
         this.rightHandWeapon = rightHandWeapon;
     }
 
+    /**
+     * This constructor is used to copy an Enemy.
+     * @param enemy The Enemy to copy.
+     */
+    public Enemy(Enemy enemy) {
+        this(enemy.getName(), enemy.isALife, enemy.getLifePoints(), enemy.getRightHandWeapon());
+    }
 
     /**
      * toString gives you a beautified version of what the Enemy is.

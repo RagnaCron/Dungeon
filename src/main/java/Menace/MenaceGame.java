@@ -1,7 +1,9 @@
 package Menace;
 
 import Controller.Model.ControllerState;
+import DungeonEntity.Fighters.Enemy;
 import DungeonEntity.Fighters.Player;
+import DungeonEntity.Items.Weapon;
 import DungeonEntity.Rooms.DataStructure.RoomList;
 import DungeonEntity.Rooms.FourDoorRoom;
 import GameInterface.Gamer;
@@ -10,6 +12,7 @@ import javafx.util.Pair;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.function.Supplier;
 
 /**
@@ -30,6 +33,7 @@ public final class MenaceGame implements Gamer {
 	private Player player;
 	private FourDoorRoom currentRoom;
 	private Map<String, Pair<ControllerState, Supplier<String>>> commands;
+	private static Random rand = new Random();
 
 	private MenaceGame(String playerName) {
 		dungeon = new SnakeDungeonGenerator().generateSnakeDungeon();
@@ -64,7 +68,18 @@ public final class MenaceGame implements Gamer {
 	@Override
 	public Pair<ControllerState, Supplier<String>> playGame(String command) {
 		Pair<ControllerState, Supplier<String>> com = commands.get(command);
-		return com != null ? com : new Pair<>(ControllerState.GAMING_STATE, this::mmhNoCantDoThat);
+		if (player.isALife())
+			return com != null ? com : new Pair<>(ControllerState.GAMING_STATE, this::mmhNoCantDoThat);
+		return new Pair<>(ControllerState.CHOOSING_STATE, this::deathMessage);
+	}
+
+	/**
+	 * Shows the player a nice little death message.
+	 * @return The message includes the room wherein you have died and the enemy name.
+	 */
+	private String deathMessage() {
+		return currentRoom.getEnemy().getName() + " has killed you. " +
+				player.getName() + " you have reached room number " + currentRoom.getCurrentRoomNumber();
 	}
 
 	/**
@@ -124,8 +139,33 @@ public final class MenaceGame implements Gamer {
 		return traverseToNextRoom(currentRoom.hasEastDoor(), currentRoom.getEastDoor());
 	}
 
+	/**
+	 * The attack method. If you defend against an enemy or the enemy attacks you is random.
+	 * @return A nice Message about how the fight went.
+	 */
 	private String attack() {
-		return "attacked";
+		if (currentRoom.hasEnemy()) {
+			player.attack(currentRoom.getEnemy());
+			StringBuilder message = new StringBuilder(currentRoom.getEnemy().getName());
+			boolean enemyWillAttack = rand.nextBoolean();
+			boolean playerWillDefend = rand.nextBoolean();
+			if (!currentRoom.getEnemy().isALife()) {
+				currentRoom.getItems().add(new Weapon(currentRoom.getEnemy().getRightHandWeapon()));
+				currentRoom.setEnemy(null);
+				return message.append(" is dead...").toString();
+			}
+			else if (enemyWillAttack) {
+				if (playerWillDefend) {
+					player.defend(currentRoom.getEnemy());
+					return player.getName() + " you have defended against the enemy...";
+				} else {
+					currentRoom.getEnemy().attack(player);
+					return message.append(" has attacked you...").toString();
+				}
+			}
+			return player.getName() + " you have attacked the enemy...";
+		}
+		return player.getName() + " you have already killed the enemy...";
 	}
 
 	/**
@@ -151,18 +191,14 @@ public final class MenaceGame implements Gamer {
 	private String heal() {
 		StringBuilder message =  new StringBuilder();
 		if (player.hasPotion()) {
-			message.append(player.getName()).append(" you have healed yourself by ")
-					.append(player.getPotion().getLifePoints());
 			player.heal();
-			message.append("\n").append(player.getName()).append(" you have ").append(player.getLifePoints());
+			message.append(player.getName()).append(" you have healed yourself");
 		}
 		else
-			message.append(player.getName())
-					.append(" you have no potion to heal yourself");
+			message.append(player.getName()).append(" you have no potion to heal yourself");
 		return message.toString();
 	}
 
-	//  TODO: MAKE SURE THAT HARAKIRE STOPS THE GAME, IMPLEMENT TRUE COMMAND PATTERN FOR IT, CHANGE DATA STRUCTURE
 	/**
 	 * Commit harakiri. You will die. Sets the players isALife to false.
 	 * It is one of two was to quit the game.
