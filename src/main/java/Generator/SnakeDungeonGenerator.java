@@ -21,6 +21,7 @@ import java.util.Random;
  */
 public class SnakeDungeonGenerator {
 
+	// TODO: JAVADOC
 
 	private RoomList rooms = new RoomList();
 	private Random rand = new Random();

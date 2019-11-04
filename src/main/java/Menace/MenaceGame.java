@@ -23,11 +23,12 @@ import java.util.function.Supplier;
  */
 public final class MenaceGame implements Gamer {
 
+	// TODO: JAVADOC
+
 	private RoomList dungeon;
 	private Player player;
 	private FourDoorRoom currentRoom;
 	private Map<String, Supplier<String>> commands;
-	private Directions previousDirection = null;
 
 	private MenaceGame(String playerName) {
 		dungeon = new SnakeDungeonGenerator().generateSnakeDungeon();
@@ -49,7 +50,7 @@ public final class MenaceGame implements Gamer {
 		commands.put("attack", this::attack);
 	}
 
-	// TODO: FACTORY PATTERN
+	// TODO: FACTORY PATTERN DOCUMENTATION
 	public static Gamer CreateNewMenaceGame(String playerName) {
 		return new MenaceGame(playerName);
 	}
@@ -68,24 +69,53 @@ public final class MenaceGame implements Gamer {
 		return "No, " + player.getName() + " you can't do that...";
 	}
 
-	private void traverseToNextRoom() { // TODO: CHANGE ROOM TO HOLD INT.. MAKE LIFE EASY
-
+	/**
+	 * Does the magic of changing to a new room.
+	 * @param hasDoor Check if the currentRoom has a door to a given direction.
+	 * @param nextRoomNumber The index to the next room...
+	 * @return If there is a door in the given direction and the the enemy is dead you will change the room
+	 * else you will get feedback in relation to what went wrong.
+	 */
+	private String traverseToNextRoom(boolean hasDoor, Integer nextRoomNumber) {
+		if (hasDoor) {
+			if (currentRoom.hasEnemy())
+				return player.getName() + " you can't leave the room there is an enemy...";
+			currentRoom = dungeon.get(nextRoomNumber);
+			return player.getName() + " you entered a new room...";
+		}
+		return player.getName() + " you are not a ghost, you can't go through walls...";
 	}
 
+	/**
+	 * The player can travel north if there is door and the enemy is dead.
+	 * @return if there is a door to the north go through it if the enemy is dead.
+	 */
 	private String goNorth() {
-		return "goNorth";
+		return traverseToNextRoom(currentRoom.hasNorthDoor(), currentRoom.getNorthDoor());
 	}
 
+	/**
+	 * The player can travel south if there is door and the enemy is dead.
+	 * @return if there is a door to the south go through it if the enemy is dead.
+	 */
 	private String goSouth() {
-		return "goSouth";
+		return traverseToNextRoom(currentRoom.hasSouthDoor(), currentRoom.getSouthDoor());
 	}
 
+	/**
+	 * The player can travel west if there is door and the enemy is dead.
+	 * @return if there is a door to the west go through it if the enemy is dead.
+	 */
 	private String goWest() {
-		return "goWest";
+		return traverseToNextRoom(currentRoom.hasWestDoor(), currentRoom.getWestDoor());
 	}
 
+	/**
+	 * The player can travel east if there is door and the enemy is dead.
+	 * @return if there is a door to the east go through it if the enemy is dead.
+	 */
 	private String goEast() {
-		return "goEast";
+		return traverseToNextRoom(currentRoom.hasEastDoor(), currentRoom.getEastDoor());
 	}
 
 	private String attack() {
@@ -126,7 +156,7 @@ public final class MenaceGame implements Gamer {
 		return message.toString();
 	}
 
-	//  TODO: MAKE SHORE THAT HARAKIRE STOPS THE GAME
+	//  TODO: MAKE SURE THAT HARAKIRE STOPS THE GAME, IMPLEMENT TRUE COMMAND PATTERN FOR IT, CHANGE DATA STRUCTURE
 	/**
 	 * Commit harakiri. You will die. Sets the players isALife to false.
 	 * It is one of two was to quit the game.
@@ -138,7 +168,7 @@ public final class MenaceGame implements Gamer {
 	}
 
 	private String pickupWeapon() {
-		System.out.println(currentRoom.getItems().toString());
+//		System.out.println(currentRoom.getItems().toString());
 //		Weapon weapon = currentRoom.getItems().removeWeapon("Stick");
 //		currentRoom.getItems().add(player.getRightHandWeapon());
 //		player.setRightHandWeapon(weapon);

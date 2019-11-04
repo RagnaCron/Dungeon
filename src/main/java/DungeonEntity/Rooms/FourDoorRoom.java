@@ -13,24 +13,18 @@ import lombok.Setter;
  * @author Manuel Werder
  * @version 0.1
  */
+@Getter
+@Setter
 public final class FourDoorRoom extends Room {
 
-	@Setter
+	// TODO: JAVADOC
+
 	private Integer northDoor;
-	@Setter
 	private Integer southDoor;
-	@Setter
 	private Integer westDoor;
-	@Setter
 	private Integer eastDoor;
-
-	@Getter
 	private int currentRoomNumber;
-
-	@Getter
 	private ItemList items;
-	@Setter
-	@Getter
 	private Enemy enemy;
 
 	public FourDoorRoom(String roomName) {

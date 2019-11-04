@@ -13,5 +13,6 @@ import java.util.function.Supplier;
  * @version 0.1
  */
 public interface Gamer {
+	// TODO: JAVADOC
 	Supplier<String> playGame(String command);
 }

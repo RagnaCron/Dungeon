@@ -8,7 +8,7 @@ package Controller.Model;
  * @author Manuel Werder
  * @version 0.1
  */
-public enum ControllerState {
+public enum ControllerState { // TODO: // TODO: DOCUMENTATION
 	CHOOSING_STATE,
 	GAMING_STATE
 }

@@ -11,6 +11,8 @@ import Controller.DungeonController;
  */
 public final class MenaceGameMain {
 
+    // TODO: JAVADOC
+
     public static void main(String[] args) {
 
         DungeonController controller = new DungeonController();

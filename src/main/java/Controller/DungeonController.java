@@ -19,6 +19,8 @@ import java.util.function.Supplier;
  */
 public final class DungeonController extends Controller {
 
+	// TODO: JAVADOC
+
 	private UserCommandLineInterface userInterface;
 
 	/**

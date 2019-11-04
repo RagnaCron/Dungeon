@@ -16,6 +16,8 @@ import java.util.function.Supplier;
  */
 public abstract class Controller extends Command {
 
+	// TODO: JAVADOC
+
 	protected Map<String, Pair<ControllerState, Supplier<String>>> commands;
 	protected Map<String, Gamer> games;
 	protected Gamer game;
