@@ -25,16 +25,21 @@ public class SnakeDungeonGenerator {
 
 	private RoomList rooms = new RoomList();
 	private Random rand = new Random();
-	private ItemList items = new ItemList(
-			new Item[]{
-					new Potion("Small Potion", 3),
-					new Shield("Broken Shield", 4),
-			}
-	);
+	private Potion[] potions = {
+			new Potion("Water", 3),
+			new Potion("Small Potion", 4),
+			new Potion("Potion", 6),
+			new Potion("Big Potion", 8)
+	};
+	private Shield[] shields = {
+			new Shield("Broken Shield", 4),
+			new Shield("Shield", 5),
+			new Shield("Iron Shield", 6),
+	};
 	private Enemy[] enemies = {
-			new Enemy("Lazy Skeleton", true, 5, new Weapon("Stick", 3)),
-			new Enemy("Skeleton", true, 7, new Weapon("Wooden Sword", 5)),
-			new Enemy("Strong Skeleton", true, 5, new Weapon("Iron Sword", 7)),
+			new Enemy("Lazy Skeleton", true, 4, new Weapon("Stick", 3)),
+			new Enemy("Skeleton", true, 5, new Weapon("Wooden Sword", 5)),
+			new Enemy("Strong Skeleton", true, 7, new Weapon("Iron Sword", 7)),
 			new Enemy("Lazy Ork", true, 5, new Weapon("Strong Stick", 5)),
 			new Enemy("Ork", true, 5, new Weapon("Axe", 6)),
 	};
@@ -42,21 +47,18 @@ public class SnakeDungeonGenerator {
 	private Integer randomDoorDirection() {
 		return rand.nextInt(4);
 	}
-
-	private Item getRandomItem() {
-		return items.get(rand.nextInt(items.size()));
-	}
-
+	private Potion getRandomPotion() { return new Potion(potions[rand.nextInt(potions.length)]); }
+	private Shield getRandomShield() { return shields[rand.nextInt(shields.length)]; }
 	private Enemy getRandomEnemy() {
-		return  new Enemy(enemies[rand.nextInt(enemies.length )]);
+		return  new Enemy(enemies[rand.nextInt(enemies.length)]);
 	}
 
 	private void generateRooms() {
 		rooms = new RoomList();
 		for (int i = 0; i < 43; i++) {
 			ItemList itemList = new ItemList();
-			itemList.add(getRandomItem());
-			itemList.add(getRandomItem());
+			itemList.add(getRandomPotion());
+			itemList.add(getRandomShield());
 			rooms.add(new FourDoorRoom("Room " + i, i, getRandomEnemy(), itemList));
 		}
 	}

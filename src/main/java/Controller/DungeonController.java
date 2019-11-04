@@ -6,7 +6,6 @@ import Menace.MenaceGame;
 import UserInterface.UserCommandLineInterface;
 import javafx.util.Pair;
 
-import java.util.HashMap;
 import java.util.function.Supplier;
 
 
@@ -100,8 +99,8 @@ public final class DungeonController extends Controller {
 	 */
 	@Override
 	protected String playGame() {
-		games.keySet().forEach( (t) ->System.out.print("'" + t + "' "));
-		String gameName = userInterface.getInput("enter dungeon name> ");
+		games.keySet().forEach( (t) -> System.out.print("'" + t + "' "));
+		String gameName = userInterface.getInput("\nenter dungeon name> ");
 		game = games.get(gameName);
 		if (game == null) {
 			state = ControllerState.CHOOSING_STATE;

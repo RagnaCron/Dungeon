@@ -1,7 +1,6 @@
 package Menace;
 
 import Controller.Model.ControllerState;
-import DungeonEntity.Fighters.Enemy;
 import DungeonEntity.Fighters.Player;
 import DungeonEntity.Items.Weapon;
 import DungeonEntity.Rooms.DataStructure.RoomList;
@@ -40,6 +39,7 @@ public final class MenaceGame implements Gamer {
 		currentRoom = dungeon.get(0);
 		player = new Player(playerName);
 
+		// TODO: REFACTOR TO USE GAME LOOP AND PASS IN USER INTERFACE
 		commands = new HashMap<>();
 		commands.put("harakiri", new Pair<>(ControllerState.CHOOSING_STATE,this::harakiri));
 		commands.put("go north", new Pair<>(ControllerState.GAMING_STATE, this::goNorth));
@@ -67,9 +67,11 @@ public final class MenaceGame implements Gamer {
 	 */
 	@Override
 	public Pair<ControllerState, Supplier<String>> playGame(String command) {
-		Pair<ControllerState, Supplier<String>> com = commands.get(command);
-		if (player.isALife())
+		// TODO: CHANGE THIS TO USER GAME LOOP
+		if (player.isALife()) {
+			Pair<ControllerState, Supplier<String>> com = commands.get(command);
 			return com != null ? com : new Pair<>(ControllerState.GAMING_STATE, this::mmhNoCantDoThat);
+		}
 		return new Pair<>(ControllerState.CHOOSING_STATE, this::deathMessage);
 	}
 
@@ -150,7 +152,7 @@ public final class MenaceGame implements Gamer {
 			boolean enemyWillAttack = rand.nextBoolean();
 			boolean playerWillDefend = rand.nextBoolean();
 			if (!currentRoom.getEnemy().isALife()) {
-				currentRoom.getItems().add(new Weapon(currentRoom.getEnemy().getRightHandWeapon()));
+				currentRoom.getItems().add(currentRoom.getEnemy().getRightHandWeapon());
 				currentRoom.setEnemy(null);
 				return message.append(" is dead...").toString();
 			}
@@ -210,11 +212,6 @@ public final class MenaceGame implements Gamer {
 	}
 
 	private String pickupWeapon() {
-//		System.out.println(currentRoom.getItems().toString());
-//		Weapon weapon = currentRoom.getItems().removeWeapon("Stick");
-//		currentRoom.getItems().add(player.getRightHandWeapon());
-//		player.setRightHandWeapon(weapon);
-//		return "picked up " + weapon.toString();
 		return "picked up weapon";
 	}
 

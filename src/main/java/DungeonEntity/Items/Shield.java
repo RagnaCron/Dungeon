@@ -24,6 +24,14 @@ public class Shield extends Item {
     }
 
     /**
+     * This constructor is used to copy a shield.
+     * @param shield The Shield to copy.
+     */
+    public Shield(Shield shield) {
+        this(shield.getName(), shield.getDefensePoints());
+    }
+
+    /**
      * toString gives you a nice view of what a Shield is.
      * @return The nice and beauty.
      */

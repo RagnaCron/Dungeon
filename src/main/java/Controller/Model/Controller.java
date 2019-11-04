@@ -50,7 +50,7 @@ public abstract class Controller extends Command {
 	 * Lets give out a nice Greeting to the Player.
 	 *
 	 * @param name The name of the Player.
-	 * @return
+	 * @return A nice intro to the Player and the to commands 'help' and 'commands'.
 	 */
 	protected String helloGamer(String name) {
 		return "Hello " + name + ", welcome to a Text base Dungeon Crawler Game.\n" +
