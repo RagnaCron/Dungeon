@@ -76,8 +76,7 @@ public final class DungeonController extends Controller {
 					com =  new Pair<>(state, () -> wrongInput(command));
 				return com;
 			case GAMING_STATE:
-				com = new Pair<>(state, game.playGame(command));
-				return com;
+				return game.playGame(command);
 		}
 		return com;
 	}

@@ -1,11 +1,12 @@
 package Menace;
 
+import Controller.Model.ControllerState;
 import DungeonEntity.Fighters.Player;
 import DungeonEntity.Rooms.DataStructure.RoomList;
-import DungeonEntity.Rooms.Directions;
 import DungeonEntity.Rooms.FourDoorRoom;
 import GameInterface.Gamer;
 import Generator.SnakeDungeonGenerator;
+import javafx.util.Pair;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +29,7 @@ public final class MenaceGame implements Gamer {
 	private RoomList dungeon;
 	private Player player;
 	private FourDoorRoom currentRoom;
-	private Map<String, Supplier<String>> commands;
+	private Map<String, Pair<ControllerState, Supplier<String>>> commands;
 
 	private MenaceGame(String playerName) {
 		dungeon = new SnakeDungeonGenerator().generateSnakeDungeon();
@@ -36,18 +37,18 @@ public final class MenaceGame implements Gamer {
 		player = new Player(playerName);
 
 		commands = new HashMap<>();
-		commands.put("harakiri", this::harakiri);
-		commands.put("go north", this::goNorth);
-		commands.put("go south", this::goSouth);
-		commands.put("go west", this::goWest);
-		commands.put("go east", this::goEast);
-		commands.put("pickup weapon", this::pickupWeapon);
-		commands.put("pickup shield", this::pickupShield);
-		commands.put("pickup potion", this::pickupPotion);
-		commands.put("heal", this::heal);
-		commands.put("stats", this::stats);
-		commands.put("look", this::look);
-		commands.put("attack", this::attack);
+		commands.put("harakiri", new Pair<>(ControllerState.CHOOSING_STATE,this::harakiri));
+		commands.put("go north", new Pair<>(ControllerState.GAMING_STATE, this::goNorth));
+		commands.put("go south", new Pair<>(ControllerState.GAMING_STATE, this::goSouth));
+		commands.put("go west", new Pair<>(ControllerState.GAMING_STATE, this::goWest));
+		commands.put("go east", new Pair<>(ControllerState.GAMING_STATE, this::goEast));
+		commands.put("pickup weapon", new Pair<>(ControllerState.GAMING_STATE, this::pickupWeapon));
+		commands.put("pickup shield", new Pair<>(ControllerState.GAMING_STATE, this::pickupShield));
+		commands.put("pickup potion", new Pair<>(ControllerState.GAMING_STATE, this::pickupPotion));
+		commands.put("heal", new Pair<>(ControllerState.GAMING_STATE, this::heal));
+		commands.put("stats", new Pair<>(ControllerState.GAMING_STATE, this::stats));
+		commands.put("look", new Pair<>(ControllerState.GAMING_STATE, this::look));
+		commands.put("attack", new Pair<>(ControllerState.GAMING_STATE, this::attack));
 	}
 
 	// TODO: FACTORY PATTERN DOCUMENTATION
@@ -55,10 +56,15 @@ public final class MenaceGame implements Gamer {
 		return new MenaceGame(playerName);
 	}
 
+	/**
+	 * This is the soul Method to get a game command.
+	 * @param command The command to find.
+	 * @return Returns a controller state and a Method to be run be the Command Pattern.
+	 */
 	@Override
-	public Supplier<String> playGame(String command) {
-		Supplier<String> com = commands.get(command);
-		return com != null ? com : this::mmhNoCantDoThat;
+	public Pair<ControllerState, Supplier<String>> playGame(String command) {
+		Pair<ControllerState, Supplier<String>> com = commands.get(command);
+		return com != null ? com : new Pair<>(ControllerState.GAMING_STATE, this::mmhNoCantDoThat);
 	}
 
 	/**

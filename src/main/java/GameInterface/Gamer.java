@@ -1,7 +1,9 @@
 package GameInterface;
 
 import Commander.Command;
+import Controller.Model.ControllerState;
 import UserInterface.UserCommandLineInterface;
+import javafx.util.Pair;
 
 import java.util.function.Supplier;
 
@@ -13,6 +15,10 @@ import java.util.function.Supplier;
  * @version 0.1
  */
 public interface Gamer {
-	// TODO: JAVADOC
-	Supplier<String> playGame(String command);
+	/**
+	 * This is the soul Method to get a game command.
+	 * @param command The command to find.
+	 * @return Returns a controller state and a Method to be run be the Command Pattern.
+	 */
+	Pair<ControllerState, Supplier<String>> playGame(String command);
 }
