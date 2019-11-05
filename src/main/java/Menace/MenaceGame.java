@@ -7,6 +7,7 @@ import DungeonEntity.Rooms.DataStructure.RoomList;
 import DungeonEntity.Rooms.FourDoorRoom;
 import GameInterface.Gamer;
 import Generator.SnakeDungeonGenerator;
+import UserInterface.UserCommandLineInterface;
 import javafx.util.Pair;
 
 import java.util.HashMap;
@@ -31,48 +32,63 @@ public final class MenaceGame implements Gamer {
 	private RoomList dungeon;
 	private Player player;
 	private FourDoorRoom currentRoom;
-	private Map<String, Pair<ControllerState, Supplier<String>>> commands;
+	private Map<String, Supplier<String>> commands;
 	private static Random rand = new Random();
+	private UserCommandLineInterface userInterface;
+	private MenaceGameState state;
 
-	private MenaceGame(String playerName) {
+	public MenaceGame(String playerName, UserCommandLineInterface userInterface) {
 		dungeon = new SnakeDungeonGenerator().generateSnakeDungeon();
 		currentRoom = dungeon.get(0);
 		player = new Player(playerName);
+		this.userInterface = userInterface;
+		state = MenaceGameState.PLAYING;
 
 		// TODO: REFACTOR TO USE GAME LOOP AND PASS IN USER INTERFACE
 		commands = new HashMap<>();
-		commands.put("harakiri", new Pair<>(ControllerState.CHOOSING_STATE,this::harakiri));
-		commands.put("go north", new Pair<>(ControllerState.GAMING_STATE, this::goNorth));
-		commands.put("go south", new Pair<>(ControllerState.GAMING_STATE, this::goSouth));
-		commands.put("go west", new Pair<>(ControllerState.GAMING_STATE, this::goWest));
-		commands.put("go east", new Pair<>(ControllerState.GAMING_STATE, this::goEast));
-		commands.put("pickup weapon", new Pair<>(ControllerState.GAMING_STATE, this::pickupWeapon));
-		commands.put("pickup shield", new Pair<>(ControllerState.GAMING_STATE, this::pickupShield));
-		commands.put("pickup potion", new Pair<>(ControllerState.GAMING_STATE, this::pickupPotion));
-		commands.put("heal", new Pair<>(ControllerState.GAMING_STATE, this::heal));
-		commands.put("stats", new Pair<>(ControllerState.GAMING_STATE, this::stats));
-		commands.put("look", new Pair<>(ControllerState.GAMING_STATE, this::look));
-		commands.put("attack", new Pair<>(ControllerState.GAMING_STATE, this::attack));
+		commands.put("harakiri", this::harakiri);
+		commands.put("go north", this::goNorth);
+		commands.put("go south", this::goSouth);
+		commands.put("go west", this::goWest);
+		commands.put("go east", this::goEast);
+		commands.put("pickup weapon", this::pickupWeapon);
+		commands.put("pickup shield", this::pickupShield);
+		commands.put("pickup potion", this::pickupPotion);
+		commands.put("heal", this::heal);
+		commands.put("stats", this::stats);
+		commands.put("look", this::look);
+		commands.put("attack", this::attack);
 	}
 
-	// TODO: FACTORY PATTERN DOCUMENTATION
-	public static Gamer CreateNewMenaceGame(String playerName) {
-		return new MenaceGame(playerName);
-	}
+//	// TODO: FACTORY PATTERN DOCUMENTATION
+//	public static Gamer CreateNewMenaceGame(String playerName, UserCommandLineInterface userInterface) {
+//		return new MenaceGame(playerName, userInterface);
+//	}
 
 	/**
-	 * This is the soul Method to get a game command.
-	 * @param command The command to find.
-	 * @return Returns a controller state and a Method to be run be the Command Pattern.
+	 * This is the soul Method to start a game.
+	 * @return Gives a nice message about how the game ended.
 	 */
 	@Override
-	public Pair<ControllerState, Supplier<String>> playGame(String command) {
-		// TODO: CHANGE THIS TO USER GAME LOOP
-		if (player.isALife()) {
-			Pair<ControllerState, Supplier<String>> com = commands.get(command);
-			return com != null ? com : new Pair<>(ControllerState.GAMING_STATE, this::mmhNoCantDoThat);
+	public Supplier<String> playGame() {
+		while (player.isALife()) {
+			Supplier<String> func = getCommand(userInterface.getInput("menace dungeon> "));
+			switch (state) {
+				case PLAYING:
+					userInterface.println(func.get());
+					break;
+				case HARAKIRI:
+					return func;
+			}
 		}
-		return new Pair<>(ControllerState.CHOOSING_STATE, this::deathMessage);
+		return this::deathMessage;
+	}
+
+	private Supplier<String> getCommand(String command) {
+		if (command.equals("harakiri"))
+			state = MenaceGameState.HARAKIRI;
+		Supplier<String> com = commands.get(command);
+		return com != null ? com : this::mmhNoCantDoThat;
 	}
 
 	/**

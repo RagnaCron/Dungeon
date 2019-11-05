@@ -11,7 +11,7 @@ import java.util.function.Supplier;
  * @author Manuel Werder
  * @version 0.1
  */
-public abstract class Command {
+public abstract class Command<T, R> {
 	// TODO: DOCUMENT COMMAND PATTERN
 
 	/**
@@ -21,7 +21,7 @@ public abstract class Command {
 	 * @param command The Command to look up, for example in a HashMap.
 	 * @return A java Tuple.
 	 */
-	abstract protected Pair<ControllerState, Supplier<String>> getCommand(String command);
+	abstract protected Pair<T, R> getCommand(String command);
 
 	/**
 	 * With this Method we went to execute a given function.
@@ -29,6 +29,6 @@ public abstract class Command {
 	 * @param command Takes the function with no arguments and a String as Return value.
 	 * @return Returns a String from the function execution.
 	 */
-	abstract protected String executeCommand(Supplier<String> command);
+	abstract protected String executeCommand(R command);
 
 }
