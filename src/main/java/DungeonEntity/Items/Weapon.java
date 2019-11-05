@@ -37,7 +37,7 @@ public class Weapon extends Item {
      */
     @Override
     public String toString() {
-        String buildName = super.toString() + " has " + attackPoints + " attack ";
+        String buildName = super.toString() + " it has " + attackPoints + " attack ";
         if (attackPoints == 1) {
             return buildName + "point";
         }

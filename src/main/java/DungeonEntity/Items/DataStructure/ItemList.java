@@ -36,9 +36,9 @@ public class ItemList extends ArrayList<Item> {
 		StringBuilder buildItemList = new StringBuilder();
 		buildItemList.append("Items:\n");
 		for (Item item : this) {
-			buildItemList.append("\t").append(item.toString()).append("\n");
+			buildItemList.append(item.toString()).append("\n");
 		}
-		return new String(buildItemList);
+		return buildItemList.toString();
 	}
 
 	/**
@@ -67,6 +67,7 @@ public class ItemList extends ArrayList<Item> {
 	 */
 	public Weapon removeWeapon(String name) {
 		Item item = removeItem(name);
+		if (item == null) return null;
 		try {
 			Weapon weapon = (Weapon) item;
 			return weapon;
@@ -85,6 +86,7 @@ public class ItemList extends ArrayList<Item> {
 	 */
 	public Potion removePotion(String name) {
 		Item item = removeItem(name);
+		if (item == null) return null;
 		try {
 			Potion potion = (Potion) item;
 			return potion;
@@ -103,6 +105,7 @@ public class ItemList extends ArrayList<Item> {
 	 */
 	public Shield removeShield(String name) {
 		Item item = removeItem(name);
+		if (item == null) return null;
 		try {
 			Shield shield = (Shield) item;
 			return shield;

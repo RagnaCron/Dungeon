@@ -37,7 +37,7 @@ public class Shield extends Item {
      */
     @Override
     public String toString() {
-        String buildName = super.toString() + " has " + defensePoints + " defense ";
+        String buildName = super.toString() + " it has " + defensePoints + " defense ";
         if (defensePoints == 1) {
            return buildName + "point";
            }

@@ -39,7 +39,7 @@ public class Potion extends Item {
      */
     @Override
     public String toString() {
-        String buildName = super.toString() + " has " + lifePoints + " life ";
+        String buildName = super.toString() + " it has " + lifePoints + " life ";
         if (lifePoints == 1) {
             return buildName + "point";
         }

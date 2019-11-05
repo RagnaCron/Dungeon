@@ -1,14 +1,15 @@
 package Menace;
 
-import Controller.Model.ControllerState;
 import DungeonEntity.Fighters.Player;
+import DungeonEntity.Items.Base.Item;
+import DungeonEntity.Items.Potion;
+import DungeonEntity.Items.Shield;
 import DungeonEntity.Items.Weapon;
 import DungeonEntity.Rooms.DataStructure.RoomList;
 import DungeonEntity.Rooms.FourDoorRoom;
 import GameInterface.Gamer;
 import Generator.SnakeDungeonGenerator;
 import UserInterface.UserCommandLineInterface;
-import javafx.util.Pair;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +29,7 @@ import java.util.function.Supplier;
 public final class MenaceGame implements Gamer {
 
 	// TODO: JAVADOC
-
+	// TODO: MAKE A STATIC FUNCTION TO GET GAME DESCRIPTION ABOUT THE COMMANDS
 	private RoomList dungeon;
 	private Player player;
 	private FourDoorRoom currentRoom;
@@ -44,30 +45,25 @@ public final class MenaceGame implements Gamer {
 		this.userInterface = userInterface;
 		state = MenaceGameState.PLAYING;
 
-		// TODO: REFACTOR TO USE GAME LOOP AND PASS IN USER INTERFACE
 		commands = new HashMap<>();
 		commands.put("harakiri", this::harakiri);
 		commands.put("go north", this::goNorth);
 		commands.put("go south", this::goSouth);
 		commands.put("go west", this::goWest);
 		commands.put("go east", this::goEast);
-		commands.put("pickup weapon", this::pickupWeapon);
-		commands.put("pickup shield", this::pickupShield);
-		commands.put("pickup potion", this::pickupPotion);
+		commands.put("pickup item", this::pickupItem);
 		commands.put("heal", this::heal);
 		commands.put("stats", this::stats);
 		commands.put("look", this::look);
 		commands.put("attack", this::attack);
 	}
 
-//	// TODO: FACTORY PATTERN DOCUMENTATION
-//	public static Gamer CreateNewMenaceGame(String playerName, UserCommandLineInterface userInterface) {
-//		return new MenaceGame(playerName, userInterface);
-//	}
-
 	/**
-	 * This is the soul Method to start a game.
-	 * @return Gives a nice message about how the game ended.
+	 * This is the soul Method to start a game. This Games goes as long as the player is a life or
+	 * he commits harakiri...
+	 *
+	 * @return Gives a nice message about how the game ended and returns execution back to the
+	 * Controller if game is finished.
 	 */
 	@Override
 	public Supplier<String> playGame() {
@@ -84,6 +80,12 @@ public final class MenaceGame implements Gamer {
 		return this::deathMessage;
 	}
 
+	/**
+	 * Gets the command out of the HashMap<String, Supplier<String>>, makes a simple check if the player
+	 * committed Harakiri, if yes set game state to harakiri and return harakiri function.
+	 * @param command A command of type String to search as Key in a HashMap
+	 * @return Supplier that returns a String, is used for later execution.
+	 */
 	private Supplier<String> getCommand(String command) {
 		if (command.equals("harakiri"))
 			state = MenaceGameState.HARAKIRI;
@@ -227,16 +229,37 @@ public final class MenaceGame implements Gamer {
 		return "You have committed harakiri. You reached Room " + currentRoom.getCurrentRoomNumber();
 	}
 
-	private String pickupWeapon() {
-		return "picked up weapon";
-	}
-
-	private String pickupShield() {
-		return "picked up shield";
-	}
-
-	private String pickupPotion() {
-		return "picked up potion";
+	/**
+	 * Picks up an item of the given choosing. If the player holds a potion and the player picks up a potion, the potion
+	 * that is held by the player will be consumed. Shield and Weapon held by the player will be dropped and the
+	 * new Weapon or shield will be picked up.
+	 *
+	 * @return Gives a nice message about success or failure when picking up an item form the dungeon floor.
+	 */
+	private String pickupItem() {
+		if (currentRoom.hasEnemy())
+			return "You have to kill the enemy to collect items...";
+		currentRoom.getItems().forEach((i) -> userInterface.println(i.getName()));
+		String itemName = userInterface.getInput("enter item name> ");
+		Item item = currentRoom.getItems().removeItem(itemName);
+		if (item != null) {
+			StringBuilder builder = new StringBuilder(player.getName()).append(" you have picked up ");
+			if (item instanceof Weapon) {
+				currentRoom.getItems().add(player.getRightHandWeapon());
+				player.setRightHandWeapon((Weapon) item);
+				builder.append(player.getRightHandWeapon().toString());
+			} else if (item instanceof Shield) {
+				currentRoom.getItems().add(player.getLeftHandShield());
+				player.setLeftHandShield((Shield) item);
+				builder.append(player.getLeftHandShield().toString());
+			} else if (item instanceof Potion) {
+				player.heal();
+				player.setPotion((Potion) item);
+				builder.append(player.getPotion().toString());
+			}
+			return builder.toString();
+		}
+		return "mmh there is no " + itemName + "item...";
 	}
 
 }
