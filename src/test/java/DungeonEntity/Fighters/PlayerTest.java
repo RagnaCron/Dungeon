@@ -29,11 +29,11 @@ class PlayerTest {
 	void setUp() {
 		weapon = new Weapon("Sword", 10);
 		weapon1 = new Weapon("Long Sword", 20);
-		enemy = new Enemy("Ork", true, 10, weapon);
-		enemy1 = new Enemy("Big Ork", true, 10, weapon1);
+		shield = new Shield("Shield", 10);
+		enemy = new Enemy("Ork", true, 10, weapon, shield);
+		enemy1 = new Enemy("Big Ork", true, 10, weapon1, shield);
 		potion = new Potion("Potion", 10);
 		potion1 = new Potion("Big Potion", 20);
-		shield = new Shield("Shield", 10);
 		player = new Player("Manuel", true, 10, weapon, shield, potion);
 	}
 

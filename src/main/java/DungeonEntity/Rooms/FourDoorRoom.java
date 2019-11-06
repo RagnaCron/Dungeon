@@ -30,6 +30,9 @@ public final class FourDoorRoom extends Room {
 	public FourDoorRoom(String roomName) {
 		this(roomName, 0, null, null);
 	}
+	public FourDoorRoom(String roomName, int roomNumber) {
+		this(roomName, roomNumber, null, null);
+	}
 
 	public FourDoorRoom(String roomName, int roomNumber, Enemy enemy, ItemList items) {
 		this(roomName, roomNumber, enemy, items, null, null, null, null);
@@ -54,12 +57,16 @@ public final class FourDoorRoom extends Room {
 		if (hasSouthDoor()) buildDoorString.append("There is a door to the South").append("\n");
 		if (hasWestDoor()) buildDoorString.append("There is a door to the West").append("\n");
 		if (hasEastDoor()) buildDoorString.append("There is a door to the East").append("\n");
-		if (hasEnemy()) buildDoorString.append(enemy.toString()).append("\n");
-		if (!hasEnemy()) buildDoorString.append(items.toString());
+		if (hasEnemy() && isEnemyALife()) buildDoorString.append(enemy.toString()).append("\n");
+		if (!isEnemyALife() && hasItems()) buildDoorString.append(items.toString());
 		return buildDoorString.toString();
 	}
 
+	public boolean hasItems() { return items != null; }
+
 	public boolean hasEnemy() { return enemy != null; }
+
+	public boolean isEnemyALife() { return hasEnemy() && enemy.isALife(); }
 
 	public boolean hasNorthDoor() {
 		return northDoor != null;

@@ -7,6 +7,8 @@ import DungeonEntity.Items.Weapon;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Random;
+
 /**
  * The Player. This is the entity that the user gives command to.
  * The Player Class extends the LifeForm Class.
@@ -15,14 +17,16 @@ import lombok.Setter;
  * @author Manuel Werder
  * @version 0.1
  */
-@Setter
-@Getter
 public class Player extends LifeForm implements Healer, Attacker, Defender {
 
+    @Setter @Getter
     private Weapon rightHandWeapon;
+    @Setter @Getter
     private Shield leftHandShield;
+    @Setter @Getter
     private Potion potion;
 
+    private Random rand = new Random();
     /**
      *
      * @param name Name of the Player.
@@ -42,9 +46,9 @@ public class Player extends LifeForm implements Healer, Attacker, Defender {
     }
 
     public Player(String name) {
-        this(name, true, 5, new Weapon("Stick", 3),
-                new Shield("Wooden plank", 3),
-                new Potion("Water", 3));
+        this(name, true, 10, new Weapon("Stick", 4),
+                new Shield("Wooden plank", 5),
+                new Potion("Water", 5));
     }
 
     /**
@@ -71,8 +75,7 @@ public class Player extends LifeForm implements Healer, Attacker, Defender {
      */
     @Override
     public void attack(LifeForm defender) {
-        if (hasWeapon())
-            defender.loseLifePoints(rightHandWeapon.getAttackPoints());
+        defender.loseLifePoints(rightHandWeapon.getAttackPoints());
     }
 
     /**
@@ -82,15 +85,21 @@ public class Player extends LifeForm implements Healer, Attacker, Defender {
      */
     @Override
     public void defend(LifeForm attacker) {
+
         try {
             Enemy enemy = (Enemy) attacker;
-            if (hasShield() && leftHandShield.getDefensePoints() < enemy.getRightHandWeapon().getAttackPoints()) {
-                int lifePointsToLose = enemy.getRightHandWeapon().getAttackPoints() - leftHandShield.getDefensePoints();
-                loseLifePoints(lifePointsToLose);
+            if (rand.nextBoolean()) {
+                if (hasShield() && leftHandShield.getDefensePoints() < enemy.getRightHandWeapon().getAttackPoints()) {
+                    int lifePointsToLose = enemy.getRightHandWeapon().getAttackPoints() - leftHandShield.getDefensePoints();
+                    loseLifePoints(lifePointsToLose);
+                }
+            } else {
+                loseLifePoints(enemy.getRightHandWeapon().getAttackPoints());
             }
         } catch (ClassCastException e) {
             // Currently we don't care
         }
+
     }
 
     /**

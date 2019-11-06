@@ -13,12 +13,11 @@ import lombok.Setter;
  * @version 0.1
  */
 @Getter
+@Setter
 public abstract class LifeForm {
 
-    protected final String name;
-    @Setter
+    protected String name;
     protected boolean isALife;
-    @Setter
     protected int lifePoints;
 
     /**

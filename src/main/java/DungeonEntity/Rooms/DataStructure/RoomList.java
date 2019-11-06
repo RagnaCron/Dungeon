@@ -41,4 +41,8 @@ public class RoomList extends ArrayList<FourDoorRoom> {
 		return buildItemList.toString();
 	}
 
+	public FourDoorRoom first() {
+		return get(0);
+	}
+
 }
