@@ -36,7 +36,7 @@ public class ItemList extends ArrayList<Item> {
 		StringBuilder buildItemList = new StringBuilder();
 		buildItemList.append("Items:\n");
 		for (Item item : this) {
-			buildItemList.append(item.toString()).append("\n");
+			buildItemList.append("\t").append(item.toString()).append("\n");
 		}
 		return buildItemList.toString();
 	}

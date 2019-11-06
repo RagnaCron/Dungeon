@@ -27,7 +27,7 @@ class WeaponTest {
 
 	@Test
 	void testToString() {
-		String expected = "Sword has 10 attack points";
+		String expected = "Sword it has 10 attack points";
 		assertEquals(expected, weapon.toString());
 	}
 }

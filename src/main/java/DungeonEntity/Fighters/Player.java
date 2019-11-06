@@ -54,7 +54,7 @@ public class Player extends LifeForm implements Healer, Attacker, Defender {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder(super.toString());
-        if (hasPotion()) builder.append(", \n").append(potion.toString());
+        if (hasPotion()) builder.append(",\n").append(potion.toString());
         else builder.append(",\n").append("no potion");
         builder.append(",\nright hand: ")
                 .append(rightHandWeapon.toString())
