@@ -39,7 +39,7 @@ public final class MenaceGame implements Gamer {
 	private MenaceGameState state;
 
 	public MenaceGame(String playerName, UserCommandLineInterface userInterface) {
-		dungeon = new SnakeDungeonGenerator().generateSnakeDungeon();
+		dungeon = new SnakeDungeonGenerator().getDungeon();
 		currentRoom = dungeon.get(0);
 		player = new Player(playerName);
 		this.userInterface = userInterface;

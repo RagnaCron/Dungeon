@@ -19,7 +19,7 @@ import java.util.Random;
  * @author Manuel Werder
  * @version 0.1
  */
-public class SnakeDungeonGenerator {
+public final class SnakeDungeonGenerator extends DungeonGenerator {
 
 	// TODO: JAVADOC
 
@@ -53,18 +53,20 @@ public class SnakeDungeonGenerator {
 		return  new Enemy(enemies[rand.nextInt(enemies.length)]);
 	}
 
-	private void generateRooms() {
+	@Override
+	protected void generateRooms(int count) {
 		rooms = new RoomList();
-		for (int i = 0; i < 43; i++) {
+		for (int i = 0; i < count; i++) {
 			ItemList itemList = new ItemList();
 			itemList.add(getRandomPotion());
 			itemList.add(getRandomShield());
-			rooms.add(new FourDoorRoom("Room " + i, i, getRandomEnemy(), itemList));
+			rooms.add(new FourDoorRoom("Room " + (i + 1), i, getRandomEnemy(), itemList));
 		}
 	}
 
-	public RoomList generateSnakeDungeon() {
-		generateRooms();
+	@Override
+	public RoomList getDungeon() {
+		generateRooms(10);
 		connectRooms();
 		return rooms;
 	}
@@ -96,20 +98,21 @@ public class SnakeDungeonGenerator {
 	private void setDoorDirection(Integer direction, FourDoorRoom currentRoom, FourDoorRoom nextRoom) {
 		if (direction == 0) {
 			currentRoom.setNorthDoor(nextRoom.getCurrentRoomNumber());
-			nextRoom.setSouthDoor(currentRoom.getCurrentRoomNumber());
+//			nextRoom.setSouthDoor(currentRoom.getCurrentRoomNumber());
 		}
 		if (direction == 1) {
 			currentRoom.setSouthDoor(nextRoom.getCurrentRoomNumber());
-			nextRoom.setNorthDoor(currentRoom.getCurrentRoomNumber());
+//			nextRoom.setNorthDoor(currentRoom.getCurrentRoomNumber());
 		}
 		if (direction == 2) {
 			currentRoom.setWestDoor(nextRoom.getCurrentRoomNumber());
-			nextRoom.setEastDoor(currentRoom.getCurrentRoomNumber());
+//			nextRoom.setEastDoor(currentRoom.getCurrentRoomNumber());
 		}
 		if (direction == 3) {
 			currentRoom.setEastDoor(nextRoom.getCurrentRoomNumber());
-			nextRoom.setWestDoor(currentRoom.getCurrentRoomNumber());
+//			nextRoom.setWestDoor(currentRoom.getCurrentRoomNumber());
 		}
 	}
+
 
 }
