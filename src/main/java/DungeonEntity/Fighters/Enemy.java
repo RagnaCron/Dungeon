@@ -54,7 +54,8 @@ public class Enemy extends LifeForm implements Attacker, Defender {
      */
     @Override
     public String toString() {
-        return super.toString() + ", \nright hand: " + rightHandWeapon.toString();
+        return super.toString() + ", \nright hand: " + rightHandWeapon.toString() +
+                "\nleft hand: " + leftHandShield.toString();
     }
 
     /**

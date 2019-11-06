@@ -81,7 +81,7 @@ public class MenaceDungeon extends Dungeon{
 
 	private void resetEnemy(Enemy enemy) {
 		enemy.setALife(true);
-		enemy.setName(enemyNames[rand.nextInt(currentRoom.getCurrentRoomNumber())]);
+		enemy.setName(enemyNames[rand.nextInt(enemyNames.length)]);
 		enemy.setRightHandWeapon(createWeapon());
 		enemy.setLeftHandShield(createShield());
 	}
