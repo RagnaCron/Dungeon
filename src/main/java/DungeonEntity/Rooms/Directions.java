@@ -6,7 +6,7 @@ package DungeonEntity.Rooms;
  * @author Manuel Werder
  * @version 0.1
  */
-public enum Door {
+public enum Directions {
 	NORTH_DOOR,
 	SOUTH_DOOR,
 	WEST_DOOR,

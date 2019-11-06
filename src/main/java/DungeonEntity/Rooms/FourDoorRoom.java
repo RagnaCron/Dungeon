@@ -13,26 +13,18 @@ import lombok.Setter;
  * @author Manuel Werder
  * @version 0.1
  */
+@Getter
+@Setter
 public final class FourDoorRoom extends Room {
 
-	private Door northDoor;
-	private Door southDoor;
-	private Door westDoor;
-	private Door eastDoor;
+	// TODO: JAVADOC
 
-	@Getter
+	private Integer northDoor;
+	private Integer southDoor;
+	private Integer westDoor;
+	private Integer eastDoor;
 	private int currentRoomNumber;
-	@Setter
-	@Getter
-	private int lastRoomNumber;
-	@Setter
-	@Getter
-	private int nextRoomNumber;
-
-	@Getter
 	private ItemList items;
-	@Setter
-	@Getter
 	private Enemy enemy;
 
 	public FourDoorRoom(String roomName) {
@@ -44,7 +36,7 @@ public final class FourDoorRoom extends Room {
 	}
 
 	public FourDoorRoom(String roomName, int roomNumber, Enemy enemy, ItemList items,
-						Door northDoor , Door southDoor, Door westDoor, Door eastDoor) {
+	                    Integer northDoor , Integer southDoor, Integer westDoor, Integer eastDoor) {
 		super(roomName);
 		this.currentRoomNumber = roomNumber;
 		this.northDoor = northDoor;
@@ -53,20 +45,21 @@ public final class FourDoorRoom extends Room {
 		this.eastDoor = eastDoor;
 		this.enemy = enemy;
 		this.items = items;
-		this.lastRoomNumber = 0;
-		this.nextRoomNumber = 0;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder buildDoorString = new StringBuilder(super.toString()).append(":\n");
-		if (hasNorthDoor()) buildDoorString.append("\t").append(northDoor.toString()).append("\n");
-		if (hasSouthDoor()) buildDoorString.append("\t").append(southDoor.toString()).append("\n");
-		if (hasWestDoor()) buildDoorString.append("\t").append(westDoor.toString()).append("\n");
-		if (hasEastDoor()) buildDoorString.append("\t").append(eastDoor.toString()).append("\n");
-		buildDoorString.append("\t").append(enemy.getName());
+		if (hasNorthDoor()) buildDoorString.append("There is a door to the North").append("\n");
+		if (hasSouthDoor()) buildDoorString.append("There is a door to the South").append("\n");
+		if (hasWestDoor()) buildDoorString.append("There is a door to the West").append("\n");
+		if (hasEastDoor()) buildDoorString.append("There is a door to the East").append("\n");
+		if (hasEnemy()) buildDoorString.append(enemy.toString()).append("\n");
+		if (!hasEnemy()) buildDoorString.append(items.toString());
 		return buildDoorString.toString();
 	}
+
+	public boolean hasEnemy() { return enemy != null; }
 
 	public boolean hasNorthDoor() {
 		return northDoor != null;
@@ -82,31 +75,6 @@ public final class FourDoorRoom extends Room {
 
 	public boolean hasEastDoor() {
 		return eastDoor != null;
-	}
-
-	public void setDoorDirection(Door direction, FourDoorRoom nextRoom) {
-		switch (direction){
-			case NORTH_DOOR:
-				northDoor = Door.SOUTH_DOOR;
-				nextRoom.setLastRoomNumber(currentRoomNumber);
-				nextRoomNumber = nextRoom.getCurrentRoomNumber();
-				break;
-			case SOUTH_DOOR:
-				southDoor = Door.NORTH_DOOR;
-				nextRoom.setLastRoomNumber(currentRoomNumber);
-				nextRoomNumber = nextRoom.getCurrentRoomNumber();
-				break;
-			case WEST_DOOR:
-				westDoor = Door.EAST_DOOR;
-				nextRoom.setLastRoomNumber(currentRoomNumber);
-				nextRoomNumber = nextRoom.getCurrentRoomNumber();
-				break;
-			case EAST_DOOR:
-				eastDoor = Door.WEST_DOOR;
-				nextRoom.setLastRoomNumber(currentRoomNumber);
-				nextRoomNumber = nextRoom.getCurrentRoomNumber();
-				break;
-		}
 	}
 
 }

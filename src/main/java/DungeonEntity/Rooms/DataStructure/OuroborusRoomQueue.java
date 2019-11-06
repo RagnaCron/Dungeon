@@ -4,6 +4,8 @@ import DungeonEntity.Rooms.Base.Queue;
 
 public class OuroborusRoomQueue<T> implements Queue<T> {
 
+	// TODO: JAVADOC
+
 	private int front, rear;
 
 	private T[] queue;

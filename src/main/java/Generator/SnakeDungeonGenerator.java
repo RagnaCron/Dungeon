@@ -7,7 +7,6 @@ import DungeonEntity.Items.Potion;
 import DungeonEntity.Items.Shield;
 import DungeonEntity.Items.Weapon;
 import DungeonEntity.Rooms.DataStructure.RoomList;
-import DungeonEntity.Rooms.Door;
 import DungeonEntity.Rooms.FourDoorRoom;
 
 import java.util.Random;
@@ -22,50 +21,44 @@ import java.util.Random;
  */
 public class SnakeDungeonGenerator {
 
+	// TODO: JAVADOC
 
 	private RoomList rooms = new RoomList();
-
 	private Random rand = new Random();
-	private ItemList items = new ItemList(
-			new Item[]{
-					new Potion("Small Potion", 3),
-					new Shield("Broken Shield", 4),
-					new Weapon("Sword", 6)
-			}
-	);
+	private Potion[] potions = {
+			new Potion("Water", 3),
+			new Potion("Small Potion", 4),
+			new Potion("Potion", 6),
+			new Potion("Big Potion", 8)
+	};
+	private Shield[] shields = {
+			new Shield("Broken Shield", 4),
+			new Shield("Shield", 5),
+			new Shield("Iron Shield", 6),
+	};
 	private Enemy[] enemies = {
-			new Enemy("Lazy Skeleton", true, 5, new Weapon("Stick", 3)),
-			new Enemy("Skeleton", true, 7, new Weapon("Wooden Sword", 5)),
-			new Enemy("Strong Skeleton", true, 5, new Weapon("Iron Sword", 7)),
+			new Enemy("Lazy Skeleton", true, 4, new Weapon("Stick", 3)),
+			new Enemy("Skeleton", true, 5, new Weapon("Wooden Sword", 5)),
+			new Enemy("Strong Skeleton", true, 7, new Weapon("Iron Sword", 7)),
 			new Enemy("Lazy Ork", true, 5, new Weapon("Strong Stick", 5)),
 			new Enemy("Ork", true, 5, new Weapon("Axe", 6)),
 	};
 
-	private Door randomDoorDirection() {
-		int i = rand.nextInt(4);
-		switch (i) {
-			case 0: return Door.NORTH_DOOR;
-			case 1: return Door.SOUTH_DOOR;
-			case 2: return Door.WEST_DOOR;
-			case 3: return Door.EAST_DOOR;
-			default: return null;
-		}
+	private Integer randomDoorDirection() {
+		return rand.nextInt(4);
 	}
-
-	private Item getRandomItem() {
-		return items.get(rand.nextInt(items.size()));
-	}
-
+	private Potion getRandomPotion() { return new Potion(potions[rand.nextInt(potions.length)]); }
+	private Shield getRandomShield() { return shields[rand.nextInt(shields.length)]; }
 	private Enemy getRandomEnemy() {
-		return enemies[rand.nextInt(enemies.length )];
+		return  new Enemy(enemies[rand.nextInt(enemies.length)]);
 	}
 
 	private void generateRooms() {
 		rooms = new RoomList();
 		for (int i = 0; i < 43; i++) {
 			ItemList itemList = new ItemList();
-			itemList.add(getRandomItem());
-			itemList.add(getRandomItem());
+			itemList.add(getRandomPotion());
+			itemList.add(getRandomShield());
 			rooms.add(new FourDoorRoom("Room " + i, i, getRandomEnemy(), itemList));
 		}
 	}
@@ -78,13 +71,13 @@ public class SnakeDungeonGenerator {
 
 	private void connectRooms() {
 		int currentRoomNumber = 0;
-		while (true) { // TODO: MAKE DO WHILE OUT OF IT, USE SECOND IF STATEMENT FOR CHECK
-			FourDoorRoom room = rooms.get(currentRoomNumber);
-			Door direction = randomDoorDirection();
-			if (direction != null && checkDoorToNextRoom(room, direction)) {
+		while (true) {
+			FourDoorRoom currentRoom = rooms.get(currentRoomNumber);
+			Integer direction = randomDoorDirection();
+			if (checkDoorToNextRoom(direction, currentRoom)) {
 				if (currentRoomNumber + 1 < rooms.size() - 2) {
 					FourDoorRoom nextRoom = rooms.get(currentRoomNumber + 1);
-					room.setDoorDirection(direction, nextRoom);
+					setDoorDirection(direction, currentRoom, nextRoom);
 					currentRoomNumber++;
 				}
 				else return;
@@ -92,15 +85,31 @@ public class SnakeDungeonGenerator {
 		}
 	}
 
-	private boolean checkDoorToNextRoom(FourDoorRoom room, Door direction) {
-		switch (direction) {
-			case NORTH_DOOR: return !room.hasNorthDoor();
-			case SOUTH_DOOR: return !room.hasSouthDoor();
-			case WEST_DOOR: return !room.hasWestDoor();
-			case EAST_DOOR: return !room.hasEastDoor();
-			default: return false;
-		}
+	private boolean checkDoorToNextRoom(Integer direction, FourDoorRoom currentRoom) {
+		if (direction == 0 && !currentRoom.hasNorthDoor()) return true;
+		if (direction == 1 && !currentRoom.hasSouthDoor()) return true;
+		if (direction == 2 && !currentRoom.hasWestDoor()) return true;
+		if (direction == 3 && !currentRoom.hasEastDoor()) return true;
+		return false;
 	}
 
+	private void setDoorDirection(Integer direction, FourDoorRoom currentRoom, FourDoorRoom nextRoom) {
+		if (direction == 0) {
+			currentRoom.setNorthDoor(nextRoom.getCurrentRoomNumber());
+			nextRoom.setSouthDoor(currentRoom.getCurrentRoomNumber());
+		}
+		if (direction == 1) {
+			currentRoom.setSouthDoor(nextRoom.getCurrentRoomNumber());
+			nextRoom.setNorthDoor(currentRoom.getCurrentRoomNumber());
+		}
+		if (direction == 2) {
+			currentRoom.setWestDoor(nextRoom.getCurrentRoomNumber());
+			nextRoom.setEastDoor(currentRoom.getCurrentRoomNumber());
+		}
+		if (direction == 3) {
+			currentRoom.setEastDoor(nextRoom.getCurrentRoomNumber());
+			nextRoom.setWestDoor(currentRoom.getCurrentRoomNumber());
+		}
+	}
 
 }

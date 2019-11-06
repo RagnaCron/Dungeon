@@ -22,14 +22,22 @@ public class Shield extends Item {
         super(name);
         this.defensePoints = defensePoints;
     }
-    
+
+    /**
+     * This constructor is used to copy a shield.
+     * @param shield The Shield to copy.
+     */
+    public Shield(Shield shield) {
+        this(shield.getName(), shield.getDefensePoints());
+    }
+
     /**
      * toString gives you a nice view of what a Shield is.
      * @return The nice and beauty.
      */
     @Override
     public String toString() {
-        String buildName = super.toString() + " has " + defensePoints + " defense ";
+        String buildName = super.toString() + " it has " + defensePoints + " defense ";
         if (defensePoints == 1) {
            return buildName + "point";
            }

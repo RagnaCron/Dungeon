@@ -26,12 +26,20 @@ public class Potion extends Item {
     }
 
     /**
+     * This constructor is used to copy a potion.
+     * @param potion The Potion to copy.
+     */
+    public Potion(Potion potion) {
+        this(potion.getName(), potion.getLifePoints());
+    }
+
+    /**
      * toString gives you a nice view of what a Potion is.
      * @return The nice and beauty.
      */
     @Override
     public String toString() {
-        String buildName = super.toString() + " has " + lifePoints + " life ";
+        String buildName = super.toString() + " it has " + lifePoints + " life ";
         if (lifePoints == 1) {
             return buildName + "point";
         }

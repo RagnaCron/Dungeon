@@ -37,7 +37,7 @@ class EnemyTest {
 
 	@Test
 	void testToString() {
-		String expected = "Ork has 10 life points, \nright hand: Sword has 10 attack points";
+		String expected = "Ork has 10 life points, \nright hand: Sword it has 10 attack points";
 		assertEquals(expected, enemy.toString());
 	}
 

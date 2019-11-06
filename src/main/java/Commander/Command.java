@@ -1,34 +1,35 @@
 package Commander;
 
-import Controller.Model.ControllerState;
 import javafx.util.Pair;
-
-import java.util.function.Supplier;
 
 /**
  * The abstract class Command builds the basis for the Command Pattern.
  *
+ * @param <T> Any Type that makes sens.
+ * @param <R> Any Type that makes sens that you want to return.
+ *
  * @author Manuel Werder
  * @version 0.1
  */
-public abstract class Command {
+public abstract class Command<T, R> {
 	// TODO: DOCUMENT COMMAND PATTERN
+	// TODO: JAVADOC
 
 	/**
 	 * With this Method we want to get a command out of an HashMap or
 	 * what ever fits the needs.
 	 *
 	 * @param command The Command to look up, for example in a HashMap.
-	 * @return A java Tuple.
+	 * @return A java Tuple
 	 */
-	abstract protected Pair<ControllerState, Supplier<String>> getCommand(String command);
+	abstract protected Pair<T, R> getCommand(String command);
 
 	/**
-	 * With this Method we went to execute a given function.
+	 * With this Method we went to execute a given R Function.
 	 *
-	 * @param command Takes the function with no arguments and a String as Return value.
-	 * @return Returns a String from the function execution.
+	 * @param command Takes the R.
+	 * @return Returns a String from the R Type execution.
 	 */
-	abstract protected String executeCommand(Supplier<String> command);
+	abstract protected String executeCommand(R command);
 
 }

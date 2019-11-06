@@ -2,6 +2,7 @@ package Controller.Model;
 
 import Commander.Command;
 import GameInterface.Gamer;
+import UserInterface.UserCommandLineInterface;
 import javafx.util.Pair;
 
 import java.util.HashMap;
@@ -14,10 +15,12 @@ import java.util.function.Supplier;
  * @author Manuel Werder
  * @version 0.1
  */
-public abstract class Controller extends Command {
+public abstract class Controller extends Command<ControllerState, Supplier<String>> {
+
+	// TODO: JAVADOC
 
 	protected Map<String, Pair<ControllerState, Supplier<String>>> commands;
-	protected Map<String, Gamer> games;
+	protected Map<String, Function<String, UserCommandLineInterface, Gamer>> games;
 	protected Gamer game;
 	protected String playerName;
 	protected ControllerState state;
@@ -48,12 +51,12 @@ public abstract class Controller extends Command {
 	 * Lets give out a nice Greeting to the Player.
 	 *
 	 * @param name The name of the Player.
-	 * @return
+	 * @return A nice intro to the Player and the to commands 'help' and 'commands'.
 	 */
 	protected String helloGamer(String name) {
 		return "Hello " + name + ", welcome to a Text base Dungeon Crawler Game.\n" +
 				"Enter the command 'help' to see some basic infos.\n" +
-				name + " you are at the beginning of you journey enter 'commands' to see" +
+				name + " you are at the beginning of you journey enter 'commands' to see\n" +
 				"what is possible at the Dungeon Portal.";
 	}
 

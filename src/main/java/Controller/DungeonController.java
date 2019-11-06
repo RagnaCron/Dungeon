@@ -2,11 +2,12 @@ package Controller;
 
 import Controller.Model.Controller;
 import Controller.Model.ControllerState;
+import Controller.Model.Function;
+import GameInterface.Gamer;
 import Menace.MenaceGame;
 import UserInterface.UserCommandLineInterface;
 import javafx.util.Pair;
 
-import java.util.HashMap;
 import java.util.function.Supplier;
 
 
@@ -18,6 +19,8 @@ import java.util.function.Supplier;
  * @version 0.1
  */
 public final class DungeonController extends Controller {
+
+	// TODO: JAVADOC
 
 	private UserCommandLineInterface userInterface;
 
@@ -31,7 +34,7 @@ public final class DungeonController extends Controller {
 		playerName = userInterface.getInput("Hello, enter your name> ");
 		userInterface.println(helloGamer(playerName));
 
-		games.put("menace", MenaceGame.CreateNewMenaceGame(playerName));
+		games.put("menace", MenaceGame::new);
 	}
 
 	/**
@@ -46,7 +49,9 @@ public final class DungeonController extends Controller {
 					state = controlCommand("dungeon portal> ");
 					break;
 				case GAMING_STATE:
-					state = controlCommand("exploring dungeon> ");
+					userInterface.println(executeCommand(game.playGame()));
+					state = ControllerState.CHOOSING_STATE;
+					game = null;
 					break;
 			}
 		}
@@ -67,17 +72,9 @@ public final class DungeonController extends Controller {
 	@Override
 	protected Pair<ControllerState, Supplier<String>> getCommand(String command) {
 		Pair<ControllerState, Supplier<String>> com = null;
-		switch (state) {
-			case CHOOSING_STATE:
-				com = commands.get(command);
-				if (com == null)
-					com =  new Pair<>(state, () -> wrongInput(command));
-				return com;
-			case GAMING_STATE:
-				com = new Pair<>(state, game.playGame(command));
-				return com;
-		}
-		return com;
+		if (state == ControllerState.CHOOSING_STATE)
+			com = commands.get(command);
+		return com != null ? com : new Pair<>(state, () -> wrongInput(command));
 	}
 
 	/**
@@ -99,13 +96,14 @@ public final class DungeonController extends Controller {
 	 */
 	@Override
 	protected String playGame() {
-		games.keySet().forEach( (t) ->System.out.print("'" + t + "' "));
-		String gameName = userInterface.getInput("enter dungeon name> ");
-		game = games.get(gameName);
-		if (game == null) {
+		games.keySet().forEach( (t) -> System.out.print("'" + t + "' "));
+		String gameName = userInterface.getInput("\nenter dungeon name> ");
+		Function<String, UserCommandLineInterface, Gamer> g = games.get(gameName);
+		if (g == null) {
 			state = ControllerState.CHOOSING_STATE;
 			return "There is no dungeon '" + gameName + "' to explore...";
 		}
+		game = g.execute(playerName, userInterface);
 		return playerName + " you have entered the " + gameName + " dungeon...good luck!";
 	}
 
