@@ -85,7 +85,6 @@ public class Player extends LifeForm implements Healer, Attacker, Defender {
      */
     @Override
     public void defend(LifeForm attacker) {
-
         try {
             Enemy enemy = (Enemy) attacker;
             if (rand.nextBoolean()) {
@@ -99,7 +98,6 @@ public class Player extends LifeForm implements Healer, Attacker, Defender {
         } catch (ClassCastException e) {
             // Currently we don't care
         }
-
     }
 
     /**
