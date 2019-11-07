@@ -46,6 +46,7 @@ public class MenaceDungeon extends Dungeon{
 		for (int i = 0; i < rooms.size(); i++) {
 			FourDoorRoom room = rooms.get(i);
 			room.setItems(new ItemList());
+			room.setCurrentRoomNumber(i + 1);
 			if (i == 4 || i == 9) {
 				room.getItems().add(createPotion(room.getCurrentRoomNumber()));
 			}
@@ -63,9 +64,10 @@ public class MenaceDungeon extends Dungeon{
 			room.setItems(new ItemList());
 			room.setCurrentRoomNumber(room.getCurrentRoomNumber() + 10);
 			room.setRoomName("Room " + room.getCurrentRoomNumber());
-			if (i == 4 || i == 9) {
+			if (i % 4 == 0 || i % 10 == 0) {
 				room.getItems().add(createPotion(room.getCurrentRoomNumber()));
 			}
+			else
 			resetEnemy(room.getEnemy(), room.getCurrentRoomNumber());
 		}
 	}
@@ -73,8 +75,11 @@ public class MenaceDungeon extends Dungeon{
 	@Override
 	public void dropEnemyItems() {
 		// TODO: NEW DROP SYSTEM
-		if (currentRoom.getCurrentRoomNumber() % 5 == 0) {
+		if (currentRoom.getCurrentRoomNumber() % 4 == 0) {
 			currentRoom.getItems().add(currentRoom.getItems().size(), currentRoom.getEnemy().getRightHandWeapon());
+		}
+		else if (currentRoom.getCurrentRoomNumber() % 3 == 0) {
+			currentRoom.getItems().add(currentRoom.getItems().size(), currentRoom.getEnemy().getLeftHandShield());
 		}
 		else if (currentRoom.getCurrentRoomNumber() % 10 == 0) {
 			currentRoom.getItems().add(currentRoom.getItems().size(), currentRoom.getEnemy().getRightHandWeapon());
@@ -91,7 +96,7 @@ public class MenaceDungeon extends Dungeon{
 
 	private Potion createPotion(int roomNumber) {
 		return new Potion(potionNames[rand.nextInt(potionNames.length)],
-				(roomNumber + 1) * 3 / 2);
+				(roomNumber + 2) * 2 + 1);
 	}
 
 	private Weapon createWeapon(int roomNumber) {
