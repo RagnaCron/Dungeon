@@ -27,7 +27,24 @@ import java.util.function.Supplier;
 public final class MenaceGame implements Gamer {
 
 	// TODO: JAVADOC
-	// TODO: MAKE A STATIC FUNCTION TO GET GAME DESCRIPTION ABOUT THE COMMANDS
+
+	public static String GAME_DESCRIPTION() {
+		return "The Menace Dungeon.\nIt is a dungeon that only knows one way...\n" +
+				"kill the enemy, collect items if any were dropped and go to the next room.\n" +
+				"You will start with 100 life points. Try to survive as long as you can.\n" +
+				"The Menace Dungeon knows no end...except you commit harakiri or get killed by an enemy.\n" +
+				"When you start the game, you should now the commands, as there is now voice that can tell you...\n" +
+				"Entering a wrong command will bring the enemy upon you...\n" +
+				"Those are the available Menace Dungeon Commands:\n" +
+				"'harakiri' - to commit suicide,\n" +
+				"'fight' - enters the fighting action with the enemy, \n" +
+				"'look' - to have a look at the room,\n" +
+				"'stats' - to see owe you are doing,\n" +
+				"'heal' - to heal yourself,\n" +
+				"'pickup item' - you can pick up items when the enemy is dead,\n"+
+				"'go <direction>' - brings you to a new room";
+	}
+
 	private Dungeon dungeon;
 	private Player player;
 	private Map<String, Supplier<String>> commands;

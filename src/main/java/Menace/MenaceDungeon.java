@@ -74,7 +74,6 @@ public class MenaceDungeon extends Dungeon{
 
 	@Override
 	public void dropEnemyItems() {
-		// TODO: NEW DROP SYSTEM
 		if (currentRoom.getCurrentRoomNumber() % 4 == 0) {
 			currentRoom.getItems().add(currentRoom.getItems().size(), currentRoom.getEnemy().getRightHandWeapon());
 		}

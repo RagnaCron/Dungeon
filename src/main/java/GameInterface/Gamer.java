@@ -14,9 +14,11 @@ import java.util.function.Supplier;
  * @version 0.1
  */
 public interface Gamer {
+
 	/**
 	 * This is the soul Method to start a game.
 	 * @return Gives a nice message about how the game ended.
 	 */
 	Supplier<String> playGame();
+
 }

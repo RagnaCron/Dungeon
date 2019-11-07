@@ -48,6 +48,9 @@ public final class DungeonController extends Controller {
 				case CHOOSING_STATE:
 					state = controlCommand("dungeon portal> ");
 					break;
+				case HELP_STATE:
+					state = controlCommand("dungeon help section> ");
+					break;
 				case GAMING_STATE:
 					userInterface.println(executeCommand(game.playGame()));
 					state = ControllerState.CHOOSING_STATE;
@@ -73,7 +76,9 @@ public final class DungeonController extends Controller {
 	protected Pair<ControllerState, Supplier<String>> getCommand(String command) {
 		Pair<ControllerState, Supplier<String>> com = null;
 		if (state == ControllerState.CHOOSING_STATE)
-			com = commands.get(command);
+			com = controllerCommands.get(command);
+		else if (state == ControllerState.HELP_STATE)
+			com = helpCommands.get(command);
 		return com != null ? com : new Pair<>(state, () -> wrongInput(command));
 	}
 

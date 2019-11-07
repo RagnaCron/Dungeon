@@ -2,6 +2,7 @@ package Controller.Model;
 
 import Commander.Command;
 import GameInterface.Gamer;
+import Menace.MenaceGame;
 import UserInterface.UserCommandLineInterface;
 import javafx.util.Pair;
 
@@ -19,18 +20,23 @@ public abstract class Controller extends Command<ControllerState, Supplier<Strin
 
 	// TODO: JAVADOC
 
-	protected Map<String, Pair<ControllerState, Supplier<String>>> commands;
+	protected Map<String, Pair<ControllerState, Supplier<String>>> controllerCommands;
+	protected Map<String, Pair<ControllerState, Supplier<String>>> helpCommands;
 	protected Map<String, Function<String, UserCommandLineInterface, Gamer>> games;
 	protected Gamer game;
 	protected String playerName;
 	protected ControllerState state;
 
 	protected Controller() {
-		commands = new HashMap<>();
-		commands.put("help",  new Pair<>(ControllerState.CHOOSING_STATE, this::help));
-		commands.put("commands", new Pair<>(ControllerState.CHOOSING_STATE, this::commands));
-		commands.put("exit", new Pair<>(ControllerState.CHOOSING_STATE, this::exit));
-		commands.put("explore dungeon", new Pair<>(ControllerState.GAMING_STATE, this::playGame));
+		controllerCommands = new HashMap<>();
+		controllerCommands.put("help",  new Pair<>(ControllerState.HELP_STATE, this::help));
+		controllerCommands.put("commands", new Pair<>(ControllerState.CHOOSING_STATE, this::commands));
+		controllerCommands.put("exit", new Pair<>(ControllerState.CHOOSING_STATE, this::exit));
+		controllerCommands.put("explore dungeon", new Pair<>(ControllerState.GAMING_STATE, this::playGame));
+
+		helpCommands = new HashMap<>();
+		helpCommands.put("quit", new Pair<>(ControllerState.CHOOSING_STATE, this::quit));
+		helpCommands.put("menace description", new Pair<>(ControllerState.HELP_STATE, MenaceGame::GAME_DESCRIPTION));
 
 		games = new HashMap<>();
 	}
@@ -76,21 +82,27 @@ public abstract class Controller extends Command<ControllerState, Supplier<Strin
 	 *
 	 * @return Returns a nice help description.
 	 */
-	private String help() {
+	protected String help() {
 		return "This is the help text...Enter 'help' for this text.\n" +
 				"Most commands that can be run have a simple syntax, \n" +
 				"'<command name>', exchange  everything between the <> with a given command.\n" +
 				"For example 'commands'. Enter 'explore dungeon' to play a game.\n" +
 				"You will then have to chose from a list of games.\n" +
 				"Note: While you are playing a game you can not use any of the commands that are\n" +
-				"listed under 'commands'.";
+				"listed under 'commands'.\n" +
+				"Enter 'quit' to leave the help section.\n" +
+				"'menace description' - tells you all you ned to know about the Menace Dungeon";
+	}
+
+	protected String quit() {
+		return "You have left the help section.";
 	}
 
 	/**
 	 *
 	 * @return Returns all Possible commands that a basic Controller should have.
 	 */
-	private String commands() {
+	protected String commands() {
 		return "The Dungeon Portal has the following commands:\n" +
 				"'help' - gives you a nice general help to the dungeon portal\n" +
 				"'commands' - gives you this out what you are reading right know\n" +
@@ -104,7 +116,7 @@ public abstract class Controller extends Command<ControllerState, Supplier<Strin
 	 *
 	 * @return String, but gives null back. This is done due to the command Pattern.
 	 */
-	private String exit() {
+	protected String exit() {
 		System.exit(0);
 		return null;
 	}
