@@ -4,22 +4,22 @@ import javafx.util.Pair;
 
 import java.util.HashMap;
 import java.util.Map;
+// * @param <T> Any Type that makes sens.
 
 /**
  * The abstract class Command builds the basis for the Command Pattern.
  *
- * @param <T> Any Type that makes sens.
  * @param <R> Any Type that makes sens that you want to return.
  *
  * @author Manuel Werder
  * @version 0.1
  */
-public abstract class Command<T, R> {
+public abstract class Command<R> {
 	// TODO: DOCUMENT COMMAND PATTERN
 	// TODO: JAVADOC
 
-	protected Map<String, Pair<T, R>> controllerCommands;
-	protected Map<String, Pair<T, R>> helpCommands;
+	protected Map<String, R> controllerCommands; // TODO: DOCUMENT CHANGES
+	protected Map<String, R> helpCommands;
 
 	public Command() {
 		controllerCommands = new HashMap<>();
@@ -33,7 +33,7 @@ public abstract class Command<T, R> {
 	 * @param command The Command to look up, for example in a HashMap.
 	 * @return A java Tuple
 	 */
-	abstract protected Pair<T, R> getCommand(String command);
+	abstract protected R getCommand(String command);
 
 	/**
 	 * With this Method we went to execute a given R Function.

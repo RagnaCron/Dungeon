@@ -16,7 +16,7 @@ import java.util.function.Supplier;
  * @author Manuel Werder
  * @version 0.1
  */
-public abstract class Controller extends Command<ControllerState, Supplier<String>> {
+public abstract class Controller extends Command<Supplier<String>> {
 
 	// TODO: JAVADOC
 
@@ -27,13 +27,13 @@ public abstract class Controller extends Command<ControllerState, Supplier<Strin
 
 	protected Controller() {
 		super();
-		controllerCommands.put("help",  new Pair<>(ControllerState.HELP_STATE, this::help));
-		controllerCommands.put("commands", new Pair<>(ControllerState.CHOOSING_STATE, this::commands));
-		controllerCommands.put("exit", new Pair<>(ControllerState.CHOOSING_STATE, this::exit));
-		controllerCommands.put("explore dungeon", new Pair<>(ControllerState.GAMING_STATE, this::playGame));
+		controllerCommands.put("help",  this::help);
+		controllerCommands.put("commands", this::commands);
+		controllerCommands.put("exit", this::exit);
+		controllerCommands.put("explore dungeon", this::playGame);
 
-		helpCommands.put("quit", new Pair<>(ControllerState.CHOOSING_STATE, this::quit));
-		helpCommands.put("menace description", new Pair<>(ControllerState.HELP_STATE, MenaceGame::GAME_DESCRIPTION));
+		helpCommands.put("quit", this::quit);
+		helpCommands.put("menace description", MenaceGame::GAME_DESCRIPTION);
 
 		games = new HashMap<>();
 	}
@@ -80,6 +80,7 @@ public abstract class Controller extends Command<ControllerState, Supplier<Strin
 	 * @return Returns a nice help description.
 	 */
 	private String help() {
+		state = ControllerState.HELP_STATE;
 		return "This is the help text...Enter 'help' for this text.\n" +
 				"Most commands that can be run have a simple syntax, \n" +
 				"'<command name>', exchange  everything between the <> with a given command.\n" +
@@ -92,6 +93,7 @@ public abstract class Controller extends Command<ControllerState, Supplier<Strin
 	}
 
 	private String quit() {
+		state = ControllerState.CHOOSING_STATE;
 		return "You have left the help section.";
 	}
 

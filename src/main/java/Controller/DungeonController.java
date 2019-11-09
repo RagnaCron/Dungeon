@@ -46,10 +46,10 @@ public final class DungeonController extends Controller {
 		while (true) {
 			switch (state) {
 				case CHOOSING_STATE:
-					state = controlCommand("dungeon portal> ");
+					controlCommand("dungeon portal> ");
 					break;
 				case HELP_STATE:
-					state = controlCommand("dungeon help section> ");
+					controlCommand("dungeon help section> ");
 					break;
 				case GAMING_STATE:
 					userInterface.println(executeCommand(game.playGame()));
@@ -60,26 +60,24 @@ public final class DungeonController extends Controller {
 		}
 	}
 
-	private ControllerState controlCommand(String prompt) {
+	private void controlCommand(String prompt) {
 		String input;
-		Pair<ControllerState, Supplier<String>> command;
+		Supplier<String> command;
 		String output;
 		input = userInterface.getInput(prompt);
 		command = getCommand(input);
-		state = command.getKey();
-		output = executeCommand(command.getValue());
+		output = executeCommand(command);
 		userInterface.println(output);
-		return state;
 	}
 
 	@Override
-	protected Pair<ControllerState, Supplier<String>> getCommand(String command) {
-		Pair<ControllerState, Supplier<String>> com = null;
+	protected Supplier<String> getCommand(String command) {
+		Supplier<String> com = null;
 		if (state == ControllerState.CHOOSING_STATE)
 			com = controllerCommands.get(command);
 		else if (state == ControllerState.HELP_STATE)
 			com = helpCommands.get(command);
-		return com != null ? com : new Pair<>(state, () -> wrongInput(command));
+		return com != null ? com : () -> wrongInput(command);
 	}
 
 	/**
