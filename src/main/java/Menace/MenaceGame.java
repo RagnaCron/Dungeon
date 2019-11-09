@@ -39,7 +39,7 @@ public final class MenaceGame implements Gamer {
 				"'harakiri' - to commit suicide,\n" +
 				"'fight' - enters the fighting action with the enemy, \n" +
 				"'look' - to have a look at the room,\n" +
-				"'stats' - to see owe you are doing,\n" +
+				"'stats' - to see how you are doing,\n" +
 				"'heal' - to heal yourself,\n" +
 				"'pickup item' - you can pick up items when the enemy is dead,\n"+
 				"'go <direction>' - brings you to a new room";
