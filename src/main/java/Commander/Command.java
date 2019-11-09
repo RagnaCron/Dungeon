@@ -2,6 +2,9 @@ package Commander;
 
 import javafx.util.Pair;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * The abstract class Command builds the basis for the Command Pattern.
  *
@@ -14,6 +17,14 @@ import javafx.util.Pair;
 public abstract class Command<T, R> {
 	// TODO: DOCUMENT COMMAND PATTERN
 	// TODO: JAVADOC
+
+	protected Map<String, Pair<T, R>> controllerCommands;
+	protected Map<String, Pair<T, R>> helpCommands;
+
+	public Command() {
+		controllerCommands = new HashMap<>();
+		helpCommands = new HashMap<>();
+	}
 
 	/**
 	 * With this Method we want to get a command out of an HashMap or

@@ -20,21 +20,18 @@ public abstract class Controller extends Command<ControllerState, Supplier<Strin
 
 	// TODO: JAVADOC
 
-	protected Map<String, Pair<ControllerState, Supplier<String>>> controllerCommands;
-	protected Map<String, Pair<ControllerState, Supplier<String>>> helpCommands;
 	protected Map<String, Function<String, UserCommandLineInterface, Gamer>> games;
 	protected Gamer game;
 	protected String playerName;
 	protected ControllerState state;
 
 	protected Controller() {
-		controllerCommands = new HashMap<>();
+		super();
 		controllerCommands.put("help",  new Pair<>(ControllerState.HELP_STATE, this::help));
 		controllerCommands.put("commands", new Pair<>(ControllerState.CHOOSING_STATE, this::commands));
 		controllerCommands.put("exit", new Pair<>(ControllerState.CHOOSING_STATE, this::exit));
 		controllerCommands.put("explore dungeon", new Pair<>(ControllerState.GAMING_STATE, this::playGame));
 
-		helpCommands = new HashMap<>();
 		helpCommands.put("quit", new Pair<>(ControllerState.CHOOSING_STATE, this::quit));
 		helpCommands.put("menace description", new Pair<>(ControllerState.HELP_STATE, MenaceGame::GAME_DESCRIPTION));
 
@@ -82,7 +79,7 @@ public abstract class Controller extends Command<ControllerState, Supplier<Strin
 	 *
 	 * @return Returns a nice help description.
 	 */
-	protected String help() {
+	private String help() {
 		return "This is the help text...Enter 'help' for this text.\n" +
 				"Most commands that can be run have a simple syntax, \n" +
 				"'<command name>', exchange  everything between the <> with a given command.\n" +
@@ -94,7 +91,7 @@ public abstract class Controller extends Command<ControllerState, Supplier<Strin
 				"'menace description' - tells you all you ned to know about the Menace Dungeon";
 	}
 
-	protected String quit() {
+	private String quit() {
 		return "You have left the help section.";
 	}
 
@@ -102,7 +99,7 @@ public abstract class Controller extends Command<ControllerState, Supplier<Strin
 	 *
 	 * @return Returns all Possible commands that a basic Controller should have.
 	 */
-	protected String commands() {
+	private String commands() {
 		return "The Dungeon Portal has the following commands:\n" +
 				"'help' - gives you a nice general help to the dungeon portal\n" +
 				"'commands' - gives you this out what you are reading right know\n" +
@@ -116,7 +113,7 @@ public abstract class Controller extends Command<ControllerState, Supplier<Strin
 	 *
 	 * @return String, but gives null back. This is done due to the command Pattern.
 	 */
-	protected String exit() {
+	private String exit() {
 		System.exit(0);
 		return null;
 	}
