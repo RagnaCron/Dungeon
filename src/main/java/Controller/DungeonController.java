@@ -6,7 +6,6 @@ import Controller.Model.Function;
 import GameInterface.Gamer;
 import Menace.MenaceGame;
 import UserInterface.UserCommandLineInterface;
-import javafx.util.Pair;
 
 import java.util.function.Supplier;
 
@@ -30,6 +29,7 @@ public final class DungeonController extends Controller {
 	 */
 	public DungeonController() {
 		super();
+
 		userInterface = new UserCommandLineInterface();
 		playerName = userInterface.getInput("Hello, enter your name> ");
 		userInterface.println(helloGamer(playerName));
@@ -42,38 +42,27 @@ public final class DungeonController extends Controller {
 	 */
 	@Override
 	public void startController() {
-		state = ControllerState.CHOOSING_STATE;
+		state = ControllerState.PLAY_STATE;
 		while (true) {
 			switch (state) {
-				case CHOOSING_STATE:
+				case PLAY_STATE:
 					controlCommand("dungeon portal> ");
 					break;
 				case HELP_STATE:
 					controlCommand("dungeon help section> ");
-					break;
-				case GAMING_STATE:
-					userInterface.println(executeCommand(game.playGame()));
-					state = ControllerState.CHOOSING_STATE;
-					game = null;
 					break;
 			}
 		}
 	}
 
 	private void controlCommand(String prompt) {
-		String input;
-		Supplier<String> command;
-		String output;
-		input = userInterface.getInput(prompt);
-		command = getCommand(input);
-		output = executeCommand(command);
-		userInterface.println(output);
+		userInterface.println(executeCommand(getCommand(userInterface.getInput(prompt))));
 	}
 
 	@Override
 	protected Supplier<String> getCommand(String command) {
 		Supplier<String> com = null;
-		if (state == ControllerState.CHOOSING_STATE)
+		if (state == ControllerState.PLAY_STATE)
 			com = controllerCommands.get(command);
 		else if (state == ControllerState.HELP_STATE)
 			com = helpCommands.get(command);
@@ -103,11 +92,9 @@ public final class DungeonController extends Controller {
 		String gameName = userInterface.getInput("\nenter dungeon name> ");
 		Function<String, UserCommandLineInterface, Gamer> g = games.get(gameName);
 		if (g == null) {
-			state = ControllerState.CHOOSING_STATE;
 			return "There is no dungeon '" + gameName + "' to explore...";
 		}
-		game = g.execute(playerName, userInterface);
-		return playerName + " you have entered the " + gameName + " dungeon...good luck!";
+		return g.execute(playerName, userInterface).playGame().get();
 	}
 
 

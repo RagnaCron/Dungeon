@@ -4,7 +4,6 @@ import Commander.Command;
 import GameInterface.Gamer;
 import Menace.MenaceGame;
 import UserInterface.UserCommandLineInterface;
-import javafx.util.Pair;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,12 +20,12 @@ public abstract class Controller extends Command<Supplier<String>> {
 	// TODO: JAVADOC
 
 	protected Map<String, Function<String, UserCommandLineInterface, Gamer>> games;
-	protected Gamer game;
 	protected String playerName;
 	protected ControllerState state;
 
 	protected Controller() {
 		super();
+
 		controllerCommands.put("help",  this::help);
 		controllerCommands.put("commands", this::commands);
 		controllerCommands.put("exit", this::exit);
@@ -93,7 +92,7 @@ public abstract class Controller extends Command<Supplier<String>> {
 	}
 
 	private String quit() {
-		state = ControllerState.CHOOSING_STATE;
+		state = ControllerState.PLAY_STATE;
 		return "You have left the help section.";
 	}
 

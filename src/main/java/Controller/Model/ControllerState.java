@@ -9,7 +9,6 @@ package Controller.Model;
  * @version 0.1
  */
 public enum ControllerState {
-	CHOOSING_STATE,
-	GAMING_STATE,
+	PLAY_STATE,
 	HELP_STATE
 }

@@ -79,6 +79,7 @@ public final class MenaceGame implements Gamer {
 	 */
 	@Override
 	public Supplier<String> playGame() {
+		userInterface.println(player.getName()+ " you have entered the menace dungeon, good luck...");
 		while (player.isALife()) {
 			Supplier<String> func = getCommand(userInterface.getInput("menace dungeon> "));
 			switch (state) {
