@@ -1,7 +1,5 @@
 package Commander;
 
-import javafx.util.Pair;
-
 import java.util.HashMap;
 import java.util.Map;
 // * @param <T> Any Type that makes sens.
@@ -15,10 +13,9 @@ import java.util.Map;
  * @version 0.1
  */
 public abstract class Command<R> {
-	// TODO: DOCUMENT COMMAND PATTERN
 	// TODO: JAVADOC
 
-	protected Map<String, R> controllerCommands; // TODO: DOCUMENT CHANGES
+	protected Map<String, R> controllerCommands;
 	protected Map<String, R> helpCommands;
 
 	public Command() {
