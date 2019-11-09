@@ -17,7 +17,6 @@ import java.util.function.Supplier;
 /**
  * The MenaceGame class is final. It implements the common Gamer interface.
  * This method describes the sole entry point to the the game.
- * The Default constructor takes no arguments.
  * The game is an endless Dungeon Crawler Game. This means that the only two ways
  * to quit the game is to commit harakiri or be killed by an enemy.
  *
