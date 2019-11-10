@@ -3,10 +3,8 @@ package Menace;
 import DungeonEntity.Dungeon.Dungeon;
 import DungeonEntity.Fighters.Player;
 import DungeonEntity.Items.Base.Item;
-import DungeonEntity.Items.Potion;
-import DungeonEntity.Items.Shield;
-import DungeonEntity.Items.Weapon;
-import GameInterface.Gamer;
+import DungeonEntity.Items.*;
+import Gamer.*;
 import Generator.OneWayDungeonGenerator;
 import UserInterface.UserCommandLineInterface;
 
@@ -17,7 +15,7 @@ import java.util.function.Supplier;
 /**
  * The MenaceGame class is final. It implements the common Gamer interface.
  * This method describes the sole entry point to the the game.
- * The game is an endless Dungeon Crawler Game. This means that the only two ways
+ * The game is an endless Dungeon Crawler Gamer. This means that the only two ways
  * to quit the game is to commit harakiri or be killed by an enemy.
  *
  * @author Manuel Werder
@@ -48,14 +46,14 @@ public final class MenaceGame implements Gamer {
 	private Player player;
 	private Map<String, Supplier<String>> commands;
 	private UserCommandLineInterface userInterface;
-	private MenaceGameState state;
+	private GameState state;
 
 	public MenaceGame(String playerName, UserCommandLineInterface userInterface) {
 		dungeon = new OneWayDungeonGenerator(10).getDungeon();
 		dungeon.spawnEnemies();
 		player = new Player(playerName);
 		this.userInterface = userInterface;
-		state = MenaceGameState.PLAYING;
+		state = GameState.PLAYING;
 
 		commands = new HashMap<>();
 		commands.put("harakiri", this::harakiri);
@@ -101,7 +99,7 @@ public final class MenaceGame implements Gamer {
 	 */
 	private Supplier<String> getCommand(String command) {
 		if (command.equals("harakiri"))
-			state = MenaceGameState.HARAKIRI;
+			state = GameState.HARAKIRI;
 		Supplier<String> com = commands.get(command);
 		return com != null ? com : this::mmhNoCantDoThat;
 	}

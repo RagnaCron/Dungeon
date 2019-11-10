@@ -1,6 +1,5 @@
 package Generator;
 
-import DungeonEntity.Dungeon.Dungeon;
 import DungeonEntity.Rooms.DataStructure.RoomList;
 import DungeonEntity.Rooms.FourDoorRoom;
 import Generator.Base.DungeonGenerator;

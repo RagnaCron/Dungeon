@@ -1,12 +1,8 @@
-package Controller;
+package Menace;
 
-import Controller.Model.Controller;
-import Controller.Model.ControllerState;
-import Controller.Model.Function;
-import GameInterface.Gamer;
-import Menace.MenaceGame;
+import Controller.*;
+import Gamer.Gamer;
 import UserInterface.UserCommandLineInterface;
-
 import java.util.function.Supplier;
 
 
@@ -82,7 +78,7 @@ public final class DungeonController extends Controller {
 	/**
 	 * Looks up the gameName and initializes the game and runs it.
 	 * Internally we set the State of the DungeonController, depending on if
-	 * the Game exists or not.
+	 * the Gamer exists or not.
 	 *
 	 * @return A message of success or failure.
 	 */

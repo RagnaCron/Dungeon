@@ -1,7 +1,5 @@
 package Menace;
 
-import Controller.DungeonController;
-
 
 /**
  * The entry point to the Dungeon game.

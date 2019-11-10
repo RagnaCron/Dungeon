@@ -11,6 +11,8 @@ import DungeonEntity.Rooms.FourDoorRoom;
 
 import java.util.Random;
 
+// TODO: JAVADOC
+
 public class MenaceDungeon extends Dungeon{
 
 	private Random rand = new Random();

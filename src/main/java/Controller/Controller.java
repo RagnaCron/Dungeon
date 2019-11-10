@@ -1,7 +1,7 @@
-package Controller.Model;
+package Controller;
 
 import Commander.Command;
-import GameInterface.Gamer;
+import Gamer.Gamer;
 import Menace.MenaceGame;
 import UserInterface.UserCommandLineInterface;
 
@@ -56,7 +56,7 @@ public abstract class Controller extends Command<Supplier<String>> {
 	 * @return A nice intro to the Player and the to commands 'help' and 'commands'.
 	 */
 	protected String helloGamer(String name) {
-		return "Hello " + name + ", welcome to a Text base Dungeon Crawler Game.\n" +
+		return "Hello " + name + ", welcome to a Text base Dungeon Crawler Gamer.\n" +
 				"Enter the command 'help' to see some basic infos.\n" +
 				name + " you are at the beginning of you journey enter 'commands' to see\n" +
 				"what is possible at the Dungeon Portal.";

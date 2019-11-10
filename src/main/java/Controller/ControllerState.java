@@ -1,5 +1,7 @@
-package Controller.Model;
+package Controller;
 
+
+import Controller.Model.Controller;
 
 /**
  * The State for the Controller. It is a simple implementation of the

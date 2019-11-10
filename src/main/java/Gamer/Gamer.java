@@ -1,9 +1,4 @@
-package GameInterface;
-
-import Commander.Command;
-import Controller.Model.ControllerState;
-import UserInterface.UserCommandLineInterface;
-import javafx.util.Pair;
+package Gamer;
 
 import java.util.function.Supplier;
 

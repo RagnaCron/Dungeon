@@ -4,6 +4,8 @@ import DungeonEntity.Rooms.FourDoorRoom;
 
 public class OneWayDungeonGenerator extends TwoWayDungeonGenerator {
 
+	// TODO: JAVADOC
+
 	public OneWayDungeonGenerator(int roomsCount) {
 		super(roomsCount);
 	}
