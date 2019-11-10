@@ -78,8 +78,9 @@ public final class MenaceGame implements Gamer {
 	@Override
 	public Supplier<String> playGame() {
 		userInterface.println(player.getName()+ " you have entered the menace dungeon, good luck...");
-		while (player.isALife()) {
-			Supplier<String> func = getCommand(userInterface.getInput("menace dungeon> "));
+		while (player.isALife()) { // Sequenzdiagramm von hier an
+			String command = userInterface.getInput("menace dungeon> ");
+			Supplier<String> func = getCommand(command);
 			switch (state) {
 				case PLAYING:
 					userInterface.println(func.get());
@@ -89,7 +90,7 @@ public final class MenaceGame implements Gamer {
 			}
 		}
 		return this::deathMessage;
-	}
+	} // Sequenzdiagramm bis hier
 
 	/**
 	 * Gets the command out of the HashMap<String, Supplier<String>>, makes a simple check if the player
@@ -135,7 +136,7 @@ public final class MenaceGame implements Gamer {
 	private String traverseToNextRoom(boolean hasDoor, Integer nextRoomNumber) {
 		if (hasDoor) {
 			if (dungeon.getCurrentRoom().isEnemyALife())
-				return player.getName() + " you can't leave the room there is an enemy...";
+				return player.getName() + " you can't go to the next room there is an enemy blocking the door...";
 			dungeon.gotoNextRoom(nextRoomNumber);
 			return player.getName() + " you entered a new room...";
 		}
@@ -185,10 +186,12 @@ public final class MenaceGame implements Gamer {
 			StringBuilder message = new StringBuilder();
 			if (!dungeon.getCurrentRoom().isEnemyALife()) {
 				dungeon.dropEnemyItems();
-				return message.append(dungeon.getCurrentRoom().getEnemy().getName()).append(" is dead...").toString();
+				return message.append(dungeon.getCurrentRoom().getEnemy().getName())
+						.append(" is dead...").toString();
 			}
 			message.append("You have been fighting the enemy:\n")
-					.append(player.toString()).append("\n").append(dungeon.getCurrentRoom().getEnemy().toString());
+					.append(player.toString()).append("\n")
+					.append(dungeon.getCurrentRoom().getEnemy().toString());
 			return message.toString();
 		}
 		return player.getName() + " you have already killed the enemy...";

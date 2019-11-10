@@ -21,7 +21,7 @@ public class MenaceDungeon extends Dungeon{
 	private String[] shieldsNames = {"Broken Shield", "Shield", "Iron Shield",};
 	private String[] weaponName = { "Stick", "Golden Sword", "Katana", "Broken Sword", "Sword", "Iron Sword",};
 	private String[] enemyNames = {"Skeleton", "Ork", "Dragon", "Ghoul", "Zombie", "Dark Elb", "Goblin", "Slime",
-			"Mummy", "You Mom", "Your non existing Girlfriend", "Dark Magician"
+			"Mummy", "Your Mom", "Your non existing Girlfriend", "Dark Magician"
 	};
 
 	public MenaceDungeon(RoomList rooms) {
@@ -49,10 +49,10 @@ public class MenaceDungeon extends Dungeon{
 			FourDoorRoom room = rooms.get(i);
 			room.setItems(new ItemList());
 			room.setCurrentRoomNumber(i + 1);
-			if (i == 4 || i == 9) {
+			if (i % 4 == 0 || i % 10 == 0) {
 				room.getItems().add(createPotion(room.getCurrentRoomNumber()));
 			}
-			room.setEnemy(createEnemy(room.getCurrentRoomNumber()));
+			resetEnemy(room, room.getCurrentRoomNumber());
 		}
 	}
 
@@ -63,6 +63,7 @@ public class MenaceDungeon extends Dungeon{
 	protected void reSpawnEnemies() {
 		for (int i = 0; i < rooms.size(); i++) {
 			FourDoorRoom room = rooms.get(i);
+			resetDoorDirection(room, rand.nextInt(4));
 			room.setItems(new ItemList());
 			room.setCurrentRoomNumber(room.getCurrentRoomNumber() + 10);
 			room.setRoomName("Room " + room.getCurrentRoomNumber());
@@ -70,29 +71,58 @@ public class MenaceDungeon extends Dungeon{
 				room.getItems().add(createPotion(room.getCurrentRoomNumber()));
 			}
 			else
-			resetEnemy(room.getEnemy(), room.getCurrentRoomNumber());
+			resetEnemy(room, room.getCurrentRoomNumber());
 		}
+	}
+
+	private void resetDoorDirection(FourDoorRoom room, int direction) {
+		if (room.hasNorthDoor()) {
+			Integer nextRoomNumber = room.getNorthDoor();
+			room.setNorthDoor(null);
+			setNewDirection(nextRoomNumber, room, direction);
+		}
+		else if (room.hasSouthDoor()) {
+			Integer nextRoomNumber = room.getSouthDoor();
+			room.setSouthDoor(null);
+			setNewDirection(nextRoomNumber, room, direction);
+		}
+		else if (room.hasWestDoor()) {
+			Integer nextRoomNumber = room.getWestDoor();
+			room.setWestDoor(null);
+			setNewDirection(nextRoomNumber, room, direction);
+		}
+		else if (room.hasEastDoor()) {
+			Integer nextRoomNumber = room.getEastDoor();
+			room.setEastDoor(null);
+			setNewDirection(nextRoomNumber, room, direction);
+		}
+	}
+
+	private void setNewDirection(Integer nextRoomNumber, FourDoorRoom room, int direction) {
+		if (direction == 0) room.setNorthDoor(nextRoomNumber);
+		else if (direction == 1) room.setSouthDoor(nextRoomNumber);
+		else if (direction == 2) room.setWestDoor(nextRoomNumber);
+		else if (direction == 3) room.setEastDoor(nextRoomNumber);
 	}
 
 	@Override
 	public void dropEnemyItems() {
-		if (currentRoom.getCurrentRoomNumber() % 4 == 0) {
-			currentRoom.getItems().add(currentRoom.getItems().size(), currentRoom.getEnemy().getRightHandWeapon());
+		if (currentRoom.getCurrentRoomNumber() % 10 == 0) {
+			currentRoom.getItems().add(currentRoom.getEnemy().getRightHandWeapon());
+			currentRoom.getItems().add(currentRoom.getEnemy().getLeftHandShield());
+			currentRoom.getItems().add(createPotion(currentRoom.getCurrentRoomNumber()));
+		}
+		else if (currentRoom.getCurrentRoomNumber() % 4 == 0) {
+			currentRoom.getItems().add(currentRoom.getEnemy().getRightHandWeapon());
 		}
 		else if (currentRoom.getCurrentRoomNumber() % 3 == 0) {
-			currentRoom.getItems().add(currentRoom.getItems().size(), currentRoom.getEnemy().getLeftHandShield());
-		}
-		else if (currentRoom.getCurrentRoomNumber() % 10 == 0) {
-			currentRoom.getItems().add(currentRoom.getItems().size(), currentRoom.getEnemy().getRightHandWeapon());
-			currentRoom.getItems().add(currentRoom.getItems().size(), currentRoom.getEnemy().getLeftHandShield());
+			currentRoom.getItems().add(currentRoom.getEnemy().getLeftHandShield());
+			currentRoom.getItems().add(createPotion(currentRoom.getCurrentRoomNumber()));
 		}
 	}
 
-	private void resetEnemy(Enemy enemy, int roomNumber) {
-		enemy.setALife(true);
-		enemy.setName(enemyNames[rand.nextInt(enemyNames.length)]);
-		enemy.setRightHandWeapon(createWeapon(roomNumber));
-		enemy.setLeftHandShield(createShield(roomNumber));
+	private void resetEnemy(FourDoorRoom room, int roomNumber) {
+		room.setEnemy(createEnemy(roomNumber));
 	}
 
 	private Potion createPotion(int roomNumber) {
@@ -116,4 +146,5 @@ public class MenaceDungeon extends Dungeon{
 				(roomNumber + 10 + i) / 2,
 				createWeapon(roomNumber), createShield(roomNumber));
 	}
+
 }

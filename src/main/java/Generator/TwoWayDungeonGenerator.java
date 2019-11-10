@@ -36,7 +36,7 @@ public class TwoWayDungeonGenerator extends DungeonGenerator {
 	@Override
 	protected void generateRooms(int count) {
 		rooms = new RoomList();
-		for (int i = 0; i < count; i++) {
+		for (int i = 0; i <= count; i++) {
 			rooms.add(new FourDoorRoom("Room " + (i + 1), i));
 		}
 	}
