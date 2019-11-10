@@ -79,7 +79,7 @@ public class Player extends LifeForm implements Healer, Attacker, Defender {
     }
 
     /**
-     * Defend against an attacking opponent.
+     * Defend against an attacking opponent. Note: defending is random.
      *
      * @param attacker The attacker which to defend against.
      */
