@@ -50,7 +50,6 @@ public final class MenaceGame implements Gamer {
 
 	public MenaceGame(String playerName, UserCommandLineInterface userInterface) {
 		dungeon = new OneWayDungeonGenerator(10).getDungeon();
-		dungeon.spawnEnemies();
 		player = new Player(playerName);
 		this.userInterface = userInterface;
 		state = GameState.PLAYING;

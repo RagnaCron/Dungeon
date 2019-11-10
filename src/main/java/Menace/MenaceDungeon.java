@@ -13,7 +13,13 @@ import java.util.Random;
 
 // TODO: JAVADOC
 
-public class MenaceDungeon extends Dungeon{
+/**
+ *
+ *
+ * @author Manuel Werder
+ * @version 0.1
+ */
+public class MenaceDungeon extends Dungeon {
 
 	private Random rand = new Random();
 
@@ -26,6 +32,7 @@ public class MenaceDungeon extends Dungeon{
 
 	public MenaceDungeon(RoomList rooms) {
 		super(rooms);
+		spawnEnemies();
 	}
 
 	/**
@@ -74,6 +81,7 @@ public class MenaceDungeon extends Dungeon{
 			resetEnemy(room, room.getCurrentRoomNumber());
 		}
 	}
+
 
 	private void resetDoorDirection(FourDoorRoom room, int direction) {
 		if (room.hasNorthDoor()) {
