@@ -14,7 +14,7 @@ public class Weapon extends Item {
     private int attackPoints;
 
     /**
-     * The constructor for the Weapon.
+     * The constructor for the Weapon. Calls super() first and then sets attackPoints.
      * @param name The name of the amazing weapon.
      * @param attackPoints Some nice attackPoints for the weapon.
      */

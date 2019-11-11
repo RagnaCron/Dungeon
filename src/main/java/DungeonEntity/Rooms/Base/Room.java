@@ -12,7 +12,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public abstract class Room {
+public abstract class Room{
 
 	/**
 	 * The field roomName.
@@ -27,6 +27,10 @@ public abstract class Room {
 		this.roomName = roomName;
 	}
 
+	/**
+	 * The nome of the room.
+	 * @return The room name.
+	 */
 	@Override
 	public String toString() {
 		return roomName;

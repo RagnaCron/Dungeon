@@ -7,25 +7,27 @@ import java.util.Map;
 /**
  * The abstract class Command builds the basis for the Command Pattern.
  *
- * @param <R> Any Type that makes sens that you want to return.
+ * @param <R> Any Type that makes sens that you want to return, wen you get a Value out of the HashMaps.
  *
  * @author Manuel Werder
  * @version 0.1
  */
 public abstract class Command<R> {
-	// TODO: JAVADOC
 
 	protected Map<String, R> controllerCommands;
 	protected Map<String, R> helpCommands;
 
+	/**
+	 * Init the controllerCommands and the helpCommands.
+	 */
 	public Command() {
 		controllerCommands = new HashMap<>();
 		helpCommands = new HashMap<>();
 	}
 
 	/**
-	 * With this Method we want to get a command out of an HashMap or
-	 * what ever fits the needs.
+	 * With this Method we want to get a command out of an HashMap, you need
+	 * to implement you own logic to handel to different HashMap access.
 	 *
 	 * @param command The Command to look up, for example in a HashMap.
 	 * @return A java Tuple

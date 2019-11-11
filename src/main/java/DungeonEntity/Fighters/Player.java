@@ -28,6 +28,7 @@ public class Player extends LifeForm implements Healer, Attacker, Defender {
 
     private Random rand = new Random();
     /**
+     * Calls Super() first and then inits all private fields.
      *
      * @param name Name of the Player.
      * @param isALife Is the Player a life.
@@ -45,6 +46,11 @@ public class Player extends LifeForm implements Healer, Attacker, Defender {
         this.potion = potion;
     }
 
+    /**
+     * Calls its own Constructor.
+     *
+     * @param name Name of the Player.
+     */
     public Player(String name) {
         this(name, true, 100, new Weapon("Stick", 7),
                 new Shield("Wooden plank", 7),

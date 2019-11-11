@@ -4,6 +4,7 @@ import DungeonEntity.Dungeon.Dungeon;
 import DungeonEntity.Fighters.Player;
 import DungeonEntity.Items.Base.Item;
 import DungeonEntity.Items.*;
+import DungeonEntity.Rooms.FourDoorRoom;
 import Gamer.*;
 import Generator.OneWayDungeonGenerator;
 import UserInterface.UserCommandLineInterface;
@@ -42,7 +43,7 @@ public final class MenaceGame implements Gamer {
 				"'go <direction>' - brings you to a new room";
 	}
 
-	private Dungeon dungeon;
+	private Dungeon<FourDoorRoom> dungeon;
 	private Player player;
 	private Map<String, Supplier<String>> commands;
 	private UserCommandLineInterface userInterface;

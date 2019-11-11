@@ -21,6 +21,7 @@ public abstract class LifeForm {
     protected int lifePoints;
 
     /**
+     * Init all protected fields.
      *
      * @param name The name of the LifeForm.
      * @param isALife Is the LifeForm a life.

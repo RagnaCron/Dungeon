@@ -1,6 +1,8 @@
 package Menace;
 
 
+import Controller.Controller;
+
 /**
  * The entry point to the Dungeon game.
  *
@@ -13,7 +15,7 @@ public final class MenaceGameMain {
 
     public static void main(String[] args) {
 
-        DungeonController controller = new DungeonController();
+        Controller controller = new DungeonController();
         controller.startController();
 
     }

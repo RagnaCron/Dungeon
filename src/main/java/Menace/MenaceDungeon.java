@@ -19,7 +19,7 @@ import java.util.Random;
  * @author Manuel Werder
  * @version 0.1
  */
-public class MenaceDungeon extends Dungeon {
+public class MenaceDungeon extends Dungeon<FourDoorRoom> {
 
 	private Random rand = new Random();
 
@@ -30,7 +30,7 @@ public class MenaceDungeon extends Dungeon {
 			"Mummy", "Your Mom", "Your non existing Girlfriend", "Dark Magician"
 	};
 
-	public MenaceDungeon(RoomList rooms) {
+	public MenaceDungeon(RoomList<FourDoorRoom> rooms) {
 		super(rooms);
 		spawnEnemies();
 	}

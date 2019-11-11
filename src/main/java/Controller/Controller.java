@@ -11,18 +11,21 @@ import java.util.function.Supplier;
 
 /**
  * The abstract Controller Class is a basis for different kind of Controllers in the Dungeon Framework.
+ * It extends the abstract Command class with the Type Supplier with the Type String.
  *
  * @author Manuel Werder
  * @version 0.1
  */
 public abstract class Controller extends Command<Supplier<String>> {
 
-	// TODO: JAVADOC
-
 	protected Map<String, Function<String, UserCommandLineInterface, Gamer>> games;
 	protected String playerName;
 	protected ControllerState state;
 
+	/**
+	 * Init the Controller. Calls Super() first and then loads the controllerCommands and the helpCommands,
+	 * after that it inits games HashMap. and sets the ControllerState to PLAY_STATE.
+	 */
 	protected Controller() {
 		super();
 
@@ -35,6 +38,7 @@ public abstract class Controller extends Command<Supplier<String>> {
 		helpCommands.put("menace description", MenaceGame::GAME_DESCRIPTION);
 
 		games = new HashMap<>();
+		state = ControllerState.PLAY_STATE;
 	}
 
 	/**
@@ -44,6 +48,7 @@ public abstract class Controller extends Command<Supplier<String>> {
 	abstract public void startController();
 
 	/**
+	 * This Method is here to start up a game the Player chooses from a list of games.
 	 *
 	 * @return Returns a String of what ever you see fit.
 	 */
@@ -75,6 +80,7 @@ public abstract class Controller extends Command<Supplier<String>> {
 
 	/**
 	 * We want the User to know how to  use a command in this Controller.
+	 * It sets the state of the Controller to HELP_STATE.
 	 *
 	 * @return Returns a nice help description.
 	 */
@@ -91,12 +97,19 @@ public abstract class Controller extends Command<Supplier<String>> {
 				"'menace description' - tells you all you ned to know about the Menace Dungeon";
 	}
 
+	/**
+	 * A Method that changes the State of the controller back to PLAY_STATE and
+	 * then Returns a String Message.
+	 * @return A nice Message for the user so he knows that he left the help section.
+	 */
 	private String quit() {
 		state = ControllerState.PLAY_STATE;
 		return "You have left the help section.";
 	}
 
 	/**
+	 * With this the User gets a nice overview what kind of simple commands the
+	 * controller is capable of.
 	 *
 	 * @return Returns all Possible commands that a basic Controller should have.
 	 */

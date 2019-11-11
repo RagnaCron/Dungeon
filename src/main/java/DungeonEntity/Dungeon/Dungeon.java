@@ -1,7 +1,7 @@
 package DungeonEntity.Dungeon;
 
+import DungeonEntity.Rooms.Base.Room;
 import DungeonEntity.Rooms.DataStructure.RoomList;
-import DungeonEntity.Rooms.FourDoorRoom;
 import lombok.Getter;
 
 /**
@@ -11,17 +11,17 @@ import lombok.Getter;
  * @author Manuel Werder
  * @version 0.1
  */
-public abstract class Dungeon {
+public abstract class Dungeon<T extends Room> {
 
-	protected RoomList rooms;
+	protected RoomList<T> rooms;
 	@Getter
-	protected FourDoorRoom currentRoom;
+	protected T currentRoom;
 
 	/**
 	 * The Dungeon Constructor takes a room list.
 	 * @param rooms A list of rooms.
 	 */
-	public Dungeon(RoomList rooms) {
+	public Dungeon(RoomList<T> rooms) {
 		this.rooms = rooms;
 		currentRoom = rooms.first();
 	}

@@ -14,7 +14,7 @@ import java.util.Random;
 /**
  * The Enemy. This is the entity to fight as user.
  * The Enemy Class extends the LifeForm Class.
- * The Enemy Class implements the Attacker Interface.
+ * The Enemy Class implements the Attacker and Defender Interface.
  *
  * @author Manuel Werder
  * @version 0.1
@@ -28,7 +28,7 @@ public class Enemy extends LifeForm implements Attacker, Defender {
     private Random rand = new Random();
 
     /**
-     *
+     * Calls super and then Inits the private fields.
      * @param name Name of the Enemy.
      * @param isALife Is the Enemy a life.
      * @param lifePoints The lifePoints the Enemy has.
