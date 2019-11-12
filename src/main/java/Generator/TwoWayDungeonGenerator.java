@@ -25,7 +25,7 @@ public class TwoWayDungeonGenerator extends DungeonGenerator {
 
 	/**
 	 * Get a random direction between 0 an 3.
-	 * @return The direction form 0 (north), 1 (south), 2 (west) and 3 (east).
+	 * @return The direction form 0 (north), 1 (south), 2 (west) or 3 (east).
 	 */
 	protected Integer randomDoorDirection() {
 		return rand.nextInt(4);
@@ -89,7 +89,7 @@ public class TwoWayDungeonGenerator extends DungeonGenerator {
 
 	/**
 	 * Check if there is a door set for the direction.
-	 * @param direction The direction form 0 (north), 1 (south), 2 (west) and 3 (east).
+	 * @param direction The direction form 0 (north), 1 (south), 2 (west) or 3 (east).
 	 * @param currentRoom The current room to check.
 	 * @return Is true if the direction is not yet set.
 	 */

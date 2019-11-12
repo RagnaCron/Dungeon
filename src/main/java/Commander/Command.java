@@ -13,7 +13,7 @@ import java.util.Map;
  * @version 0.1
  */
 public abstract class Command<R> {
-
+// TODO: DOCUMENT GENERIC
 	protected Map<String, R> controllerCommands;
 	protected Map<String, R> helpCommands;
 
@@ -30,7 +30,7 @@ public abstract class Command<R> {
 	 * to implement you own logic to handel to different HashMap access.
 	 *
 	 * @param command The Command to look up, for example in a HashMap.
-	 * @return A java Tuple
+	 * @return What ever R will be.
 	 */
 	abstract protected R getCommand(String command);
 

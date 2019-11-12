@@ -15,7 +15,7 @@ public class OneWayDungeonGenerator extends TwoWayDungeonGenerator {
 
 	/**
 	 * Calls super() with the roomsCount.
-	 * @param roomsCount How many rooms do you want? (Tip: take 10)
+	 * @param roomsCount How many rooms do you want?
 	 */
 	public OneWayDungeonGenerator(int roomsCount) {
 		super(roomsCount);
@@ -23,7 +23,7 @@ public class OneWayDungeonGenerator extends TwoWayDungeonGenerator {
 
 	/**
 	 * This is used to make a room to room connection.
-	 * @param direction The direction form 0 (north), 1 (south), 2 (west) and 3 (east).
+	 * @param direction The direction form 0 (north), 1 (south), 2 (west) or 3 (east).
 	 * @param currentRoom The current room to set the door with the next room number.
 	 * @param nextRoom The next room to get the room number form.
 	 */

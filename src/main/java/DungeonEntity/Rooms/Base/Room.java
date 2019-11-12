@@ -12,7 +12,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public abstract class Room{
+public abstract class Room {
 
 	/**
 	 * The field roomName.

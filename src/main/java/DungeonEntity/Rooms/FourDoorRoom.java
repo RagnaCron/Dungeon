@@ -8,7 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * The FourDoorRoom has four doors it extends the Room class.
+ * The FourDoorRoom has four doors it extends the Room class. It has an ItemList
+ * and one Enemy.
  *
  * @author Manuel Werder
  * @version 0.1

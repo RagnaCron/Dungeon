@@ -26,6 +26,10 @@ public final class MenaceGame implements Gamer {
 
 	// TODO: JAVADOC
 
+	/**
+	 * This Function gives a description about the MenaceGame class.
+	 * @return Me, my self and only what a Player can do with me.
+	 */
 	public static String GAME_DESCRIPTION() {
 		return "The Menace Dungeon.\nIt is a dungeon that only knows one way...\n" +
 				"kill the enemy, collect items if any were dropped and go to the next room.\n" +
@@ -49,6 +53,14 @@ public final class MenaceGame implements Gamer {
 	private UserCommandLineInterface userInterface;
 	private GameState state;
 
+	/**
+	 * Gives a new instance of the MenaceGame back. It generates a new dungeon, sets the player and userInterface
+	 * gives the Game an initial state of PLAYING, after thet it loads all the different Commands to the commands,
+	 * HashMap that the player can use.
+	 * @param playerName The cool and awesome Player name.
+	 * @param userInterface The interface to communicate to.
+	 */
+	@SuppressWarnings("all")
 	public MenaceGame(String playerName, UserCommandLineInterface userInterface) {
 		dungeon = new OneWayDungeonGenerator(10).getDungeon();
 		player = new Player(playerName);

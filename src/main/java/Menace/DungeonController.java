@@ -15,8 +15,6 @@ import java.util.function.Supplier;
  */
 public final class DungeonController extends Controller {
 
-	// TODO: JAVADOC
-
 	private UserCommandLineInterface userInterface;
 
 	/**
@@ -39,6 +37,7 @@ public final class DungeonController extends Controller {
 	@Override
 	public void startController() {
 		state = ControllerState.PLAY_STATE;
+		//noinspection InfiniteLoopStatement
 		while (true) {
 			switch (state) {
 				case PLAY_STATE:
@@ -51,10 +50,21 @@ public final class DungeonController extends Controller {
 		}
 	}
 
+	/**
+	 * With this Method the intention is set, to getCommand and pass it to executeCommand,
+	 * it then gives it out to the CommandLineInterface.
+	 *
+	 * @param prompt Where is the Player? So tell him.
+	 */
 	private void controlCommand(String prompt) {
 		userInterface.println(executeCommand(getCommand(userInterface.getInput(prompt))));
 	}
 
+	/**
+	 * Get a command out of controllerCommands or helpCommands depending on the state of the Controller.
+	 * @param command The Command to look up.
+	 * @return Gives a Supplier back with a return Type String.
+	 */
 	@Override
 	protected Supplier<String> getCommand(String command) {
 		Supplier<String> com = null;
