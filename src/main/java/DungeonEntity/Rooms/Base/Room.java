@@ -1,5 +1,8 @@
 package DungeonEntity.Rooms.Base;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * The Abstract Room Class. Is the basis for all kind of different Rooms.
  * It has a name and not much more.
@@ -7,12 +10,14 @@ package DungeonEntity.Rooms.Base;
  * @author Manuel Werder
  * @version 0.1
  */
+@Getter
+@Setter
 public abstract class Room {
 
 	/**
-	 * The field roomName is final.
+	 * The field roomName.
 	 */
-	private final String roomName;
+	private String roomName;
 
 	/**
 	 * The Room of ... what ever.
@@ -22,6 +27,10 @@ public abstract class Room {
 		this.roomName = roomName;
 	}
 
+	/**
+	 * The nome of the room.
+	 * @return The room name.
+	 */
 	@Override
 	public String toString() {
 		return roomName;

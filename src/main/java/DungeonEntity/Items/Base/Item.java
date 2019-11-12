@@ -4,7 +4,7 @@ package DungeonEntity.Items.Base;
 import lombok.Getter;
 
 /**
- * The Item Superclass provides the basic API for Shields, Weapons and Potions.
+ * The Item Superclass provides the basic API for Shields, Weapons, Potions and what ever is needed.
  *
  * @author Manuel Werder
  * @version 0.1

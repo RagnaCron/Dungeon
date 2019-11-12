@@ -14,7 +14,7 @@ public class Shield extends Item {
     private int defensePoints;
 
     /**
-     * The constructor for the Shield.
+     * The constructor for the Shield. Calls super() first and then sets the defensePoints.
      * @param name The name of the Shield.
      * @param defensePoints The defensePoints to have when holding the shield.
      */
@@ -37,7 +37,7 @@ public class Shield extends Item {
      */
     @Override
     public String toString() {
-        String buildName = super.toString() + " it has " + defensePoints + " defense ";
+        String buildName = super.toString() + ", it has " + defensePoints + " defense ";
         if (defensePoints == 1) {
            return buildName + "point";
            }

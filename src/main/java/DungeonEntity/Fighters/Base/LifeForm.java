@@ -4,24 +4,22 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * The LifeForm abstract Baseclass will provide the basic API for all LifeForms in the Game.
- * All LifeForms in this Game have a name and lifePoints.
- *
- * (It can be that at a later time the LifeForm may to hold a Shield in its leftHand.)
+ * The LifeForm abstract Baseclass will provide the basic API for all LifeForms in the Gamer.
+ * All LifeForms in this Gamer have a name and lifePoints.
  *
  * @author Manuel Werder
  * @version 0.1
  */
 @Getter
+@Setter
 public abstract class LifeForm {
 
-    protected final String name;
-    @Setter
+    protected String name;
     protected boolean isALife;
-    @Setter
     protected int lifePoints;
 
     /**
+     * Init all protected fields.
      *
      * @param name The name of the LifeForm.
      * @param isALife Is the LifeForm a life.

@@ -27,7 +27,7 @@ class ShieldTest {
 
 	@Test
 	void testToString() {
-		String expected = "Shield it has 10 defense points";
+		String expected = "Shield, it has 10 defense points";
 		assertEquals(expected, shield.toString());
 	}
 }

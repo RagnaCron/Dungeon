@@ -7,6 +7,8 @@ import DungeonEntity.Items.Weapon;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Random;
+
 /**
  * The Player. This is the entity that the user gives command to.
  * The Player Class extends the LifeForm Class.
@@ -15,15 +17,18 @@ import lombok.Setter;
  * @author Manuel Werder
  * @version 0.1
  */
-@Setter
-@Getter
 public class Player extends LifeForm implements Healer, Attacker, Defender {
 
+    @Setter @Getter
     private Weapon rightHandWeapon;
+    @Setter @Getter
     private Shield leftHandShield;
+    @Setter @Getter
     private Potion potion;
 
+    private Random rand = new Random();
     /**
+     * Calls Super() first and then inits all private fields.
      *
      * @param name Name of the Player.
      * @param isALife Is the Player a life.
@@ -41,10 +46,15 @@ public class Player extends LifeForm implements Healer, Attacker, Defender {
         this.potion = potion;
     }
 
+    /**
+     * Calls its own Constructor.
+     *
+     * @param name Name of the Player.
+     */
     public Player(String name) {
-        this(name, true, 5, new Weapon("Stick", 3),
-                new Shield("Wooden plank", 3),
-                new Potion("Water", 3));
+        this(name, true, 100, new Weapon("Stick", 7),
+                new Shield("Wooden plank", 7),
+                new Potion("Water", 50));
     }
 
     /**
@@ -71,12 +81,11 @@ public class Player extends LifeForm implements Healer, Attacker, Defender {
      */
     @Override
     public void attack(LifeForm defender) {
-        if (hasWeapon())
-            defender.loseLifePoints(rightHandWeapon.getAttackPoints());
+        defender.loseLifePoints(rightHandWeapon.getAttackPoints());
     }
 
     /**
-     * Defend against an attacking opponent.
+     * Defend against an attacking opponent. Note: defending is random.
      *
      * @param attacker The attacker which to defend against.
      */
@@ -84,9 +93,13 @@ public class Player extends LifeForm implements Healer, Attacker, Defender {
     public void defend(LifeForm attacker) {
         try {
             Enemy enemy = (Enemy) attacker;
-            if (hasShield() && leftHandShield.getDefensePoints() < enemy.getRightHandWeapon().getAttackPoints()) {
-                int lifePointsToLose = enemy.getRightHandWeapon().getAttackPoints() - leftHandShield.getDefensePoints();
-                loseLifePoints(lifePointsToLose);
+            if (rand.nextBoolean()) {
+                if (hasShield() && leftHandShield.getDefensePoints() < enemy.getRightHandWeapon().getAttackPoints()) {
+                    int lifePointsToLose = enemy.getRightHandWeapon().getAttackPoints() - leftHandShield.getDefensePoints();
+                    loseLifePoints(lifePointsToLose);
+                }
+            } else {
+                loseLifePoints(enemy.getRightHandWeapon().getAttackPoints());
             }
         } catch (ClassCastException e) {
             // Currently we don't care

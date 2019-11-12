@@ -31,9 +31,9 @@ class ItemListTest {
 	@Test
 	void testToString() {
 		String expected = "Items:\n" +
-				"\tSword it has 10 attack points\n" +
-				"\tPotion it has 10 life points\n" +
-				"\tShield it has 10 defense points\n";
+				"\tSword, it has 10 attack points\n" +
+				"\tPotion, it gives 10 life points\n" +
+				"\tShield, it has 10 defense points\n";
 		assertEquals(expected, itemList.toString());
 	}
 

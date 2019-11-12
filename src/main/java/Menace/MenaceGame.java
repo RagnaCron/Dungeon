@@ -1,26 +1,22 @@
 package Menace;
 
+import DungeonEntity.Dungeon.Dungeon;
 import DungeonEntity.Fighters.Player;
 import DungeonEntity.Items.Base.Item;
-import DungeonEntity.Items.Potion;
-import DungeonEntity.Items.Shield;
-import DungeonEntity.Items.Weapon;
-import DungeonEntity.Rooms.DataStructure.RoomList;
+import DungeonEntity.Items.*;
 import DungeonEntity.Rooms.FourDoorRoom;
-import GameInterface.Gamer;
-import Generator.SnakeDungeonGenerator;
+import Gamer.*;
+import Generator.OneWayDungeonGenerator;
 import UserInterface.UserCommandLineInterface;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.function.Supplier;
 
 /**
  * The MenaceGame class is final. It implements the common Gamer interface.
  * This method describes the sole entry point to the the game.
- * The Default constructor takes no arguments.
- * The game is an endless Dungeon Crawler Game. This means that the only two ways
+ * The game is an endless Dungeon Crawler Gamer. This means that the only two ways
  * to quit the game is to commit harakiri or be killed by an enemy.
  *
  * @author Manuel Werder
@@ -28,22 +24,46 @@ import java.util.function.Supplier;
  */
 public final class MenaceGame implements Gamer {
 
-	// TODO: JAVADOC
-	// TODO: MAKE A STATIC FUNCTION TO GET GAME DESCRIPTION ABOUT THE COMMANDS
-	private RoomList dungeon;
-	private Player player;
-	private FourDoorRoom currentRoom;
-	private Map<String, Supplier<String>> commands;
-	private static Random rand = new Random();
-	private UserCommandLineInterface userInterface;
-	private MenaceGameState state;
+	/**
+	 * This Function gives a description about the MenaceGame class.
+	 * @return Me, my self and only what a Player can do with me.
+	 */
+	public static String GAME_DESCRIPTION() {
+		return "The Menace Dungeon.\nIt is a dungeon that only knows one way...\n" +
+				"kill the enemy, collect items if any were dropped and go to the next room.\n" +
+				"You will start with 100 life points. Try to survive as long as you can.\n" +
+				"The Menace Dungeon knows no end...except you commit harakiri or get killed by an enemy.\n" +
+				"When you start the game, you should now the commands, as there is now voice that can tell you...\n" +
+				"Entering a wrong command will bring the enemy upon you...\n" +
+				"Those are the available Menace Dungeon Commands:\n" +
+				"'harakiri' - to commit suicide,\n" +
+				"'fight' - enters the fighting action with the enemy, \n" +
+				"'look' - to have a look at the room,\n" +
+				"'stats' - to see how you are doing,\n" +
+				"'heal' - to heal yourself,\n" +
+				"'pickup item' - you can pick up items when the enemy is dead,\n"+
+				"'go <direction>' - brings you to a new room";
+	}
 
+	private Dungeon<FourDoorRoom> dungeon;
+	private Player player;
+	private Map<String, Supplier<String>> commands;
+	private UserCommandLineInterface userInterface;
+	private GameState state;
+
+	/**
+	 * Gives a new instance of the MenaceGame back. It generates a new dungeon, sets the player and userInterface
+	 * gives the Game an initial state of PLAYING, after thet it loads all the different Commands to the commands,
+	 * HashMap that the player can use.
+	 * @param playerName The cool and awesome Player name.
+	 * @param userInterface The interface to communicate to.
+	 */
+	@SuppressWarnings("all")
 	public MenaceGame(String playerName, UserCommandLineInterface userInterface) {
-		dungeon = new SnakeDungeonGenerator().generateSnakeDungeon();
-		currentRoom = dungeon.get(0);
+		dungeon = new OneWayDungeonGenerator(10).getDungeon();
 		player = new Player(playerName);
 		this.userInterface = userInterface;
-		state = MenaceGameState.PLAYING;
+		state = GameState.PLAYING;
 
 		commands = new HashMap<>();
 		commands.put("harakiri", this::harakiri);
@@ -55,7 +75,7 @@ public final class MenaceGame implements Gamer {
 		commands.put("heal", this::heal);
 		commands.put("stats", this::stats);
 		commands.put("look", this::look);
-		commands.put("attack", this::attack);
+		commands.put("fight", this::fight);
 	}
 
 	/**
@@ -67,8 +87,10 @@ public final class MenaceGame implements Gamer {
 	 */
 	@Override
 	public Supplier<String> playGame() {
-		while (player.isALife()) {
-			Supplier<String> func = getCommand(userInterface.getInput("menace dungeon> "));
+		userInterface.println(player.getName()+ " you have entered the menace dungeon, good luck...");
+		while (player.isALife()) { // Sequenzdiagramm von hier an
+			String command = userInterface.getInput("menace dungeon> ");
+			Supplier<String> func = getCommand(command);
 			switch (state) {
 				case PLAYING:
 					userInterface.println(func.get());
@@ -78,7 +100,7 @@ public final class MenaceGame implements Gamer {
 			}
 		}
 		return this::deathMessage;
-	}
+	} // Sequenzdiagramm bis hier
 
 	/**
 	 * Gets the command out of the HashMap<String, Supplier<String>>, makes a simple check if the player
@@ -88,7 +110,7 @@ public final class MenaceGame implements Gamer {
 	 */
 	private Supplier<String> getCommand(String command) {
 		if (command.equals("harakiri"))
-			state = MenaceGameState.HARAKIRI;
+			state = GameState.HARAKIRI;
 		Supplier<String> com = commands.get(command);
 		return com != null ? com : this::mmhNoCantDoThat;
 	}
@@ -98,8 +120,8 @@ public final class MenaceGame implements Gamer {
 	 * @return The message includes the room wherein you have died and the enemy name.
 	 */
 	private String deathMessage() {
-		return currentRoom.getEnemy().getName() + " has killed you. " +
-				player.getName() + " you have reached room number " + currentRoom.getCurrentRoomNumber();
+		return dungeon.getCurrentRoom().getEnemy().getName() + " has killed you. " +
+				player.getName() + " you have reached room number " + dungeon.getCurrentRoom().getRoomName();
 	}
 
 	/**
@@ -107,6 +129,10 @@ public final class MenaceGame implements Gamer {
 	 * @return A nice message about what you can't do.
 	 */
 	private String mmhNoCantDoThat() {
+		if (dungeon.getCurrentRoom().isEnemyALife()) {
+			dungeon.getCurrentRoom().getEnemy().attack(player);
+			return "The enemy has attacked you...";
+		}
 		return "No, " + player.getName() + " you can't do that...";
 	}
 
@@ -119,9 +145,9 @@ public final class MenaceGame implements Gamer {
 	 */
 	private String traverseToNextRoom(boolean hasDoor, Integer nextRoomNumber) {
 		if (hasDoor) {
-			if (currentRoom.hasEnemy())
-				return player.getName() + " you can't leave the room there is an enemy...";
-			currentRoom = dungeon.get(nextRoomNumber);
+			if (dungeon.getCurrentRoom().isEnemyALife())
+				return player.getName() + " you can't go to the next room there is an enemy blocking the door...";
+			dungeon.gotoNextRoom(nextRoomNumber);
 			return player.getName() + " you entered a new room...";
 		}
 		return player.getName() + " you are not a ghost, you can't go through walls...";
@@ -132,7 +158,7 @@ public final class MenaceGame implements Gamer {
 	 * @return if there is a door to the north go through it if the enemy is dead.
 	 */
 	private String goNorth() {
-		return traverseToNextRoom(currentRoom.hasNorthDoor(), currentRoom.getNorthDoor());
+		return traverseToNextRoom(dungeon.getCurrentRoom().hasNorthDoor(), dungeon.getCurrentRoom().getNorthDoor());
 	}
 
 	/**
@@ -140,7 +166,7 @@ public final class MenaceGame implements Gamer {
 	 * @return if there is a door to the south go through it if the enemy is dead.
 	 */
 	private String goSouth() {
-		return traverseToNextRoom(currentRoom.hasSouthDoor(), currentRoom.getSouthDoor());
+		return traverseToNextRoom(dungeon.getCurrentRoom().hasSouthDoor(), dungeon.getCurrentRoom().getSouthDoor());
 	}
 
 	/**
@@ -148,7 +174,7 @@ public final class MenaceGame implements Gamer {
 	 * @return if there is a door to the west go through it if the enemy is dead.
 	 */
 	private String goWest() {
-		return traverseToNextRoom(currentRoom.hasWestDoor(), currentRoom.getWestDoor());
+		return traverseToNextRoom(dungeon.getCurrentRoom().hasWestDoor(), dungeon.getCurrentRoom().getWestDoor());
 	}
 
 	/**
@@ -156,34 +182,27 @@ public final class MenaceGame implements Gamer {
 	 * @return if there is a door to the east go through it if the enemy is dead.
 	 */
 	private String goEast() {
-		return traverseToNextRoom(currentRoom.hasEastDoor(), currentRoom.getEastDoor());
+		return traverseToNextRoom(dungeon.getCurrentRoom().hasEastDoor(), dungeon.getCurrentRoom().getEastDoor());
 	}
 
 	/**
 	 * The attack method. If you defend against an enemy or the enemy attacks you is random.
 	 * @return A nice Message about how the fight went.
 	 */
-	private String attack() {
-		if (currentRoom.hasEnemy()) {
-			player.attack(currentRoom.getEnemy());
-			StringBuilder message = new StringBuilder(currentRoom.getEnemy().getName());
-			boolean enemyWillAttack = rand.nextBoolean();
-			boolean playerWillDefend = rand.nextBoolean();
-			if (!currentRoom.getEnemy().isALife()) {
-				currentRoom.getItems().add(currentRoom.getEnemy().getRightHandWeapon());
-				currentRoom.setEnemy(null);
-				return message.append(" is dead...").toString();
+	private String fight() {
+		if (dungeon.getCurrentRoom().isEnemyALife()) {
+			player.defend(dungeon.getCurrentRoom().getEnemy());
+			dungeon.getCurrentRoom().getEnemy().defend(player);
+			StringBuilder message = new StringBuilder();
+			if (!dungeon.getCurrentRoom().isEnemyALife()) {
+				dungeon.dropEnemyItems();
+				return message.append(dungeon.getCurrentRoom().getEnemy().getName())
+						.append(" is dead...").toString();
 			}
-			else if (enemyWillAttack) {
-				if (playerWillDefend) {
-					player.defend(currentRoom.getEnemy());
-					return player.getName() + " you have defended against the enemy...";
-				} else {
-					currentRoom.getEnemy().attack(player);
-					return message.append(" has attacked you...").toString();
-				}
-			}
-			return player.getName() + " you have attacked the enemy...";
+			message.append("You have been fighting the enemy:\n")
+					.append(player.toString()).append("\n")
+					.append(dungeon.getCurrentRoom().getEnemy().toString());
+			return message.toString();
 		}
 		return player.getName() + " you have already killed the enemy...";
 	}
@@ -193,7 +212,7 @@ public final class MenaceGame implements Gamer {
 	 * @return Shows a nice message of the current room.
 	 */
 	private String look() {
-		return currentRoom.toString();
+		return dungeon.getCurrentRoom().toString();
 	}
 
 	/**
@@ -226,7 +245,7 @@ public final class MenaceGame implements Gamer {
 	 */
 	private String harakiri() {
 		player.setALife(false);
-		return "You have committed harakiri. You reached Room " + currentRoom.getCurrentRoomNumber();
+		return "You have committed harakiri. You reached Room " + dungeon.getCurrentRoom().getRoomName();
 	}
 
 	/**
@@ -237,19 +256,19 @@ public final class MenaceGame implements Gamer {
 	 * @return Gives a nice message about success or failure when picking up an item form the dungeon floor.
 	 */
 	private String pickupItem() {
-		if (currentRoom.hasEnemy())
+		if (dungeon.getCurrentRoom().isEnemyALife())
 			return "You have to kill the enemy to collect items...";
-		currentRoom.getItems().forEach((i) -> userInterface.println(i.getName()));
+		dungeon.getCurrentRoom().getItems().forEach((i) -> userInterface.println(i.getName()));
 		String itemName = userInterface.getInput("enter item name> ");
-		Item item = currentRoom.getItems().removeItem(itemName);
+		Item item = dungeon.getCurrentRoom().getItems().removeItem(itemName);
 		if (item != null) {
 			StringBuilder builder = new StringBuilder(player.getName()).append(" you have picked up ");
 			if (item instanceof Weapon) {
-				currentRoom.getItems().add(player.getRightHandWeapon());
+				dungeon.getCurrentRoom().getItems().add(player.getRightHandWeapon());
 				player.setRightHandWeapon((Weapon) item);
 				builder.append(player.getRightHandWeapon().toString());
 			} else if (item instanceof Shield) {
-				currentRoom.getItems().add(player.getLeftHandShield());
+				dungeon.getCurrentRoom().getItems().add(player.getLeftHandShield());
 				player.setLeftHandShield((Shield) item);
 				builder.append(player.getLeftHandShield().toString());
 			} else if (item instanceof Potion) {

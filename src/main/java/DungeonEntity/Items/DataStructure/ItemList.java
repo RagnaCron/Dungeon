@@ -8,29 +8,52 @@ import DungeonEntity.Items.Weapon;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * ItemList extends the ArrayList. It provides some convenient Methods to get Items per name out.
+ *
+ * @author Manuel Werder
+ * @version 0.1
+ */
 public class ItemList extends ArrayList<Item> {
 
+	/**
+	 * Init a new ItemList with an existing one.
+	 * @param items The existing ItemList.
+	 */
 	public ItemList(ItemList items) {
 		super(items);
 	}
 
+	/**
+	 * Init a new ItemList out of a static Item array.
+	 *
+	 * @param items The static Item Array.
+	 */
 	public ItemList(Item[] items) {
 		super(Arrays.asList(items));
 	}
 
-	public ItemList(int amount) {
-		super(Arrays.asList(new Item[amount]));
-	}
-
+	/**
+	 * Init a new ItemList from a single Item.
+	 * @param item The Item to use.
+	 */
 	public ItemList(Item item) {
 		super();
 		this.add(item);
 	}
 
+	/**
+	 * Init empty ItemList.
+	 */
 	public ItemList() {
 		super();
 	}
 
+	/**
+	 * Gives a nice representation of the content of an ItemList.
+	 *
+	 * @return The beauty and the nice.
+	 */
 	@Override
 	public String toString() {
 		StringBuilder buildItemList = new StringBuilder();

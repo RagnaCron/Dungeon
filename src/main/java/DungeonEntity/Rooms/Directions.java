@@ -10,10 +10,5 @@ public enum Directions {
 	NORTH_DOOR,
 	SOUTH_DOOR,
 	WEST_DOOR,
-	EAST_DOOR;
-
-	@Override
-	public String toString() {
-		return name().toLowerCase();
-	}
+	EAST_DOOR
 }

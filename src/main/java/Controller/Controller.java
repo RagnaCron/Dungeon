@@ -1,9 +1,9 @@
-package Controller.Model;
+package Controller;
 
 import Commander.Command;
-import GameInterface.Gamer;
+import Gamer.Gamer;
+import Menace.MenaceGame;
 import UserInterface.UserCommandLineInterface;
-import javafx.util.Pair;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,28 +11,34 @@ import java.util.function.Supplier;
 
 /**
  * The abstract Controller Class is a basis for different kind of Controllers in the Dungeon Framework.
+ * It extends the abstract Command class with the Type Supplier with the Type String.
  *
  * @author Manuel Werder
  * @version 0.1
  */
-public abstract class Controller extends Command<ControllerState, Supplier<String>> {
+public abstract class Controller extends Command<Supplier<String>> {
 
-	// TODO: JAVADOC
-
-	protected Map<String, Pair<ControllerState, Supplier<String>>> commands;
 	protected Map<String, Function<String, UserCommandLineInterface, Gamer>> games;
-	protected Gamer game;
 	protected String playerName;
 	protected ControllerState state;
 
+	/**
+	 * Init the Controller. Calls Super() first and then loads the controllerCommands and the helpCommands,
+	 * after that it inits games HashMap. and sets the ControllerState to PLAY_STATE.
+	 */
 	protected Controller() {
-		commands = new HashMap<>();
-		commands.put("help",  new Pair<>(ControllerState.CHOOSING_STATE, this::help));
-		commands.put("commands", new Pair<>(ControllerState.CHOOSING_STATE, this::commands));
-		commands.put("exit", new Pair<>(ControllerState.CHOOSING_STATE, this::exit));
-		commands.put("explore dungeon", new Pair<>(ControllerState.GAMING_STATE, this::playGame));
+		super();
+
+		controllerCommands.put("help",  this::help);
+		controllerCommands.put("commands", this::commands);
+		controllerCommands.put("exit", this::exit);
+		controllerCommands.put("explore dungeon", this::playGame);
+
+		helpCommands.put("quit", this::quit);
+		helpCommands.put("menace description", MenaceGame::GAME_DESCRIPTION);
 
 		games = new HashMap<>();
+		state = ControllerState.PLAY_STATE;
 	}
 
 	/**
@@ -42,6 +48,7 @@ public abstract class Controller extends Command<ControllerState, Supplier<Strin
 	abstract public void startController();
 
 	/**
+	 * This Method is here to start up a game the Player chooses from a list of games.
 	 *
 	 * @return Returns a String of what ever you see fit.
 	 */
@@ -54,7 +61,7 @@ public abstract class Controller extends Command<ControllerState, Supplier<Strin
 	 * @return A nice intro to the Player and the to commands 'help' and 'commands'.
 	 */
 	protected String helloGamer(String name) {
-		return "Hello " + name + ", welcome to a Text base Dungeon Crawler Game.\n" +
+		return "Hello " + name + ", welcome to a Text base Dungeon Crawler Gamer.\n" +
 				"Enter the command 'help' to see some basic infos.\n" +
 				name + " you are at the beginning of you journey enter 'commands' to see\n" +
 				"what is possible at the Dungeon Portal.";
@@ -73,20 +80,36 @@ public abstract class Controller extends Command<ControllerState, Supplier<Strin
 
 	/**
 	 * We want the User to know how to  use a command in this Controller.
+	 * It sets the state of the Controller to HELP_STATE.
 	 *
 	 * @return Returns a nice help description.
 	 */
 	private String help() {
+		state = ControllerState.HELP_STATE;
 		return "This is the help text...Enter 'help' for this text.\n" +
 				"Most commands that can be run have a simple syntax, \n" +
 				"'<command name>', exchange  everything between the <> with a given command.\n" +
 				"For example 'commands'. Enter 'explore dungeon' to play a game.\n" +
 				"You will then have to chose from a list of games.\n" +
 				"Note: While you are playing a game you can not use any of the commands that are\n" +
-				"listed under 'commands'.";
+				"listed under 'commands'.\n" +
+				"Enter 'quit' to leave the help section.\n" +
+				"'menace description' - tells you all you ned to know about the Menace Dungeon";
 	}
 
 	/**
+	 * A Method that changes the State of the controller back to PLAY_STATE and
+	 * then Returns a String Message.
+	 * @return A nice Message for the user so he knows that he left the help section.
+	 */
+	private String quit() {
+		state = ControllerState.PLAY_STATE;
+		return "You have left the help section.";
+	}
+
+	/**
+	 * With this the User gets a nice overview what kind of simple commands the
+	 * controller is capable of.
 	 *
 	 * @return Returns all Possible commands that a basic Controller should have.
 	 */

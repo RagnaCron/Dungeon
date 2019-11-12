@@ -16,7 +16,7 @@ public class Potion extends Item {
     private int lifePoints;
 
     /**
-     * The constructor for the Potion.
+     * The constructor for the Potion. Calls super() first and then sets the lifePoints.
      * @param name The name of the Potion.
      * @param lifePoints The lifePoints to gain from the potion.
      */
@@ -39,7 +39,7 @@ public class Potion extends Item {
      */
     @Override
     public String toString() {
-        String buildName = super.toString() + " it has " + lifePoints + " life ";
+        String buildName = super.toString() + ", it gives " + lifePoints + " life ";
         if (lifePoints == 1) {
             return buildName + "point";
         }

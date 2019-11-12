@@ -1,13 +1,8 @@
-package Controller;
+package Menace;
 
-import Controller.Model.Controller;
-import Controller.Model.ControllerState;
-import Controller.Model.Function;
-import GameInterface.Gamer;
-import Menace.MenaceGame;
+import Controller.*;
+import Gamer.Gamer;
 import UserInterface.UserCommandLineInterface;
-import javafx.util.Pair;
-
 import java.util.function.Supplier;
 
 
@@ -20,8 +15,6 @@ import java.util.function.Supplier;
  */
 public final class DungeonController extends Controller {
 
-	// TODO: JAVADOC
-
 	private UserCommandLineInterface userInterface;
 
 	/**
@@ -30,6 +23,7 @@ public final class DungeonController extends Controller {
 	 */
 	public DungeonController() {
 		super();
+
 		userInterface = new UserCommandLineInterface();
 		playerName = userInterface.getInput("Hello, enter your name> ");
 		userInterface.println(helloGamer(playerName));
@@ -42,39 +36,43 @@ public final class DungeonController extends Controller {
 	 */
 	@Override
 	public void startController() {
-		state = ControllerState.CHOOSING_STATE;
+		state = ControllerState.PLAY_STATE;
+		//noinspection InfiniteLoopStatement
 		while (true) {
 			switch (state) {
-				case CHOOSING_STATE:
-					state = controlCommand("dungeon portal> ");
+				case PLAY_STATE:
+					controlCommand("dungeon portal> ");
 					break;
-				case GAMING_STATE:
-					userInterface.println(executeCommand(game.playGame()));
-					state = ControllerState.CHOOSING_STATE;
-					game = null;
+				case HELP_STATE:
+					controlCommand("dungeon help section> ");
 					break;
 			}
 		}
 	}
 
-	private ControllerState controlCommand(String prompt) {
-		String input;
-		Pair<ControllerState, Supplier<String>> command;
-		String output;
-		input = userInterface.getInput(prompt);
-		command = getCommand(input);
-		state = command.getKey();
-		output = executeCommand(command.getValue());
-		userInterface.println(output);
-		return state;
+	/**
+	 * With this Method the intention is set, to getCommand and pass it to executeCommand,
+	 * it then gives it out to the CommandLineInterface.
+	 *
+	 * @param prompt Where is the Player? So tell him.
+	 */
+	private void controlCommand(String prompt) {
+		userInterface.println(executeCommand(getCommand(userInterface.getInput(prompt))));
 	}
 
+	/**
+	 * Get a command out of controllerCommands or helpCommands depending on the state of the Controller.
+	 * @param command The Command to look up.
+	 * @return Gives a Supplier back with a return Type String.
+	 */
 	@Override
-	protected Pair<ControllerState, Supplier<String>> getCommand(String command) {
-		Pair<ControllerState, Supplier<String>> com = null;
-		if (state == ControllerState.CHOOSING_STATE)
-			com = commands.get(command);
-		return com != null ? com : new Pair<>(state, () -> wrongInput(command));
+	protected Supplier<String> getCommand(String command) {
+		Supplier<String> com = null;
+		if (state == ControllerState.PLAY_STATE)
+			com = controllerCommands.get(command);
+		else if (state == ControllerState.HELP_STATE)
+			com = helpCommands.get(command);
+		return com != null ? com : () -> wrongInput(command);
 	}
 
 	/**
@@ -90,7 +88,7 @@ public final class DungeonController extends Controller {
 	/**
 	 * Looks up the gameName and initializes the game and runs it.
 	 * Internally we set the State of the DungeonController, depending on if
-	 * the Game exists or not.
+	 * the Gamer exists or not.
 	 *
 	 * @return A message of success or failure.
 	 */
@@ -100,11 +98,9 @@ public final class DungeonController extends Controller {
 		String gameName = userInterface.getInput("\nenter dungeon name> ");
 		Function<String, UserCommandLineInterface, Gamer> g = games.get(gameName);
 		if (g == null) {
-			state = ControllerState.CHOOSING_STATE;
 			return "There is no dungeon '" + gameName + "' to explore...";
 		}
-		game = g.execute(playerName, userInterface);
-		return playerName + " you have entered the " + gameName + " dungeon...good luck!";
+		return g.execute(playerName, userInterface).playGame().get();
 	}
 
 
