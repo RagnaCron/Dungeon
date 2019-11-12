@@ -6,7 +6,7 @@ import lombok.Getter;
 
 /**
  * The abstract Dungeon Class should provide a basic set of an API, so that one can build on top
- * a powerful dungeon.
+ * a powerful dungeon. Dungeon takes a Type T that extends Room.
  *
  * @author Manuel Werder
  * @version 0.1

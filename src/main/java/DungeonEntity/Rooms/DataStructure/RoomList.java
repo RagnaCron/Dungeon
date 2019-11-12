@@ -12,7 +12,7 @@ import java.util.Arrays;
  * @version 0.1
  */
 public class RoomList<T extends Room> extends ArrayList<T> {
-// TODO: DOKUMENT GENERIC
+
 	/**
 	 * Init static T Type Array of rooms.
 	 * @param rooms The static T Type Array of rooms.
