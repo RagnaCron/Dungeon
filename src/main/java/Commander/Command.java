@@ -13,7 +13,7 @@ import java.util.Map;
  * @version 0.1
  */
 public abstract class Command<R> {
-// TODO: DOCUMENT GENERIC
+
 	protected Map<String, R> controllerCommands;
 	protected Map<String, R> helpCommands;
 
