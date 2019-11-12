@@ -24,8 +24,6 @@ import java.util.function.Supplier;
  */
 public final class MenaceGame implements Gamer {
 
-	// TODO: JAVADOC
-
 	/**
 	 * This Function gives a description about the MenaceGame class.
 	 * @return Me, my self and only what a Player can do with me.
