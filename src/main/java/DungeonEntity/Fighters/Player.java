@@ -1,6 +1,9 @@
 package DungeonEntity.Fighters;
 
-import DungeonEntity.Fighters.Base.*;
+import DungeonEntity.Fighters.Base.Attacker;
+import DungeonEntity.Fighters.Base.Defender;
+import DungeonEntity.Fighters.Base.Healer;
+import DungeonEntity.Fighters.Base.LifeForm;
 import DungeonEntity.Items.Potion;
 import DungeonEntity.Items.Shield;
 import DungeonEntity.Items.Weapon;

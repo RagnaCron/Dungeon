@@ -3,9 +3,12 @@ package Menace;
 import DungeonEntity.Dungeon.Dungeon;
 import DungeonEntity.Fighters.Player;
 import DungeonEntity.Items.Base.Item;
-import DungeonEntity.Items.*;
+import DungeonEntity.Items.Potion;
+import DungeonEntity.Items.Shield;
+import DungeonEntity.Items.Weapon;
 import DungeonEntity.Rooms.FourDoorRoom;
-import Gamer.*;
+import Gamer.GameState;
+import Gamer.Gamer;
 import Generator.OneWayDungeonGenerator;
 import UserInterface.UserCommandLineInterface;
 
