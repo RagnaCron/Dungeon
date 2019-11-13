@@ -1,9 +1,7 @@
 package DungeonEntity.Items.DataStructure;
 
 import DungeonEntity.Items.Base.Item;
-import DungeonEntity.Items.Potion;
-import DungeonEntity.Items.Shield;
-import DungeonEntity.Items.Weapon;
+import DungeonEntity.Items.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
