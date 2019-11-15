@@ -1,9 +1,7 @@
 package DungeonEntity.Fighters;
 
 import DungeonEntity.Fighters.Base.*;
-import DungeonEntity.Items.Potion;
-import DungeonEntity.Items.Shield;
-import DungeonEntity.Items.Weapon;
+import DungeonEntity.Items.*;
 import lombok.Getter;
 import lombok.Setter;
 

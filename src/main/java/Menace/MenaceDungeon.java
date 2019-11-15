@@ -3,9 +3,7 @@ package Menace;
 import DungeonEntity.Dungeon.Dungeon;
 import DungeonEntity.Fighters.Enemy;
 import DungeonEntity.Items.DataStructure.ItemList;
-import DungeonEntity.Items.Potion;
-import DungeonEntity.Items.Shield;
-import DungeonEntity.Items.Weapon;
+import DungeonEntity.Items.*;
 import DungeonEntity.Rooms.DataStructure.RoomList;
 import DungeonEntity.Rooms.FourDoorRoom;
 

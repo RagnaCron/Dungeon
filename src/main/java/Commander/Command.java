@@ -2,7 +2,6 @@ package Commander;
 
 import java.util.HashMap;
 import java.util.Map;
-// * @param <T> Any Type that makes sens.
 
 /**
  * The abstract class Command builds the basis for the Command Pattern.

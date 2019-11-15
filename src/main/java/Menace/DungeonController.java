@@ -1,8 +1,11 @@
 package Menace;
 
-import Controller.*;
+import Controller.Controller;
+import Controller.ControllerState;
+import Controller.Function;
 import Gamer.Gamer;
 import UserInterface.UserCommandLineInterface;
+
 import java.util.function.Supplier;
 
 
